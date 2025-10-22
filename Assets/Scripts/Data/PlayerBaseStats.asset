@@ -12,3 +12,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34879c2ce4d14e64bbf39560d9297e87, type: 3}
   m_Name: PlayerBaseStats
   m_EditorClassIdentifier: 
+  healthBase: 100
+  staminaBase: 50
+  manaBase: 50
+  pDefenceBase: 1
+  mDefenceBase: 1
+  pAttackBase: 1
+  mAttackBase: 1
+  strength:
+    baseValue: 1
+  dexterity:
+    baseValue: 1
+  intelligence:
+    baseValue: 1
+  constitution:
+    baseValue: 1
+  wisdom:
+    baseValue: 1
+  endurance:
+    baseValue: 1

@@ -13,14 +13,10 @@ public class BaseStatData : ScriptableObject
     public int mAttackBase = 1;
 
     [Header("Defining Stats")]
-    public int strengthBase = 1;
-    public int dexterityBase = 1;
-    public int intelligenceBase = 1;
-    public int luckBase = 1;
-
-    //[Header("Extra Stats")]
-
-
-
-
+    public Stat strength;
+    public Stat dexterity;
+    public Stat intelligence;
+    public Stat constitution;
+    public Stat wisdom;
+    public Stat endurance;
 }

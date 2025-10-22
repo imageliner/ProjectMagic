@@ -2,11 +2,9 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerStatManager : MonoBehaviour
+public class PlayerStatManager : CharacterStats
 {
-
-    [SerializeField] public BaseStatData playerBaseStats;
-    private PlayerController playerController;
+    [SerializeField] private BaseStatData playerStatData;
     public Slider healthBarSlider;
     public TextMeshProUGUI healthBarText;
     public Slider staminaBarSlider;
@@ -25,18 +23,11 @@ public class PlayerStatManager : MonoBehaviour
     private float staminaRegenTimer = 0f;
     public float staminaRegenInterval = 0.25f;
 
-    [Header("Defining Stats")]
-    private int strengthCurrent;
-    private int dexterityCurrent;
-    private int intelligenceCurrent;
-    private int luckCurrent;
-
     //[Header("Extra Stats")]
 
 
     void Start()
     {
-        playerController = GetComponent<PlayerController>();
         InitiateStats();
     }
 
@@ -49,17 +40,17 @@ public class PlayerStatManager : MonoBehaviour
     public void InitiateStats()
     {
         //health
-        healthMax = playerBaseStats.healthBase;
+        healthMax = playerStatData.healthBase;
         healthCurrent = healthMax;
         healthBarSlider.value = 1.0f;
 
         //stamina
-        staminaMax = playerBaseStats.staminaBase;
+        staminaMax = playerStatData.staminaBase;
         staminaCurrent = staminaMax;
         staminaBarSlider.value = 1.0f;
 
         //mana
-        manaMax = playerBaseStats.manaBase;
+        manaMax = playerStatData.manaBase;
         manaCurrent = manaMax;
         manaBarSlider.value = 1.0f;
     }
