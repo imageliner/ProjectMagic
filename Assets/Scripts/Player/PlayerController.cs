@@ -72,7 +72,7 @@ public class PlayerController : MonoBehaviour
     }
     public void Dash()
     {
-        if (!isDashing && playerStatManager.staminaCurrent >= dashStaminaNeeded)
+        if (!isDashing && GameManager.singleton.playerStats.currentStamina >= dashStaminaNeeded)
         {
             animator.SetTrigger("startDash");
             Vector3 dashDir = new Vector3(mousePosition.x, 0f, mousePosition.z).normalized;
@@ -84,7 +84,7 @@ public class PlayerController : MonoBehaviour
     {
         isDashing = true;
 
-        playerStatManager.staminaCurrent -= dashStaminaNeeded;
+        GameManager.singleton.playerStats.SubtractStamina(dashStaminaNeeded);
         float elapsed = 0f;
         while (elapsed < dashTime)
         {
@@ -100,7 +100,7 @@ public class PlayerController : MonoBehaviour
 
     public void Attack()
     {
-        if (!isAttacking && playerStatManager.staminaCurrent >= attackStaminaNeeded && attackCount < attackCountMax)
+        if (!isAttacking && GameManager.singleton.playerStats.currentStamina >= attackStaminaNeeded && attackCount < attackCountMax)
         {
             Vector3 attackDir = new Vector3(mousePosition.x, 0f, mousePosition.z).normalized;
             StartCoroutine(Attack(attackDir));
@@ -111,7 +111,7 @@ public class PlayerController : MonoBehaviour
     {
         isAttacking = true;
 
-        playerStatManager.staminaCurrent -= attackStaminaNeeded;
+        GameManager.singleton.playerStats.SubtractStamina(dashStaminaNeeded);
         float elapsed = 0f;
         animator.SetTrigger("startAttack");
         while (elapsed < attackDashTime)

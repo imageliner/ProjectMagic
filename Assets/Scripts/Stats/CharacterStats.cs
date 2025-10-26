@@ -1,31 +1,52 @@
 using UnityEngine;
+using TMPro;
 
 public class CharacterStats : MonoBehaviour
 {
-    [SerializeField] private BaseStatData baseStatData;
-    [Header("Main Stats")]
-    public int health;
+    [SerializeField] int baseStatPoints_perLevel = 2;
+    [SerializeField] int baseStatPoints_Offset = 0;
+    [SerializeField] int baseVitality_perLevel = 1;
+    [SerializeField] int baseVitality_Offset = 0;
+    [SerializeField] int vitalityToHealthConversion = 10;
 
-    [Header("Defining Stats")]
-    public int constitution;
-    public int endurance;
-    public int wisdom;
-    public int strength;
-    public int dexterity;
-    public int intelligence;
+    [SerializeField] TextMeshProUGUI statPointText;
+    [SerializeField] TextMeshProUGUI vitalityText;
+    [SerializeField] TextMeshProUGUI healthText;
 
-    private void Awake()
+    public int baseStatPoints { get; protected set; } = 0;
+    public int baseVitality { get; protected set; } = 0;
+
+    public int statPoint
     {
-        GetStatValues();
+        get
+        {
+            return baseStatPoints;
+        }
     }
 
-    private void GetStatValues()
+    public int vitality
     {
-        constitution = baseStatData.constitution.GetValue();
-        endurance = baseStatData.endurance.GetValue();
-        wisdom = baseStatData.wisdom.GetValue();
-        strength = baseStatData.strength.GetValue();
-        dexterity = baseStatData.dexterity.GetValue();
-        intelligence = baseStatData.intelligence.GetValue();
+        get
+        {
+            return baseVitality;
+        }
+    }
+
+    public int maxHealth
+    {
+        get
+        {
+            return vitality * vitalityToHealthConversion;
+        }
+    }
+
+    public void OnUpdateLevel(int previousLevel, int currentLevel)
+    {
+        baseStatPoints = baseStatPoints_perLevel * currentLevel + baseStatPoints_Offset;
+        baseVitality = baseVitality_perLevel * currentLevel + baseVitality_Offset;
+
+        vitalityText.text = $"Vitality: {vitality}";
+        healthText.text = $"Health: {maxHealth}";
+        statPointText.text = $"Stat Points: {statPoint}";
     }
 }
