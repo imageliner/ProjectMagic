@@ -18,7 +18,7 @@ public class CharacterStats : MonoBehaviour
     {
         get
         {
-            return health.GetTotalValue() + (vitality.baseValue * vitalityToHealthConversion);
+            return health.GetMaxValue(vitality, vitalityToHealthConversion);
         }
     }
     

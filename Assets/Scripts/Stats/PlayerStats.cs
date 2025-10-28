@@ -22,7 +22,7 @@ public class PlayerStats : CharacterStats
     public void InitializeStats()
     {
         health = new Resource();
-        health.SetMaxValue(100);
+        health.SetBaseValue(100);
         health.SetCurrentValue(health.maxValue);
         vitality = new Stat();
         wisdom = new Stat();
@@ -58,7 +58,7 @@ public class PlayerStats : CharacterStats
     public void OnVitalityUpgrade()
     {
         vitality.AddBaseValue(1);
-        health.SetMaxValue(maxHealth);
+        //health.SetMaxValue(maxHealth);
         statPointText.text = $"Stat Points: {statPoints}";
         vitalityText.text = $"Vitality: {vitality.GetTotalValue()}";
         healthText.text = $"Health: {maxHealth}";

@@ -4,18 +4,22 @@ using UnityEngine;
 [System.Serializable]
 public class Resource
 {
-    public int maxValue { get; private set; } = 1;
+    public int baseValue = 1;
+
+    public int maxValue { get; private set; }
+
     public int bonusValue { get; private set; } = 0;
     public int currentValue { get; private set; } = 1;
 
-    public int GetTotalValue()
+    public int GetMaxValue(Stat stat, int conversionValue)
     {
-        return maxValue + bonusValue;
+        maxValue = baseValue + (stat.baseValue * conversionValue) + bonusValue;
+        return maxValue;
     }
 
-    public void SetMaxValue(int value)
+    public void SetBaseValue(int value)
     {
-        maxValue = value;
+        baseValue = value;
     }
 
     public void SetBonusValue(int value)
