@@ -76,12 +76,12 @@ public class CharacterStats_Old : MonoBehaviour
         MagDefenceCalculation();
 
 
-        totalConstitution = constitution.GetSumValue();
-        totalEndurance = endurance.GetSumValue();
-        totalWisdom = wisdom.GetSumValue();
-        totalStrength = strength.GetSumValue();
-        totalDexterity = dexterity.GetSumValue();
-        totalIntelligence = intelligence.GetSumValue();
+        totalConstitution = constitution.GetTotalValue();
+        totalEndurance = endurance.GetTotalValue();
+        totalWisdom = wisdom.GetTotalValue();
+        totalStrength = strength.GetTotalValue();
+        totalDexterity = dexterity.GetTotalValue();
+        totalIntelligence = intelligence.GetTotalValue();
     }
 
     public void SubtractStamina(int value)

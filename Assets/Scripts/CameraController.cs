@@ -7,7 +7,7 @@ public class CameraController : MonoBehaviour
 
     [SerializeField] private CinemachineFollow camFollow;
     public float cameraZoomMax = 15;
-    public float cameraZoomMin = 5;
+    public float cameraZoomMin = 2;
     public float cameraZoomDefault = 12;
     private float targetZoom;
     public float zoomSpeed = 1;

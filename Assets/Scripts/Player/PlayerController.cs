@@ -48,7 +48,8 @@ public class PlayerController : MonoBehaviour
         lookRotation = Quaternion.LookRotation(mousePosition);
         lookRotation.x = 0;
         lookRotation.z = 0;
-        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
+        if (isMoving)
+            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
 
         //create combat controller script? play a function on mouse click towards mouse direciton ^ see dash code
     }
@@ -63,6 +64,7 @@ public class PlayerController : MonoBehaviour
         transform.position += moveDir * moveSpeed * Time.deltaTime;
 
         bool moving = moveDir.sqrMagnitude > 0.01f;
+        isMoving = moving;
 
         Vector3 localMove = transform.InverseTransformDirection(moveDir.normalized);
 
@@ -132,7 +134,7 @@ public class PlayerController : MonoBehaviour
         if (other.CompareTag("HealBox"))
         {
             int healAmount = 15;
-            playerStatManager.TakeHealCalculation(healAmount);
+            GameManager.singleton.playerStats2.health.AddResource(healAmount);
             Debug.Log("Health Recieved");
         }
     }
@@ -150,7 +152,7 @@ public class PlayerController : MonoBehaviour
     private IEnumerator TakeDamage(int dmgAmount)
     {
         damageRecovery = true;
-        playerStatManager.TakeDamageCalculation(dmgAmount);
+        GameManager.singleton.playerStats2.health.SubtractResource(dmgAmount);
 
         float elapsed = 0f;
         while (elapsed < invincibilityTime)

@@ -18,8 +18,8 @@ public class UIPlayerHUD : MonoBehaviour
 
     public void UpdateStats()
     {
-        int currentHP = GameManager.singleton.playerStats.currentHealth;
-        int maxHP = GameManager.singleton.playerStats.maxHealth;
+        int currentHP = GameManager.singleton.playerStats2.health.currentValue;
+        int maxHP = GameManager.singleton.playerStats2.maxHealth;
         int currentStam = GameManager.singleton.playerStats.currentStamina;
         int maxStam = GameManager.singleton.playerStats.maxStamina;
         int currentMana = GameManager.singleton.playerStats.currentMana;
