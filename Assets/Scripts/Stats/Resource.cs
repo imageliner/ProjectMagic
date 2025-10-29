@@ -6,15 +6,15 @@ public class Resource
 {
     public int baseValue = 1;
 
-    public int maxValue { get; private set; }
+    public int totalValue { get; private set; }
 
     public int bonusValue { get; private set; } = 0;
     public int currentValue { get; private set; } = 1;
 
-    public int GetMaxValue(Stat stat, int conversionValue)
+    public int GetTotalValue(Stat stat, int conversionValue)
     {
-        maxValue = baseValue + (stat.baseValue * conversionValue) + bonusValue;
-        return maxValue;
+        totalValue = baseValue + (stat.baseValue * conversionValue) + bonusValue;
+        return totalValue;
     }
 
     public void SetBaseValue(int value)
@@ -33,8 +33,8 @@ public class Resource
 
     public void AddResource(int amount)
     {
-        if (currentValue + amount > maxValue )
-            currentValue = maxValue;
+        if (currentValue + amount > totalValue )
+            currentValue = totalValue;
         else
             currentValue += amount;
     }

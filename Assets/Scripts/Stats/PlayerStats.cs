@@ -1,16 +1,19 @@
 using TMPro;
+using UnityEditor.PackageManager.UI;
 using UnityEngine;
 
 public class PlayerStats : CharacterStats
 {
-    [SerializeField] int statPoints_perLevel = 2;
-    [SerializeField] int statPoints_Offset = 0;
-    [SerializeField] int statPoints_Spent = 0;
+    [SerializeField] private int statPoints_perLevel = 2;
+    [SerializeField] private int statPoints_Offset = 0;
+    [SerializeField] private int statPoints_Spent = 0;
 
     [SerializeField] TextMeshProUGUI statPointText;
     [SerializeField] TextMeshProUGUI vitalityText;
-    [SerializeField] TextMeshProUGUI healthText;
-
+    [SerializeField] TextMeshProUGUI wisdomText;
+    [SerializeField] TextMeshProUGUI strengthText;
+    [SerializeField] TextMeshProUGUI dexText;
+    [SerializeField] TextMeshProUGUI intText;
 
     public int statPoints { get; protected set; } = 0;
 
@@ -19,30 +22,69 @@ public class PlayerStats : CharacterStats
         InitializeStats();
     }
 
-    public void InitializeStats()
+    public enum StatType
     {
-        health = new Resource();
-        health.SetBaseValue(100);
-        health.SetCurrentValue(health.maxValue);
-        vitality = new Stat();
-        wisdom = new Stat();
-        strength = new Stat();
-        dexterity = new Stat();
-        intelligence = new Stat();
+        Vitality,
+        Wisdom,
+        Strength,
+        Dexterity,
+        Intelligence
     }
 
-    public void SpendStatPoint()
+    protected override void InitializeStats()
     {
-        if (statPoints > 0)
-        {
-            Debug.Log("spent stat point");
-            statPoints--;
-            statPoints_Spent++;
+        base.InitializeStats();
+    }
 
-            //test
-            
-            OnVitalityUpgrade();
+    public void SpendStatPoint(StatType statType)
+    {
+        if (statPoints <= 0)
+        {
+            Debug.Log("not enough stat points");
+            return;
         }
+
+        statPoints--;
+        statPoints_Spent++;
+
+        switch (statType)
+        {
+            case StatType.Vitality:
+                vitality.AddBaseValue(1);
+                break;
+
+            case StatType.Wisdom:
+                wisdom.AddBaseValue(1);
+                break;
+
+            case StatType.Strength:
+                strength.AddBaseValue(1);
+                break;
+
+            case StatType.Dexterity:
+                dexterity.AddBaseValue(1);
+                break;
+
+            case StatType.Intelligence:
+                intelligence.AddBaseValue(1);
+                break;
+
+            default:
+                Debug.LogWarning("Unknown stat type in SpendStatPoint");
+                break;
+        }
+
+        UpdateStatTexts();
+    }
+
+    private void UpdateStatTexts()
+    {
+        statPointText.text = $"Stat Points: {statPoints}";
+        vitalityText.text = $"Vitality: {vitality.GetTotalValue()}";
+        wisdomText.text = $"Wisdom: {wisdom.GetTotalValue()}";
+        strengthText.text = $"Strength: {strength.GetTotalValue()}";
+        dexText.text = $"Dexterity: {dexterity.GetTotalValue()}";
+        intText.text = $"Intelligence: {intelligence.GetTotalValue()}";
     }
 
     public void OnUpdateLevel(int previousLevel, int currentLevel)
@@ -51,7 +93,6 @@ public class PlayerStats : CharacterStats
         statPoints += statPoints_perLevel;
 
         vitalityText.text = $"Vitality: {vitality.GetTotalValue()}";
-        healthText.text = $"Health: {maxHealth}";
         statPointText.text = $"Stat Points: {statPoints}";
     }
 
@@ -61,6 +102,11 @@ public class PlayerStats : CharacterStats
         //health.SetMaxValue(maxHealth);
         statPointText.text = $"Stat Points: {statPoints}";
         vitalityText.text = $"Vitality: {vitality.GetTotalValue()}";
-        healthText.text = $"Health: {maxHealth}";
     }
+
+    public void OnVitalityButtonClicked() => SpendStatPoint(StatType.Vitality);
+    public void OnWisdomButtonClicked() => SpendStatPoint(StatType.Wisdom);
+    public void OnStrengthButtonClicked() => SpendStatPoint(StatType.Strength);
+    public void OnDexButtonClicked() => SpendStatPoint(StatType.Dexterity);
+    public void OnIntButtonClicked() => SpendStatPoint(StatType.Intelligence);
 }
