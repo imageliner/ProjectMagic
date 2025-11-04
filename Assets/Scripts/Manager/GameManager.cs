@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
 
     public PlayerStatManager playerStats;
     public PlayerStats playerStats2;
+    public LevelSystem playerLevel;
 
     private void Awake()
     {

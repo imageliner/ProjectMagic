@@ -5,7 +5,7 @@ public class PlayerController : MonoBehaviour
 {
     private PlayerInputHandler inputHandler;
     [SerializeField] private Animator animator;
-    PlayerStatManager playerStatManager;
+    [SerializeField] private GameObject testAttackBox;
 
     public Rigidbody _rb;
     public float moveSpeed = 5.0f;
@@ -16,10 +16,10 @@ public class PlayerController : MonoBehaviour
     private float dashPower = 15f;
     private float dashTime = 0.25f;
     private float dashCoolDown = 0.5f;
-    private int dashStaminaNeeded = 25;
+    private int dashStaminaNeeded = 0;
 
     public bool isAttacking;
-    private int attackStaminaNeeded = 5;
+    private int attackStaminaNeeded = 0;
     private float attackDashPower = 5f;
     private float attackDashTime = 0.15f;
     private float attackCoolDown = 0.15f;
@@ -38,7 +38,6 @@ public class PlayerController : MonoBehaviour
     {
         inputHandler = GetComponent<PlayerInputHandler>();
         animator = GetComponentInChildren<Animator>();
-        playerStatManager = GetComponent<PlayerStatManager>();
     }
 
 
@@ -102,7 +101,8 @@ public class PlayerController : MonoBehaviour
 
     public void Attack()
     {
-        if (!isAttacking && GameManager.singleton.playerStats.currentStamina >= attackStaminaNeeded && attackCount < attackCountMax)
+        //if (!isAttacking && GameManager.singleton.playerStats.currentStamina >= attackStaminaNeeded && attackCount < attackCountMax)
+        if (!isAttacking && attackCount < attackCountMax)
         {
             Vector3 attackDir = new Vector3(mousePosition.x, 0f, mousePosition.z).normalized;
             StartCoroutine(Attack(attackDir));
@@ -113,7 +113,7 @@ public class PlayerController : MonoBehaviour
     {
         isAttacking = true;
 
-        GameManager.singleton.playerStats.SubtractStamina(dashStaminaNeeded);
+        //GameManager.singleton.playerStats.SubtractStamina(dashStaminaNeeded);
         float elapsed = 0f;
         animator.SetTrigger("startAttack");
         while (elapsed < attackDashTime)
@@ -121,8 +121,10 @@ public class PlayerController : MonoBehaviour
             transform.position += direction * attackDashPower * Time.deltaTime;
             elapsed += Time.deltaTime;
             attackCount++;
+            
             yield return null;
         }
+        Destroy(Instantiate(testAttackBox, transform), 0.5f);
         yield return new WaitForSeconds(attackCoolDown);
         isAttacking = false;
         attackCount = 0;
@@ -136,6 +138,12 @@ public class PlayerController : MonoBehaviour
             int healAmount = 15;
             GameManager.singleton.playerStats2.health.AddResource(healAmount);
             Debug.Log("Health Recieved");
+        }
+        if (other.CompareTag("ManaBox"))
+        {
+            int manaAmount = 5;
+            GameManager.singleton.playerStats2.mana.AddResource(manaAmount);
+            Debug.Log("Mana Recieved");
         }
     }
 

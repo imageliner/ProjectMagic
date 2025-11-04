@@ -14,12 +14,17 @@ public class PlayerStats : CharacterStats
     [SerializeField] TextMeshProUGUI strengthText;
     [SerializeField] TextMeshProUGUI dexText;
     [SerializeField] TextMeshProUGUI intText;
+    [SerializeField] TextMeshProUGUI pAtkText;
+    [SerializeField] TextMeshProUGUI pDefText;
+    [SerializeField] TextMeshProUGUI mAtkText;
+    [SerializeField] TextMeshProUGUI mDefText;
+    [SerializeField] TextMeshProUGUI atkSpeedText;
 
     public int statPoints { get; protected set; } = 0;
 
-    private void Awake()
+    protected override void Awake()
     {
-        InitializeStats();
+        base.Awake();
     }
 
     public enum StatType
@@ -85,6 +90,11 @@ public class PlayerStats : CharacterStats
         strengthText.text = $"Strength: {strength.GetTotalValue()}";
         dexText.text = $"Dexterity: {dexterity.GetTotalValue()}";
         intText.text = $"Intelligence: {intelligence.GetTotalValue()}";
+        pAtkText.text = $"Phys Atk: {finalPhysAtk}";
+        pDefText.text = $"Phys Def: {finalPhysDef}";
+        mAtkText.text = $"Magic Atk: {finalMAtk}";
+        mDefText.text = $"Magic Def: {finalMDef}";
+        atkSpeedText.text = $"Atk Speed: {finalAtkSpeed}";
     }
 
     public void OnUpdateLevel(int previousLevel, int currentLevel)
@@ -92,17 +102,10 @@ public class PlayerStats : CharacterStats
 
         statPoints += statPoints_perLevel;
 
-        vitalityText.text = $"Vitality: {vitality.GetTotalValue()}";
         statPointText.text = $"Stat Points: {statPoints}";
     }
 
-    public void OnVitalityUpgrade()
-    {
-        vitality.AddBaseValue(1);
-        //health.SetMaxValue(maxHealth);
-        statPointText.text = $"Stat Points: {statPoints}";
-        vitalityText.text = $"Vitality: {vitality.GetTotalValue()}";
-    }
+    
 
     public void OnVitalityButtonClicked() => SpendStatPoint(StatType.Vitality);
     public void OnWisdomButtonClicked() => SpendStatPoint(StatType.Wisdom);
