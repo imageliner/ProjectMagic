@@ -16,8 +16,17 @@ public class EnemyType : MonoBehaviour
     [SerializeField] private UIDamageNumber dmgNumberTest;
     [SerializeField] private TextMeshProUGUI lvlText;
     [SerializeField] private TextMeshProUGUI nameText;
-    
 
+    [SerializeField] private DisplayNumberPool numberPool;
+
+
+    private void Awake()
+    {
+        if (numberPool == null)
+        {
+            numberPool = FindAnyObjectByType<DisplayNumberPool>();
+        }
+    }
 
     private void Start()
     {
@@ -43,16 +52,31 @@ public class EnemyType : MonoBehaviour
             int tempDmgVar = GameManager.singleton.playerStats2.statCalcs.CalculatePhysAtkDmg(GameManager.singleton.playerStats2.finalPhysAtk);
             if(health.currentValue - tempDmgVar <= 0)
             {
+                SpawnNumber(tempDmgVar);
                 GameManager.singleton.playerLevel.AddEXP(expToGive);
                 Destroy(gameObject);
             }
             else
             {
+                
+                SpawnNumber(tempDmgVar);
                 health.SubtractResource(tempDmgVar);
-                Destroy(Instantiate(dmgNumberTest.gameObject, transform), 0.3f);
-                dmgNumberTest.SetDamageNumber(tempDmgVar);
+                //Destroy(Instantiate(dmgNumberTest.gameObject, transform), 0.3f);
+                //dmgNumberTest.SetDamageNumber(tempDmgVar);
                 Debug.Log("took damage");
             }
         }
+    }
+
+    public void SpawnNumber(int number)
+    {
+        UIDamageNumber newNumber = numberPool.GetAvailableNumber();
+
+        if (newNumber == null) return;
+
+        newNumber.transform.position = transform.position;
+        newNumber.transform.rotation = transform.rotation;
+        newNumber.gameObject.SetActive(true);
+        newNumber.UseNumber(number);
     }
 }
