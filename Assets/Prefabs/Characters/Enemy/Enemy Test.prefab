@@ -96,6 +96,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d58a84c21b7db69499df5da0068c1966, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyName: test_Slime
   health:
     baseValue: 20
   level: 0
@@ -104,6 +105,9 @@ MonoBehaviour:
   expToGive: 75
   hpBar: {fileID: 4990139275773274212}
   hpText: {fileID: 1639016994236764899}
+  dmgNumberTest: {fileID: 2315735033545349367, guid: 564c96b18353fc74987f187671bda2fb, type: 3}
+  lvlText: {fileID: 7878176232782205053}
+  nameText: {fileID: 4913143743401338959}
 --- !u!1001 &4872556728649075104
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -112,6 +116,42 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7580847895356873871}
     m_Modifications:
+    - target: {fileID: 553998500641104367, guid: cb0c1f7d69fc25b41bb941f1cdb0f231, type: 3}
+      propertyPath: m_fontSize
+      value: 71.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 553998500641104367, guid: cb0c1f7d69fc25b41bb941f1cdb0f231, type: 3}
+      propertyPath: m_fontStyle
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 553998500641104367, guid: cb0c1f7d69fc25b41bb941f1cdb0f231, type: 3}
+      propertyPath: m_fontColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 553998500641104367, guid: cb0c1f7d69fc25b41bb941f1cdb0f231, type: 3}
+      propertyPath: m_fontColor.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 553998500641104367, guid: cb0c1f7d69fc25b41bb941f1cdb0f231, type: 3}
+      propertyPath: m_fontColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 553998500641104367, guid: cb0c1f7d69fc25b41bb941f1cdb0f231, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4278190335
+      objectReference: {fileID: 0}
+    - target: {fileID: 553998500641104367, guid: cb0c1f7d69fc25b41bb941f1cdb0f231, type: 3}
+      propertyPath: m_VerticalAlignment
+      value: 512
+      objectReference: {fileID: 0}
+    - target: {fileID: 553998500641104367, guid: cb0c1f7d69fc25b41bb941f1cdb0f231, type: 3}
+      propertyPath: m_HorizontalAlignment
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1254369940006190973, guid: cb0c1f7d69fc25b41bb941f1cdb0f231, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 146
+      objectReference: {fileID: 0}
     - target: {fileID: 2118217089956847504, guid: cb0c1f7d69fc25b41bb941f1cdb0f231, type: 3}
       propertyPath: m_Name
       value: Enemy Health Info
@@ -225,6 +265,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 7591464675751755984, guid: cb0c1f7d69fc25b41bb941f1cdb0f231, type: 3}
   m_PrefabInstance: {fileID: 4872556728649075104}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &4913143743401338959 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 553998500641104367, guid: cb0c1f7d69fc25b41bb941f1cdb0f231, type: 3}
+  m_PrefabInstance: {fileID: 4872556728649075104}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &4990139275773274212 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 494909686557024708, guid: cb0c1f7d69fc25b41bb941f1cdb0f231, type: 3}
@@ -234,6 +285,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7878176232782205053 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3371554602787396061, guid: cb0c1f7d69fc25b41bb941f1cdb0f231, type: 3}
+  m_PrefabInstance: {fileID: 4872556728649075104}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &6350452388266530848

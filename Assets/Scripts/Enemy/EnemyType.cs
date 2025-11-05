@@ -4,6 +4,7 @@ using UnityEngine.UI;
 
 public class EnemyType : MonoBehaviour
 {
+    [SerializeField] private string enemyName;
     [SerializeField] private Resource health;
     [SerializeField] private int level;
     [SerializeField] private int damage;
@@ -12,10 +13,16 @@ public class EnemyType : MonoBehaviour
 
     [SerializeField] private Slider hpBar;
     [SerializeField] private TextMeshProUGUI hpText;
+    [SerializeField] private UIDamageNumber dmgNumberTest;
+    [SerializeField] private TextMeshProUGUI lvlText;
+    [SerializeField] private TextMeshProUGUI nameText;
+    
+
 
     private void Start()
     {
         health.SetCurrentValue(health.baseValue);
+
     }
 
     private void Update()
@@ -23,6 +30,8 @@ public class EnemyType : MonoBehaviour
         int currentHP = health.currentValue;
         int maxHP = health.baseValue;
         hpText.text = $"{currentHP} / {maxHP}";
+        lvlText.text = $"Lv. {level}";
+        nameText.text = $"{enemyName}";
         float healthCurrentPercent = (float)currentHP / maxHP;
         hpBar.value = healthCurrentPercent;
     }
@@ -40,6 +49,8 @@ public class EnemyType : MonoBehaviour
             else
             {
                 health.SubtractResource(tempDmgVar);
+                Destroy(Instantiate(dmgNumberTest.gameObject, transform), 0.3f);
+                dmgNumberTest.SetDamageNumber(tempDmgVar);
                 Debug.Log("took damage");
             }
         }
