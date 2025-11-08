@@ -14,9 +14,9 @@ public class CameraController : MonoBehaviour
 
     public Transform mousePosition;
     public Transform playerPosition;
-    public float followStrength = 0.2f; // How much the camera pulls toward the mouse
-    public float maxDistance = 5.0f; // Max distance from the player
-    public float smoothSpeed = 5f; // Speed of interpolation
+    public float followStrength = 0.2f;
+    public float maxDistance = 5.0f;
+    public float smoothSpeed = 5f;
 
     public bool cameraLockToggle;
 
@@ -31,7 +31,7 @@ public class CameraController : MonoBehaviour
     void Update()
     {
         Vector3 desiredPosition = Vector3.Lerp(playerPosition.position, mousePosition.position, followStrength);
-        // Clamp the camera within a circle around the player
+        // clamp camera around player
         Vector3 offset = desiredPosition - playerPosition.position;
 
         if (offset.magnitude > maxDistance)

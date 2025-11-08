@@ -9,7 +9,7 @@ public class StatCalculations
         int lowAtk = Mathf.CeilToInt(physAtk - (physAtk / 2));
         int highAtk = Mathf.CeilToInt(physAtk + (physAtk / 2));
 
-        return Random.Range(lowAtk - 1, highAtk + 1);
+        return Mathf.Max(0, Random.Range(lowAtk - 1, highAtk + 1));
     }
 
     // physical attack range

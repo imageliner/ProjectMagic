@@ -3,23 +3,22 @@ using UnityEngine;
 
 public class MouseTracker : MonoBehaviour
 {
-    [SerializeField] private Camera mainCamera;
     [SerializeField] private LayerMask layerMask;
 
-    public Vector3 mousePosition;
+    public Vector3 mouseWorldPosition;
+    public Vector2 mouseScreenPosition;
 
+    public Vector3 mouseAim;
 
-    void Start()
+    public void UpdateMousePosition(Vector2 screenPosition)
     {
-        
-    }
+        mouseScreenPosition = screenPosition;
+        Ray ray = Camera.main.ScreenPointToRay(screenPosition);
 
-    void Update()
-    {
-        Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out RaycastHit raycastHit, float.MaxValue, layerMask))
+        if (Physics.Raycast(ray, out RaycastHit hit, float.MaxValue, layerMask))
         {
-            transform.position = raycastHit.point;
+            mouseWorldPosition = hit.point;
+            transform.position = hit.point;
         }
     }
 }
