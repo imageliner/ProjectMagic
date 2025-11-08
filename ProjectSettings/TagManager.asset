@@ -8,6 +8,7 @@ TagManager:
   - HealBox
   - PlayerHitbox
   - ManaBox
+  - Enemy
   layers:
   - Default
   - TransparentFX

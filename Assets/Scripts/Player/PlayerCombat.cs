@@ -11,6 +11,8 @@ public class PlayerCombat : MonoBehaviour
     private int attackCountMax = 2;
     private int attackCount = 0;
 
+    private int currentAttackID = 0;
+
     [SerializeField] private GameObject testAttackBox;
 
 
@@ -19,7 +21,7 @@ public class PlayerCombat : MonoBehaviour
     {
         if (!isAttacking && attackCount < attackCountMax)
         {
-            //Vector3 attackDir = new Vector3(mousePosition.x, 0f, mousePosition.z).normalized;
+            currentAttackID++;
             StartCoroutine(Attack(attackDir.normalized));
         }
     }
@@ -32,13 +34,21 @@ public class PlayerCombat : MonoBehaviour
         float elapsed = 0f;
         while (elapsed < attackDashTime)
         {
+            Quaternion lookRotation = Quaternion.LookRotation(direction);
+            lookRotation.x = 0;
+            lookRotation.z = 0;
+            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 50);
             transform.position += direction * attackDashPower * Time.deltaTime;
             elapsed += Time.deltaTime;
             attackCount++;
 
             yield return null;
         }
-        Destroy(Instantiate(testAttackBox, transform), 0.5f);
+        GameObject attackBox = Instantiate(testAttackBox, transform);
+        Hitbox hitbox = attackBox.GetComponent<Hitbox>();
+        hitbox.attackID = currentAttackID;
+        Destroy(attackBox, 0.3f);
+
         yield return new WaitForSeconds(attackCoolDown);
         isAttacking = false;
         attackCount = 0;

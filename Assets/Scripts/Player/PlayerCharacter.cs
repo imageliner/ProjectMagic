@@ -48,10 +48,6 @@ public class PlayerCharacter : MonoBehaviour
             transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
     }
 
-    public void GetAimDirection()
-    {
-
-    }
 
 
     public void Movement(Vector2 inputAxis)
