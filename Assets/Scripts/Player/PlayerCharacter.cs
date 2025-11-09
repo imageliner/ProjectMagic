@@ -11,6 +11,7 @@ public class PlayerCharacter : MonoBehaviour
     [SerializeField] public MouseTracker _mouseTracker;
     [SerializeField] private PlayerAnimator _animator;
     [SerializeField] private PlayerMovement _movement;
+    [SerializeField] private PlayerGearHandler _gear;
     [SerializeField] private PlayerCombat _combat;
 
     [SerializeField] private float rotationSpeed = 15.0f;
@@ -31,12 +32,12 @@ public class PlayerCharacter : MonoBehaviour
 
         _animator = GetComponent<PlayerAnimator>();
         _movement = GetComponent<PlayerMovement>();
+        _gear = GetComponent<PlayerGearHandler>();
         _combat = GetComponent<PlayerCombat>();
     }
 
     private void Update()
     {
-        
 
         mouseWorldPos = _mouseTracker.mouseWorldPosition;
 
@@ -68,7 +69,7 @@ public class PlayerCharacter : MonoBehaviour
     {
         if (_combat != null)
         {
-            _combat.StandardAttack(_mouseTracker.mouseAim);
+            _combat.StandardAttack(_mouseTracker.mouseAim, _gear.weaponEquipped);
             _animator.SetAnimationState(AnimationStates.Attack);
         }
     }

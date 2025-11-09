@@ -17,13 +17,40 @@ public class PlayerCombat : MonoBehaviour
 
 
 
-    public void StandardAttack(Vector3 attackDir)
+    public void StandardAttack(Vector3 attackDir, WeaponObject weapon)
     {
         if (!isAttacking && attackCount < attackCountMax)
         {
             currentAttackID++;
-            StartCoroutine(Attack(attackDir.normalized));
+            StartCoroutine(NewAttack((attackDir.normalized), weapon, currentAttackID));
         }
+    }
+
+    private IEnumerator NewAttack(Vector3 direction, WeaponObject weapon, int attackID)
+    {
+        isAttacking = true;
+
+        float elapsed = 0f;
+        while (elapsed < attackDashTime)
+        {
+            Quaternion lookRotation = Quaternion.LookRotation(direction);
+            lookRotation.x = 0;
+            lookRotation.z = 0;
+            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 50);
+            transform.position += direction * attackDashPower * Time.deltaTime;
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+        attackCount++;
+        weapon.attackAbility.Use(attackID, transform);
+        //GameObject attackBox = Instantiate(weapon.attackHitBox, transform);
+        //Hitbox hitbox = attackBox.GetComponent<Hitbox>();
+        //hitbox.attackID = currentAttackID;
+        //Destroy(attackBox, 0.3f);
+        yield return new WaitForSeconds(attackCoolDown);
+        isAttacking = false;
+        attackCount = 0;
+
     }
 
     private IEnumerator Attack(Vector3 direction)

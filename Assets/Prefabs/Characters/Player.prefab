@@ -173,7 +173,6 @@ GameObject:
   - component: {fileID: 4564783844687060989}
   - component: {fileID: 7871191871119873185}
   - component: {fileID: 6364698047082951590}
-  - component: {fileID: 8794285925478688840}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -249,29 +248,6 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &8794285925478688840
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4529503775273361523}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 79bdfbff9a04115439af54a889f97624, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animator: {fileID: 0}
-  testAttackBox: {fileID: 0}
-  _rb: {fileID: 7871191871119873185}
-  moveSpeed: 5
-  isAttacking: 0
-  isMoving: 0
-  damageRecovery: 0
-  invincibilityTime: 0.5
-  mousePosition: {x: 0, y: 0, z: 0}
-  rotateTarget: {fileID: 0}
-  lookRotation: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &5131635948105136872
 GameObject:
   m_ObjectHideFlags: 0

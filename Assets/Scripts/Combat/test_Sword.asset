@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3b2c64e00ca7954993bbb7cafa4f9eb, type: 3}
+  m_Name: test_Sword
+  m_EditorClassIdentifier: 
+  classType: 0
+  mesh: {fileID: 3717943851118863786, guid: ce36915c2f77ec74cab03d7efd8be7e2, type: 3}
+  attackAbility: {fileID: 11400000, guid: 5906a108e0edd874fbe8effce2484225, type: 2}
+  itemName: Test Sword
+  itemIcon: {fileID: 0}
+  pAtk: 0
+  mAtk: 0
+  atkSpeed: 0
+  critRate: 0
+  critDmg: 0
+  strength: 0
+  intelligence: 0
+  dexterity: 0
