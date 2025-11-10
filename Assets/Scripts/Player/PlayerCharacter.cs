@@ -69,7 +69,7 @@ public class PlayerCharacter : MonoBehaviour
     {
         if (_combat != null)
         {
-            _combat.StandardAttack(_mouseTracker.mouseAim, _gear.weaponEquipped);
+            _combat.StandardAttack(_gear.weaponEquipped, _mouseTracker.mouseAim);
             _animator.SetAnimationState(AnimationStates.Attack);
         }
     }

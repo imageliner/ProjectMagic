@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerGearHandler : MonoBehaviour
@@ -5,27 +6,45 @@ public class PlayerGearHandler : MonoBehaviour
     public WeaponObject weaponEquipped;
     [SerializeField] private Transform weaponSocket;
 
-    [SerializeField] private GameObject currentWeapon;
+    [SerializeField] private WeaponItem currentWeapon;
+    private GameObject weaponInstance;
+
+    [Header("Debug")]
+    [SerializeField] private WeaponItem debug_Wep_WAR;
+    [SerializeField] private WeaponItem debug_Wep_MAGE;
+    [SerializeField] private WeaponItem debug_Wep_ARCH;
 
 
     private void Start()
     {
-        EquipWeapon(weaponEquipped);
-        Instantiate(weaponEquipped.mesh, weaponSocket);
     }
 
-    public void EquipWeapon(WeaponObject weapon)
+    #region DEBUG
+
+    public void Debug_EquipWeapon_WAR() => EquipWeapon(debug_Wep_WAR);
+    public void Debug_EquipWeapon_MAGE() => EquipWeapon(debug_Wep_MAGE);
+    public void Debug_EquipWeapon_ARCH() => EquipWeapon(debug_Wep_ARCH);
+
+
+    #endregion
+
+    public void EquipWeapon(WeaponItem newWeapon)
     {
-        if (currentWeapon != null)
+        if (weaponInstance != null)
         {
-            Destroy(currentWeapon);
+            Destroy(weaponInstance);
+            
         }
 
-        if (weapon.mesh != null)
+        currentWeapon = newWeapon;
+        weaponEquipped = currentWeapon.GetWeaponObject();
+
+        if (newWeapon != null)
         {
-            Instantiate(weapon.mesh, weaponSocket);
-            currentWeapon.transform.localPosition = Vector3.zero;
-            currentWeapon.transform.localRotation = Quaternion.identity;
+            weaponInstance = Instantiate(newWeapon.gameObject, weaponSocket);
+            //currentWeapon.transform.localPosition = Vector3.zero;
+            //currentWeapon.transform.localRotation = Quaternion.identity;
         }
+
     }
 }

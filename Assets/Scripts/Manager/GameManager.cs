@@ -5,8 +5,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager singleton;
 
-    public PlayerStatManager playerStats;
-    public PlayerStats playerStats2;
+    public PlayerStats playerStats;
     public LevelSystem playerLevel;
 
     private void Awake()

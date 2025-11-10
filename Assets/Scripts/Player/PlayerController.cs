@@ -71,32 +71,32 @@ public class PlayerController : MonoBehaviour
         animator.SetFloat("Vertical", localMove.z, 0.1f, Time.deltaTime);
         //animator.SetBool("isMoving", moving);
     }
-    public void Dash()
-    {
-        if (!isDashing && GameManager.singleton.playerStats.currentStamina >= dashStaminaNeeded)
-        {
-            animator.SetTrigger("startDash");
-            Vector3 dashDir = new Vector3(mousePosition.x, 0f, mousePosition.z).normalized;
-            StartCoroutine(DashCoroutine(dashDir));
-        }
-    }
+    //public void Dash()
+    //{
+    //    if (!isDashing && GameManager.singleton.playerStats.currentStamina >= dashStaminaNeeded)
+    //    {
+    //        animator.SetTrigger("startDash");
+    //        Vector3 dashDir = new Vector3(mousePosition.x, 0f, mousePosition.z).normalized;
+    //        StartCoroutine(DashCoroutine(dashDir));
+    //    }
+    //}
 
-    private IEnumerator DashCoroutine(Vector3 direction)
-    {
-        isDashing = true;
+    //private IEnumerator DashCoroutine(Vector3 direction)
+    //{
+    //    isDashing = true;
 
-        GameManager.singleton.playerStats.SubtractStamina(dashStaminaNeeded);
-        float elapsed = 0f;
-        while (elapsed < dashTime)
-        {
-            transform.position += direction * dashPower * Time.deltaTime;
-            elapsed += Time.deltaTime;
-            yield return null;
-        }
-        yield return new WaitForSeconds(dashCoolDown);
-        isDashing = false;
+    //    GameManager.singleton.playerStats.SubtractStamina(dashStaminaNeeded);
+    //    float elapsed = 0f;
+    //    while (elapsed < dashTime)
+    //    {
+    //        transform.position += direction * dashPower * Time.deltaTime;
+    //        elapsed += Time.deltaTime;
+    //        yield return null;
+    //    }
+    //    yield return new WaitForSeconds(dashCoolDown);
+    //    isDashing = false;
 
-    }
+    //}
     #endregion
 
     public void Attack()
@@ -136,13 +136,13 @@ public class PlayerController : MonoBehaviour
         if (other.CompareTag("HealBox"))
         {
             int healAmount = 15;
-            GameManager.singleton.playerStats2.health.AddResource(healAmount);
+            GameManager.singleton.playerStats.health.AddResource(healAmount);
             Debug.Log("Health Recieved");
         }
         if (other.CompareTag("ManaBox"))
         {
             int manaAmount = 5;
-            GameManager.singleton.playerStats2.mana.AddResource(manaAmount);
+            GameManager.singleton.playerStats.mana.AddResource(manaAmount);
             Debug.Log("Mana Recieved");
         }
     }
@@ -160,7 +160,7 @@ public class PlayerController : MonoBehaviour
     private IEnumerator TakeDamage(int dmgAmount)
     {
         damageRecovery = true;
-        GameManager.singleton.playerStats2.health.SubtractResource(dmgAmount);
+        GameManager.singleton.playerStats.health.SubtractResource(dmgAmount);
 
         float elapsed = 0f;
         while (elapsed < invincibilityTime)

@@ -17,16 +17,16 @@ public class PlayerCombat : MonoBehaviour
 
 
 
-    public void StandardAttack(Vector3 attackDir, WeaponObject weapon)
+    public void StandardAttack(WeaponObject weapon, Vector3 attackDir)
     {
         if (!isAttacking && attackCount < attackCountMax)
         {
             currentAttackID++;
-            StartCoroutine(NewAttack((attackDir.normalized), weapon, currentAttackID));
+            StartCoroutine(NewAttack(weapon, attackDir.normalized, currentAttackID));
         }
     }
 
-    private IEnumerator NewAttack(Vector3 direction, WeaponObject weapon, int attackID)
+    private IEnumerator NewAttack(WeaponObject weapon, Vector3 direction, int attackID)
     {
         isAttacking = true;
 
@@ -43,10 +43,6 @@ public class PlayerCombat : MonoBehaviour
         }
         attackCount++;
         weapon.attackAbility.Use(attackID, transform);
-        //GameObject attackBox = Instantiate(weapon.attackHitBox, transform);
-        //Hitbox hitbox = attackBox.GetComponent<Hitbox>();
-        //hitbox.attackID = currentAttackID;
-        //Destroy(attackBox, 0.3f);
         yield return new WaitForSeconds(attackCoolDown);
         isAttacking = false;
         attackCount = 0;

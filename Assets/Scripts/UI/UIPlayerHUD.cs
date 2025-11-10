@@ -17,7 +17,7 @@ public class UIPlayerHUD : MonoBehaviour
     private void Update()
     {
         // Wait until the player and manager exist
-        if (GameManager.singleton == null || GameManager.singleton.playerStats2 == null)
+        if (GameManager.singleton == null || GameManager.singleton.playerStats == null)
             return;
 
         UpdateStats();
@@ -31,12 +31,12 @@ public class UIPlayerHUD : MonoBehaviour
 
     public void UpdateStats()
     {
-        int currentHP = GameManager.singleton.playerStats2.health.currentValue;
-        int maxHP = GameManager.singleton.playerStats2.maxHealth;
+        int currentHP = GameManager.singleton.playerStats.health.currentValue;
+        int maxHP = GameManager.singleton.playerStats.maxHealth;
         //int currentStam = GameManager.singleton.playerStats.currentStamina;
         //int maxStam = GameManager.singleton.playerStats.maxStamina;
-        int currentMana = GameManager.singleton.playerStats2.mana.currentValue;
-        int maxMana = GameManager.singleton.playerStats2.maxMana;
+        int currentMana = GameManager.singleton.playerStats.mana.currentValue;
+        int maxMana = GameManager.singleton.playerStats.maxMana;
 
         healthBarText.text = $"{currentHP} / {maxHP}";
         float healthCurrentPercent = (float)currentHP / maxHP;

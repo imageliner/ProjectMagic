@@ -6,7 +6,14 @@ public class Hitbox : MonoBehaviour
 
     public int Damage()
     {
-        return GameManager.singleton.playerStats2.statCalcs.CalculatePhysAtkDmg(GameManager.singleton.playerStats2.finalPhysAtk);
+        if (GameManager.singleton == null)
+            Debug.LogError("GameManager.singleton is NULL");
+        else if (GameManager.singleton.playerStats == null)
+            Debug.LogError("GameManager.playerStats is NULL");
+        else if (GameManager.singleton.playerStats.statCalcs == null)
+            Debug.LogError("GameManager.playerStats.statCalcs is NULL");
+
+        return GameManager.singleton.playerStats.statCalcs.CalculatePhysAtkDmg(GameManager.singleton.playerStats.finalPhysAtk);
     }
 
     private void OnTriggerEnter(Collider other)

@@ -1,0 +1,15 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4641cdd1eb929144a3d5046fe8c6b17, type: 3}
+  m_Name: Ability_testMage
+  m_EditorClassIdentifier: 
+  attackHitBox: {fileID: 3251799386050929195, guid: 32e38ea37ffe0744cbcac2e095747c40, type: 3}

@@ -24,12 +24,12 @@ public class PlayerMovement : MonoBehaviour
     }
     public void Dash()
     {
-        if (!isDashing && GameManager.singleton.playerStats.currentStamina >= dashStaminaNeeded)
-        {
+        //if (!isDashing && GameManager.singleton.playerStats.currentStamina >= dashStaminaNeeded)
+        //{
             //animator.SetTrigger("startDash");
             //Vector3 dashDir = new Vector3(mousePosition.x, 0f, mousePosition.z).normalized;
             //StartCoroutine(DashCoroutine(dashDir));
-        }
+        //}
     }
 
     //private IEnumerator DashCoroutine(Vector3 direction)

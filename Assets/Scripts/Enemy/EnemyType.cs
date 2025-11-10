@@ -50,7 +50,7 @@ public class EnemyType : MonoBehaviour
     }
 
 
-    public void SpawnNumber(int number)
+    public void SpawnDmgNumber(int number)
     {
         UIDamageNumber newNumber = numberPool.GetAvailableNumber();
 
@@ -72,7 +72,7 @@ public class EnemyType : MonoBehaviour
                 Destroy(gameObject);
             }
 
-            SpawnNumber(dmg);
+            SpawnDmgNumber(dmg);
             health.SubtractResource(dmg);
         }
     }

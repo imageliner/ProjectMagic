@@ -5,7 +5,6 @@ using UnityEngine.UI;
 public class WeaponObject : ScriptableObject
 {
     [SerializeField] private ClassType classType;
-    [SerializeField] public GameObject mesh;
     public CharacterAbility attackAbility;
 
     [SerializeField] private string itemName;
@@ -27,8 +26,8 @@ public class WeaponObject : ScriptableObject
     }
 
 
-    public void Attack(int attackID, Transform t)
+    public void Attack(int attackID, Transform playerPos, Transform mousePos)
     {
-        attackAbility.Use(attackID, t);
+        attackAbility.Use(attackID, playerPos);
     }
 }
