@@ -5,6 +5,7 @@ using UnityEngine;
 public class WeaponItem : MonoBehaviour
 {
     [SerializeField] private WeaponObject weaponObject;
+    public AnimationClip attackAnim;
 
     public WeaponObject GetWeaponObject()
     {

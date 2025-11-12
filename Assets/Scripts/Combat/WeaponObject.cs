@@ -30,4 +30,9 @@ public class WeaponObject : ScriptableObject
     {
         attackAbility.Use(attackID, playerPos);
     }
+
+    public string GetClass()
+    {
+        return classType.ToString();
+    }
 }

@@ -15,6 +15,11 @@ public class PlayerGearHandler : MonoBehaviour
     [SerializeField] private WeaponItem debug_Wep_ARCH;
 
 
+    private void Awake()
+    {
+        weaponSocket = GameObject.Find("DEF-hand.socket.R").transform;
+    }
+
     private void Start()
     {
     }
@@ -46,5 +51,10 @@ public class PlayerGearHandler : MonoBehaviour
             //currentWeapon.transform.localRotation = Quaternion.identity;
         }
 
+    }
+
+    public void GetCurrentWeaponClass()
+    {
+        weaponEquipped.GetClass();
     }
 }

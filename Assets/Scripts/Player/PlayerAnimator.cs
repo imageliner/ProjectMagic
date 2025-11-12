@@ -15,7 +15,8 @@ public class PlayerAnimator : MonoBehaviour
     {
         MoveBlend,
         Dash,
-        Attack,
+        AttackMelee,
+        AttackMage
     }
 
     public void SetAnimationState(AnimationStates states, Vector3 localMove = new Vector3())
@@ -31,8 +32,12 @@ public class PlayerAnimator : MonoBehaviour
                 animator.SetTrigger("startDash");
                 break;
 
-            case AnimationStates.Attack:
+            case AnimationStates.AttackMelee:
                 animator.SetTrigger("startAttack");
+                break;
+
+            case AnimationStates.AttackMage:
+                animator.SetTrigger("startAttackMage");
                 break;
 
             default:

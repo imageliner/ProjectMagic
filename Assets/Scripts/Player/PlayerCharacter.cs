@@ -70,7 +70,14 @@ public class PlayerCharacter : MonoBehaviour
         if (_combat != null)
         {
             _combat.StandardAttack(_gear.weaponEquipped, _mouseTracker.mouseAim);
-            _animator.SetAnimationState(AnimationStates.Attack);
+            if (_gear.weaponEquipped.GetClass() == "Warrior")
+            {
+                _animator.SetAnimationState(AnimationStates.AttackMelee);
+            }
+            else
+            {
+                _animator.SetAnimationState(AnimationStates.AttackMage);
+            }
         }
     }
 }
