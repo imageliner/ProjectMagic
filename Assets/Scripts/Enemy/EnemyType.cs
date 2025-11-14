@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class EnemyType : MonoBehaviour
+public class EnemyType : CharacterBase
 {
     [SerializeField] private string enemyName;
     [SerializeField] private Resource health;
@@ -18,18 +18,10 @@ public class EnemyType : MonoBehaviour
     [SerializeField] private TextMeshProUGUI lvlText;
     [SerializeField] private TextMeshProUGUI nameText;
 
-    [SerializeField] private DisplayNumberPool numberPool;
 
-    //keep track of attack hitboxes received
-    private HashSet<int> processedAttackIDs = new HashSet<int>();
-
-
-    private void Awake()
+    protected override void Awake()
     {
-        if (numberPool == null)
-        {
-            numberPool = FindAnyObjectByType<DisplayNumberPool>();
-        }
+        base.Awake();
     }
 
     private void Start()
@@ -50,17 +42,7 @@ public class EnemyType : MonoBehaviour
     }
 
 
-    public void SpawnDmgNumber(int number)
-    {
-        UIDamageNumber newNumber = numberPool.GetAvailableNumber();
-
-        if (newNumber == null) return;
-
-        newNumber.transform.position = transform.position;
-        newNumber.transform.rotation = transform.rotation;
-        newNumber.gameObject.SetActive(true);
-        newNumber.UseNumber(number);
-    }
+   
 
     public void TakeDamage(int attackID, int dmg)
     {

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-
+    [SerializeField] private CinemachineCamera _camera;
     [SerializeField] private CinemachineFollow camFollow;
     public float cameraZoomMax = 15;
     public float cameraZoomMin = 2;
@@ -20,12 +20,21 @@ public class CameraController : MonoBehaviour
 
     public bool cameraLockToggle;
 
+    private float shakeTimer;
+    private float originalFOV;
+
+    private void Awake()
+    {
+        originalFOV = _camera.Lens.FieldOfView;
+    }
 
     void Start()
     {
         cameraLockToggle = true;
 
         targetZoom = camFollow.FollowOffset.y;
+
+        GameManager.singleton.hitstopManager.HitStop += CameraHitStop;
     }
 
     void Update()
@@ -62,8 +71,27 @@ public class CameraController : MonoBehaviour
         else if (Input.GetAxis("Mouse ScrollWheel") < 0f && targetZoom <= cameraZoomMax) // backwards
         {
             targetZoom++;
+            //cinemachine hard lookat z increase maybe
         }
 
         camFollow.FollowOffset.y = Mathf.Lerp(camFollow.FollowOffset.y, targetZoom, Time.deltaTime * zoomSpeed);
+    }
+
+    private void LateUpdate()
+    {
+        if (shakeTimer > 0)
+        {
+            _camera.Lens.FieldOfView -= Time.deltaTime * 40;
+            shakeTimer -= Time.deltaTime;
+        }else
+        {
+            _camera.Lens.FieldOfView = Mathf.Lerp(_camera.Lens.FieldOfView, originalFOV, Time.deltaTime * 6);
+        }
+    }
+
+    private void CameraHitStop()
+    {
+        originalFOV = _camera.Lens.FieldOfView;
+        shakeTimer = 0.1f;
     }
 }

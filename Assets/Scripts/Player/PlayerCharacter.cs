@@ -1,7 +1,8 @@
+using System.Collections;
 using UnityEngine;
 using static PlayerAnimator;
 
-public class PlayerCharacter : MonoBehaviour
+public class PlayerCharacter : CharacterBase
 {
     [SerializeField] private Rigidbody _rb;
     [SerializeField] private GameObject _mesh;
@@ -19,10 +20,14 @@ public class PlayerCharacter : MonoBehaviour
     [SerializeField] private Transform rotateTarget;
     [SerializeField] private Quaternion lookRotation;
 
+    [SerializeField] bool inCombat;
+
     public Vector3 mouseWorldPos;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+
         inputHandler = GetComponent<PlayerInputHandler>();
 
         if (_mouseTracker == null)
@@ -36,6 +41,12 @@ public class PlayerCharacter : MonoBehaviour
         _combat = GetComponent<PlayerCombat>();
     }
 
+    private void Start()
+    {
+        _combat.SheatheWeapon += CombatState;
+        _combat.UnsheatheWeapon += CombatState;
+        GameManager.singleton.hitstopManager.HitStop += ApplyHitStop;
+    }
     private void Update()
     {
 
@@ -47,6 +58,28 @@ public class PlayerCharacter : MonoBehaviour
         lookRotation.z = 0;
         if (_movement.isMoving)
             transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
+    }
+
+    private void ApplyHitStop()
+    {
+        StartCoroutine(_animator.FreezeCurrentAnim(1.0f));
+    }
+
+    public void CombatState()
+    {
+        if (_gear == null || _gear.weaponEquipped == null)
+            return;
+
+        if (_combat.inCombat)
+        {
+            _gear.UnsheatheWeapon();
+            _animator.SetCombatState(true);
+        }
+        else if(!_combat.inCombat)
+        {
+            _gear.SheatheWeapon();
+            _animator.SetCombatState(false);
+        }
     }
 
 
@@ -65,19 +98,40 @@ public class PlayerCharacter : MonoBehaviour
         }
     }
 
+    
+
     public void Attack()
     {
         if (_combat != null)
         {
-            _combat.StandardAttack(_gear.weaponEquipped, _mouseTracker.mouseAim);
-            if (_gear.weaponEquipped.GetClass() == "Warrior")
+            if(!_combat.isAttacking)
             {
-                _animator.SetAnimationState(AnimationStates.AttackMelee);
+                _combat.StandardAttack(_gear.weaponEquipped, _mouseTracker.mouseAim, characterType.ToString());
+                if (_gear.weaponEquipped.GetClass() == "Warrior")
+                {
+                    _animator.SetAnimationState(AnimationStates.AttackMelee);
+                }
+                else
+                {
+                    _animator.SetAnimationState(AnimationStates.AttackMage);
+                }
             }
-            else
+        }
+    }
+
+    public void TakeDamage(int attackID, int dmg)
+    {
+        Resource health = GameManager.singleton.playerStats.health;
+        if (!processedAttackIDs.Contains(attackID))
+        {
+            if (health.currentValue - dmg <= 0)
             {
-                _animator.SetAnimationState(AnimationStates.AttackMage);
+                
+                //Destroy(gameObject);
             }
+
+            SpawnDmgNumber(dmg);
+            health.SubtractResource(dmg);
         }
     }
 }

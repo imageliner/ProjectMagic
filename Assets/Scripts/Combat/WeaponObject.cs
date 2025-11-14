@@ -26,9 +26,9 @@ public class WeaponObject : ScriptableObject
     }
 
 
-    public void Attack(int attackID, Transform playerPos, Transform mousePos)
+    public void Attack(int attackID, Transform playerPos, Transform mousePos, string fromEntity)
     {
-        attackAbility.Use(attackID, playerPos);
+        attackAbility.Use(attackID, playerPos, fromEntity);
     }
 
     public string GetClass()

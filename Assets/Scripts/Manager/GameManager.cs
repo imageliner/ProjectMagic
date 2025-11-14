@@ -5,6 +5,10 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager singleton;
 
+    public HitstopManager hitstopManager;
+
+    public PlayerCharacter player;
+
     public PlayerStats playerStats;
     public LevelSystem playerLevel;
 
@@ -19,5 +23,7 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        hitstopManager = gameObject.GetComponent<HitstopManager>();
     }
 }

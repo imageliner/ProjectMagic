@@ -1,13 +1,16 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
 public class PlayerCombat : MonoBehaviour
 {
     public bool isAttacking;
-    private int attackStaminaNeeded = 0;
+    public bool inCombat;
+    [SerializeField] private float combatToIdleTimer = 6.0f;
+    [SerializeField] private float combatTimer;
     private float attackDashPower = 5f;
     private float attackDashTime = 0.15f;
-    private float attackCoolDown = 0.15f;
+    private float attackCoolDown = 0.7f;
     private int attackCountMax = 2;
     private int attackCount = 0;
 
@@ -15,20 +18,42 @@ public class PlayerCombat : MonoBehaviour
 
     [SerializeField] private GameObject testAttackBox;
 
+    public Action SheatheWeapon;
+    public Action UnsheatheWeapon;
 
-
-    public void StandardAttack(WeaponObject weapon, Vector3 attackDir)
+    private void Update()
     {
-        if (!isAttacking && attackCount < attackCountMax)
+        if (combatTimer > 0)
         {
-            currentAttackID++;
-            StartCoroutine(NewAttack(weapon, attackDir.normalized, currentAttackID));
+            combatTimer -= Time.deltaTime;
+        }
+        if (combatTimer <= 0)
+        {
+            combatTimer = 0;
+            SheatheWeapon?.Invoke();
+            inCombat = false;
         }
     }
 
-    private IEnumerator NewAttack(WeaponObject weapon, Vector3 direction, int attackID)
+
+    public void StandardAttack(WeaponObject weapon, Vector3 attackDir, string playerAtk)
+    {
+        if (!isAttacking)
+        {
+            inCombat = true;
+            UnsheatheWeapon?.Invoke();
+
+            combatTimer = combatToIdleTimer;
+
+            currentAttackID++;
+            StartCoroutine(Attack(weapon, attackDir.normalized, currentAttackID, playerAtk));
+        }
+    }
+
+    private IEnumerator Attack(WeaponObject weapon, Vector3 direction, int attackID, string playerAtk)
     {
         isAttacking = true;
+        
 
         float elapsed = 0f;
         while (elapsed < attackDashTime)
@@ -42,37 +67,9 @@ public class PlayerCombat : MonoBehaviour
             yield return null;
         }
         attackCount++;
-        weapon.attackAbility.Use(attackID, transform);
+        
         yield return new WaitForSeconds(attackCoolDown);
-        isAttacking = false;
-        attackCount = 0;
-
-    }
-
-    private IEnumerator Attack(Vector3 direction)
-    {
-        isAttacking = true;
-
-        //GameManager.singleton.playerStats.SubtractStamina(dashStaminaNeeded);
-        float elapsed = 0f;
-        while (elapsed < attackDashTime)
-        {
-            Quaternion lookRotation = Quaternion.LookRotation(direction);
-            lookRotation.x = 0;
-            lookRotation.z = 0;
-            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 50);
-            transform.position += direction * attackDashPower * Time.deltaTime;
-            elapsed += Time.deltaTime;
-            attackCount++;
-
-            yield return null;
-        }
-        GameObject attackBox = Instantiate(testAttackBox, transform);
-        Hitbox hitbox = attackBox.GetComponent<Hitbox>();
-        hitbox.attackID = currentAttackID;
-        Destroy(attackBox, 0.3f);
-
-        yield return new WaitForSeconds(attackCoolDown);
+        weapon.attackAbility.Use(attackID, transform, playerAtk);
         isAttacking = false;
         attackCount = 0;
 

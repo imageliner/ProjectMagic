@@ -96,6 +96,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d58a84c21b7db69499df5da0068c1966, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  characterType: 0
+  numberPool: {fileID: 0}
   enemyName: test_Slime
   health:
     baseValue: 20
@@ -108,7 +110,6 @@ MonoBehaviour:
   dmgNumberTest: {fileID: 2315735033545349367, guid: 564c96b18353fc74987f187671bda2fb, type: 3}
   lvlText: {fileID: 7878176232782205053}
   nameText: {fileID: 4913143743401338959}
-  numberPool: {fileID: 0}
 --- !u!1001 &4872556728649075104
 PrefabInstance:
   m_ObjectHideFlags: 0

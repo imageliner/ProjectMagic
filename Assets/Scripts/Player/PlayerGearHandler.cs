@@ -1,13 +1,16 @@
+using System;
 using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerGearHandler : MonoBehaviour
 {
     public WeaponObject weaponEquipped;
-    [SerializeField] private Transform weaponSocket;
+    [SerializeField] private Transform weaponHandSocket;
+    [SerializeField] private Transform weaponBackSocket;
 
     [SerializeField] private WeaponItem currentWeapon;
-    private GameObject weaponInstance;
+    private GameObject weaponInstanceCombat;
+    private GameObject weaponInstanceBack;
 
     [Header("Debug")]
     [SerializeField] private WeaponItem debug_Wep_WAR;
@@ -17,27 +20,42 @@ public class PlayerGearHandler : MonoBehaviour
 
     private void Awake()
     {
-        weaponSocket = GameObject.Find("DEF-hand.socket.R").transform;
+        weaponHandSocket = GameObject.Find("DEF-hand.socket.R").transform;
+        weaponBackSocket = GameObject.Find("DEF-back.socket").transform;
     }
 
-    private void Start()
-    {
-    }
+    
 
     #region DEBUG
-
     public void Debug_EquipWeapon_WAR() => EquipWeapon(debug_Wep_WAR);
     public void Debug_EquipWeapon_MAGE() => EquipWeapon(debug_Wep_MAGE);
     public void Debug_EquipWeapon_ARCH() => EquipWeapon(debug_Wep_ARCH);
-
-
     #endregion
+
+    public void SheatheWeapon()
+    {
+        if (weaponInstanceBack != null || weaponInstanceCombat != null)
+        {
+            weaponInstanceCombat.SetActive(false);
+            weaponInstanceBack.SetActive(true);
+        }
+    }
+
+    public void UnsheatheWeapon()
+    {
+        if (weaponInstanceBack != null || weaponInstanceCombat != null)
+        {
+            weaponInstanceCombat.SetActive(true);
+            weaponInstanceBack.SetActive(false);
+        }
+    }
 
     public void EquipWeapon(WeaponItem newWeapon)
     {
-        if (weaponInstance != null)
+        if (weaponInstanceBack != null || weaponInstanceCombat != null)
         {
-            Destroy(weaponInstance);
+            Destroy(weaponInstanceBack);
+            Destroy(weaponInstanceCombat);
             
         }
 
@@ -46,11 +64,12 @@ public class PlayerGearHandler : MonoBehaviour
 
         if (newWeapon != null)
         {
-            weaponInstance = Instantiate(newWeapon.gameObject, weaponSocket);
+            weaponInstanceBack = Instantiate(newWeapon.gameObject, weaponBackSocket);
+            weaponInstanceCombat = Instantiate(newWeapon.gameObject, weaponHandSocket);
+            weaponInstanceCombat.SetActive(false);
             //currentWeapon.transform.localPosition = Vector3.zero;
             //currentWeapon.transform.localRotation = Quaternion.identity;
         }
-
     }
 
     public void GetCurrentWeaponClass()

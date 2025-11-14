@@ -1,6 +1,5 @@
-using UnityEditor.PackageManager.UI;
+using System.Collections;
 using UnityEngine;
-using static PlayerStats;
 
 public class PlayerAnimator : MonoBehaviour
 {
@@ -11,12 +10,25 @@ public class PlayerAnimator : MonoBehaviour
         animator = GetComponentInChildren<Animator>();
     }
 
+    public void SetCombatState(bool combatState)
+    {
+        animator.SetBool("inCombat", combatState);
+    }
+
     public enum AnimationStates
     {
         MoveBlend,
         Dash,
         AttackMelee,
-        AttackMage
+        AttackMage,
+        InCombat
+    }
+
+    public IEnumerator FreezeCurrentAnim(float duration)
+    {
+        animator.speed = 0f;
+        yield return new WaitForSeconds(duration);
+        animator.speed = 1f;
     }
 
     public void SetAnimationState(AnimationStates states, Vector3 localMove = new Vector3())
@@ -38,6 +50,11 @@ public class PlayerAnimator : MonoBehaviour
 
             case AnimationStates.AttackMage:
                 animator.SetTrigger("startAttackMage");
+                break;
+
+            case AnimationStates.InCombat:
+                animator.SetFloat("Horizontal", localMove.x, 0.1f, Time.deltaTime);
+                animator.SetFloat("Vertical", localMove.z, 0.1f, Time.deltaTime);
                 break;
 
             default:
