@@ -9,7 +9,7 @@ public class Ability_testMelee : CharacterAbility
     {
         GameObject attackBox = Instantiate(attackHitBox, t);
         Hitbox hitbox = attackBox.GetComponent<Hitbox>();
-        hitbox.damage = GameManager.singleton.playerStats.finalPhysAtk;
+        hitbox.damage = GameManager.singleton.playerStats.statCalcs.CalculatePhysAtkDmg(GameManager.singleton.playerStats.finalPhysAtk);
         hitbox.attackID = attackID;
         hitbox.fromEntity = fromEntity;
         Destroy(attackBox, 0.3f);

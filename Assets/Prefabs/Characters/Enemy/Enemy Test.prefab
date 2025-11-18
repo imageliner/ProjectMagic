@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7162997524149279584}
   - component: {fileID: 8865205748385748259}
   - component: {fileID: 808837553590816296}
+  - component: {fileID: 5319902082005821454}
   m_Layer: 0
   m_Name: Enemy Test
   m_TagString: Untagged
@@ -110,6 +111,31 @@ MonoBehaviour:
   dmgNumberTest: {fileID: 2315735033545349367, guid: 564c96b18353fc74987f187671bda2fb, type: 3}
   lvlText: {fileID: 7878176232782205053}
   nameText: {fileID: 4913143743401338959}
+  _rb: {fileID: 0}
+--- !u!114 &5319902082005821454
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8655666166685648489}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a41e6e31b0d6b8941a0cb5e8368aa977, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isMoving: 0
+  targetInRange: 0
+  detectionRange: 5
+  attackRange: 2
+  moveSpeed: 1
+  rotationSpeed: 6
+  moveDir: {x: 0, y: 0, z: 0}
+  targetDir: {x: 0, y: 0, z: 0}
+  moveAmount: 0
+  layer:
+    serializedVersion: 2
+    m_Bits: 256
 --- !u!1001 &4872556728649075104
 PrefabInstance:
   m_ObjectHideFlags: 0

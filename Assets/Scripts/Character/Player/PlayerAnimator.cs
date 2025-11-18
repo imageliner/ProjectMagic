@@ -4,10 +4,15 @@ using UnityEngine;
 public class PlayerAnimator : MonoBehaviour
 {
     [SerializeField] private Animator animator;
+    [SerializeField] private PlayerCombat _combat;
+
+    public bool spawnHitbox;
+
 
     private void Awake()
     {
-        animator = GetComponentInChildren<Animator>();
+        animator = GetComponent<Animator>();
+        _combat = GetComponentInParent<PlayerCombat>();
     }
 
     public void SetCombatState(bool combatState)
@@ -61,5 +66,15 @@ public class PlayerAnimator : MonoBehaviour
                 Debug.LogWarning("Unknown Animation Value");
                 break;
         }
+    }
+
+    public void Flag_SpawnHitbox()
+    {
+        _combat.spawnAttack = true;
+    }
+
+    public void Flag_DespawnHitBox()
+    {
+        _combat.spawnAttack = false;
     }
 }

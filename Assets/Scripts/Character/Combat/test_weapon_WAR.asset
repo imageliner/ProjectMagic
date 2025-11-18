@@ -10,17 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a3b2c64e00ca7954993bbb7cafa4f9eb, type: 3}
-  m_Name: test_weapon_MAGE
+  m_Name: test_weapon_WAR
   m_EditorClassIdentifier: 
-  classType: 1
-  attackAbility: {fileID: 11400000, guid: bbecf6f9f62e79448898cea987c735a3, type: 2}
-  itemName: Test Staff
+  classType: 0
+  attackAbility: {fileID: 11400000, guid: 5906a108e0edd874fbe8effce2484225, type: 2}
+  itemName: Test Sword
   itemIcon: {fileID: 0}
-  pAtk: 0
+  pAtk: 2
   mAtk: 0
   atkSpeed: 0
   critRate: 0
   critDmg: 0
-  strength: 0
+  vitality: 0
+  wisdom: 0
+  strength: 1
   intelligence: 0
   dexterity: 0

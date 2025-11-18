@@ -51,7 +51,7 @@ public class CharacterStats : MonoBehaviour
     {
         get
         {
-            return strength.GetTotalValueTest(strength, strengthToPhysAtk);
+            return pAtk.GetTotalValue() + strength.GetTotalValueTest(strength, strengthToPhysAtk);
         }
     }
 
@@ -59,7 +59,7 @@ public class CharacterStats : MonoBehaviour
     {
         get
         {
-            return Mathf.CeilToInt(strength.GetTotalValueTest(strength, 2));
+            return pDef.GetTotalValue() + Mathf.CeilToInt(strength.GetTotalValueTest(strength, 2));
         }
     }
 
@@ -67,7 +67,7 @@ public class CharacterStats : MonoBehaviour
     {
         get
         {
-            return intelligence.GetTotalValueTest(intelligence, intelligenceToMAtk);
+            return mAtk.GetTotalValue() + intelligence.GetTotalValueTest(intelligence, intelligenceToMAtk);
         }
     }
 
@@ -75,7 +75,7 @@ public class CharacterStats : MonoBehaviour
     {
         get
         {
-            return Mathf.CeilToInt(intelligence.GetTotalValueTest(intelligence, 2));
+            return mDef.GetTotalValue() +  Mathf.CeilToInt(intelligence.GetTotalValueTest(intelligence, 2));
         }
     }
 

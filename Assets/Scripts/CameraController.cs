@@ -81,11 +81,15 @@ public class CameraController : MonoBehaviour
     {
         if (shakeTimer > 0)
         {
-            _camera.Lens.FieldOfView -= Time.deltaTime * 40;
+            if (_camera.Lens.FieldOfView > 55)
+            {
+                _camera.Lens.FieldOfView -= Time.deltaTime * 80;
+            }
+            
             shakeTimer -= Time.deltaTime;
         }else
         {
-            _camera.Lens.FieldOfView = Mathf.Lerp(_camera.Lens.FieldOfView, originalFOV, Time.deltaTime * 6);
+            _camera.Lens.FieldOfView = Mathf.Lerp(_camera.Lens.FieldOfView, 60, Time.deltaTime * 6);
         }
     }
 

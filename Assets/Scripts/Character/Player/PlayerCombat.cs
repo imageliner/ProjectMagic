@@ -5,12 +5,13 @@ using UnityEngine;
 public class PlayerCombat : MonoBehaviour
 {
     public bool isAttacking;
+    public bool spawnAttack;
     public bool inCombat;
     [SerializeField] private float combatToIdleTimer = 6.0f;
     [SerializeField] private float combatTimer;
     private float attackDashPower = 5f;
     private float attackDashTime = 0.15f;
-    private float attackCoolDown = 0.7f;
+    private float attackCoolDown = 0.5f;
     private int attackCountMax = 2;
     private int attackCount = 0;
 
@@ -53,7 +54,12 @@ public class PlayerCombat : MonoBehaviour
     private IEnumerator Attack(WeaponObject weapon, Vector3 direction, int attackID, string playerAtk)
     {
         isAttacking = true;
-        
+        spawnAttack = false;
+
+        yield return new WaitUntil(() => spawnAttack == true);
+
+        weapon.attackAbility.Use(attackID, transform, playerAtk);
+        spawnAttack = false;
 
         float elapsed = 0f;
         while (elapsed < attackDashTime)
@@ -69,9 +75,17 @@ public class PlayerCombat : MonoBehaviour
         attackCount++;
         
         yield return new WaitForSeconds(attackCoolDown);
-        weapon.attackAbility.Use(attackID, transform, playerAtk);
+
         isAttacking = false;
         attackCount = 0;
+    }
+
+    public void SpawnHitbox()
+    {
+
+    }
+    public void DespawnHitbox()
+    {
 
     }
 }

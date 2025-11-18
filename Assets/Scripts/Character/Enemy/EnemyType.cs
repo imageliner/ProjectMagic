@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -18,10 +19,13 @@ public class EnemyType : CharacterBase
     [SerializeField] private TextMeshProUGUI lvlText;
     [SerializeField] private TextMeshProUGUI nameText;
 
+    [SerializeField] private Rigidbody _rb;
+
 
     protected override void Awake()
     {
         base.Awake();
+        _rb = GetComponent<Rigidbody>();
     }
 
     private void Start()
@@ -42,9 +46,17 @@ public class EnemyType : CharacterBase
     }
 
 
-   
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.collider.CompareTag("Player"))
+        {
+            PlayerCharacter player = collision.collider.GetComponent<PlayerCharacter>();
+            player.TakeDamage(Random.Range(0, 9999), 1);
+            _rb.AddForce((transform.position - collision.transform.position) * 5, ForceMode.Impulse);
+        }
+    }
 
-    public void TakeDamage(int attackID, int dmg)
+    public void TakeDamage(int attackID, int dmg, GameObject obj)
     {
         if (!processedAttackIDs.Contains(attackID))
         {
@@ -54,8 +66,9 @@ public class EnemyType : CharacterBase
                 Destroy(gameObject);
             }
 
-            SpawnDmgNumber(dmg);
+            SpawnDmgNumber(dmg, Color.red);
             health.SubtractResource(dmg);
+            _rb.AddForce((transform.position - obj.transform.position) * 5, ForceMode.Impulse);
         }
     }
 }

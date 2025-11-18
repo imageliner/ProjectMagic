@@ -26,7 +26,7 @@ public class CharacterBase : MonoBehaviour
         }
     }
 
-    protected void SpawnDmgNumber(int number)
+    protected void SpawnDmgNumber(int number, Color color)
     {
         UIDamageNumber newNumber = numberPool.GetAvailableNumber();
 
@@ -35,6 +35,6 @@ public class CharacterBase : MonoBehaviour
         newNumber.transform.position = transform.position;
         newNumber.transform.rotation = transform.rotation;
         newNumber.gameObject.SetActive(true);
-        newNumber.UseNumber(number);
+        newNumber.UseNumber(number, color);
     }
 }

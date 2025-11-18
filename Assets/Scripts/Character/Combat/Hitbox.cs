@@ -1,13 +1,15 @@
-using System.Collections;
 using UnityEngine;
 
-public class ProjectileHitbox : Hitbox
+public class Hitbox : MonoBehaviour
 {
+    public int attackID;
+    public string fromEntity = "NPC";
 
-    private void Update()
-    {
-        this.gameObject.transform.position += transform.forward * 10f * Time.deltaTime;
-    }
+    public bool debugHitbox = false;
+    public int debugDmg = 0;
+
+
+    public int damage;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -17,7 +19,7 @@ public class ProjectileHitbox : Hitbox
             if (player != null)
             {
                 if (debugHitbox == true)
-                    player.TakeDamage(Random.Range(1, 9999), debugDmg);
+                    player.TakeDamage(Random.Range(1,9999), debugDmg);
                 else
                     player.TakeDamage(attackID, damage);
             }
@@ -27,9 +29,10 @@ public class ProjectileHitbox : Hitbox
             EnemyType enemy = other.GetComponent<EnemyType>();
             if (enemy != null)
             {
-                enemy.TakeDamage(attackID, damage);
+                GameManager.singleton.hitstopManager.HitStop?.Invoke();
+                enemy.TakeDamage(attackID, damage, this.gameObject);
             }
         }
-
+        
     }
 }

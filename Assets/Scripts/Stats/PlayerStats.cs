@@ -82,7 +82,7 @@ public class PlayerStats : CharacterStats
         UpdateStatTexts();
     }
 
-    private void UpdateStatTexts()
+    public void UpdateStatTexts()
     {
         statPointText.text = $"Stat Points: {statPoints}";
         vitalityText.text = $"Vitality: {vitality.GetTotalValue()}";

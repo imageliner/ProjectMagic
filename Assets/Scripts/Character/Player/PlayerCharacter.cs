@@ -35,7 +35,7 @@ public class PlayerCharacter : CharacterBase
             FindAnyObjectByType<MouseTracker>();
         }
 
-        _animator = GetComponent<PlayerAnimator>();
+        _animator = GetComponentInChildren<PlayerAnimator>();
         _movement = GetComponent<PlayerMovement>();
         _gear = GetComponent<PlayerGearHandler>();
         _combat = GetComponent<PlayerCombat>();
@@ -130,7 +130,7 @@ public class PlayerCharacter : CharacterBase
                 //Destroy(gameObject);
             }
 
-            SpawnDmgNumber(dmg);
+            SpawnDmgNumber(dmg, Color.yellow);
             health.SubtractResource(dmg);
         }
     }
