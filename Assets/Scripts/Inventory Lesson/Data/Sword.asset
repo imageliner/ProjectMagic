@@ -15,8 +15,8 @@ MonoBehaviour:
   itemID: 0
   itemName: Training Sword
   itemDescription: a wooden training sword used by children
-  itemIcon: {fileID: 0}
-  itemColor: {r: 1, g: 0.25899854, b: 0, a: 0}
+  itemIcon: {fileID: 21300000, guid: cc0915b0b19d78844ab3123e2a2f1701, type: 3}
+  itemColor: {r: 1, g: 0.1554602, b: 0, a: 1}
   physicalRepresentation: {fileID: 9126073644350290168, guid: 935040022d572524a851cce2a26c43f0, type: 3}
   canEquip: 0
   canDrop: 0
