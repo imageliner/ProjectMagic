@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: daacdc6924415d84f9c5dd72d81032ab, type: 3}
+  m_Name: Sword
+  m_EditorClassIdentifier: 
+  itemID: 0
+  itemName: Training Sword
+  itemDescription: a wooden training sword used by children
+  itemIcon: {fileID: 0}
+  itemColor: {r: 1, g: 0.25899854, b: 0, a: 0}
+  physicalRepresentation: {fileID: 9126073644350290168, guid: 935040022d572524a851cce2a26c43f0, type: 3}
+  canEquip: 0
+  canDrop: 0
