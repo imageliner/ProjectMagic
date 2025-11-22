@@ -7,6 +7,7 @@ public class UIInventorySlot : MonoBehaviour
     public bool inUse;
     public Image icon;
     public TextMeshProUGUI nameDisplay;
+    [SerializeField] private Image rarityDisplay;
 
     public InventoryItem itemData;
 
@@ -21,19 +22,49 @@ public class UIInventorySlot : MonoBehaviour
     {
         inUse = true;
         itemData = item;
-        nameDisplay.text = item.itemName;
-        nameDisplay.color = item.itemColor;
-        icon.enabled = true;
-        icon.sprite = item.itemIcon;
+
+        if (nameDisplay != null)
+        {
+            nameDisplay.text = item.itemName;
+            nameDisplay.color = item.SetRarityColor();
+        }
+
+        if (icon != null)
+        {
+            icon.enabled = true;
+            icon.sprite = item.itemIcon;
+        }
+
+        if (rarityDisplay != null)
+        {
+            if (item is EquipInventoryItem)
+                rarityDisplay.color = item.SetRarityColor();
+            else
+                rarityDisplay.color = Color.clear;
+        }
     }
 
-    public void ClickToDelete()
+    public void OnItemClicked()
     {
+        Vector3 posOffset = new Vector3(-100, 25, 0);
+        Vector3 newPos = transform.position + posOffset;
+
         if (itemData is EquipInventoryItem equip)
         {
+            
             if (equip.equipType == EquipType.Weapon)
             {
-                FindAnyObjectByType<Inventory>().EquipNewWeapon(equip);
+                
+                if (itemDesc == null)
+                {
+                    itemDesc = FindAnyObjectByType<UIItemDescription>();
+                }
+
+                itemDesc.EnableWindow();
+                itemDesc.transform.position = newPos;
+                itemDesc.InitializeEquipDescription(equip);
+
+                //FindAnyObjectByType<Inventory>().EquipNewWeapon(equip);
             }
             else if (equip.equipType == EquipType.Helmet)
             {
@@ -44,8 +75,7 @@ public class UIInventorySlot : MonoBehaviour
         else
         {
             //FindAnyObjectByType<Inventory>().RemoveItem(itemData);
-            Vector3 posOffset = new Vector3(-100, 25, 0);
-            Vector3 newPos = transform.position + posOffset;
+            
 
             //UIItemDescription clonedDescription = Instantiate(itemDesc, newPos, transform.rotation, this.transform);
             //clonedDescription.InitializeItemDescription(itemData);
@@ -55,7 +85,7 @@ public class UIInventorySlot : MonoBehaviour
                  itemDesc = FindAnyObjectByType<UIItemDescription>();
             }
 
-            itemDesc.gameObject.SetActive(true);
+            itemDesc.EnableWindow();
             itemDesc.transform.position = newPos;
             itemDesc.InitializeItemDescription(itemData);
         }
@@ -69,5 +99,6 @@ public class UIInventorySlot : MonoBehaviour
         itemData = null;
         nameDisplay.text = "";
         icon.enabled = false;
+        rarityDisplay.color = Color.clear;
     }
 }

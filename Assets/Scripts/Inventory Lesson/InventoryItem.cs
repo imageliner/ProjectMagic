@@ -1,3 +1,4 @@
+using Unity.Burst.Intrinsics;
 using UnityEngine;
 
 
@@ -8,9 +9,46 @@ public class InventoryItem : ScriptableObject
     public string itemName;
     public string itemDescription;
     public Sprite itemIcon;
-    public Color itemColor;
-    public GameObject physicalRepresentation;
+    //public Color itemColor;
+    
+    public ItemRarity itemRarity;
+
+    
 
     public bool canEquip;
     public bool canDrop;
+
+    public Color SetRarityColor()
+    {
+        switch (itemRarity)
+        {
+            case ItemRarity.Common:
+                    return Color.white;
+
+            case ItemRarity.Uncommon:
+                return Color.green;
+
+            case ItemRarity.Rare:
+                return Color.blue;
+
+            case ItemRarity.Epic:
+                return Color.magenta;
+
+            case ItemRarity.Legendary:
+                return Color.yellow;
+
+            default:
+                return Color.white;
+
+        }
+    }
+}
+
+public enum ItemRarity
+{
+    Common,
+    Uncommon,
+    Rare,
+    Epic,
+    Legendary
 }

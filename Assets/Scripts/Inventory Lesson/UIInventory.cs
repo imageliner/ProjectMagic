@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 
 public class UIInventory : MonoBehaviour
@@ -9,6 +10,8 @@ public class UIInventory : MonoBehaviour
     public List<UIInventorySlot> allClonedSlots = new List<UIInventorySlot>();
 
     public int maxSlots = 30;
+
+    [SerializeField] TextMeshProUGUI goldText;
 
     private void Start()
     {
