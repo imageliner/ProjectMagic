@@ -21,11 +21,14 @@ public class EnemyType : CharacterBase
 
     [SerializeField] private Rigidbody _rb;
 
+    [SerializeField] LootPool lootPool;
+
 
     protected override void Awake()
     {
         base.Awake();
         _rb = GetComponent<Rigidbody>();
+        lootPool = GetComponent<LootPool>();
     }
 
     private void Start()
@@ -63,6 +66,7 @@ public class EnemyType : CharacterBase
             if (health.currentValue - dmg <= 0)
             {
                 GameManager.singleton.playerLevel.AddEXP(expToGive);
+                lootPool.GetRandomDrop();
                 Destroy(gameObject);
             }
 

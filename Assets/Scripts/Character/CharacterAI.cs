@@ -1,12 +1,13 @@
 using System.Collections;
 using UnityEngine;
-using static UnityEditor.Experimental.GraphView.GraphView;
+
 
 public class CharacterAI : MonoBehaviour
 {
     [SerializeField] private NPCState currentState;
 
     [SerializeField] public bool canStrafe;
+    [SerializeField] public bool isAggressive;
 
     private Coroutine movementRoutine;
 
@@ -15,6 +16,7 @@ public class CharacterAI : MonoBehaviour
     public bool targetInRange;
     public float detectionRange = 5;
     public float attackRange = 2;
+    public float distanceToTarget;
 
     public float moveSpeed { get; private set; } = 1f;
     public float rotationSpeed { get; private set; } = 6f;
@@ -47,12 +49,13 @@ public class CharacterAI : MonoBehaviour
 
         currentState = newState;
         currentState.OnStateEnter();
+
+        Debug.Log(newState.ToString());
     }
 
 
     void Update()
     {
-        Debug.Log(currentState.ToString());
 
         if (currentState != null)
         {
@@ -66,7 +69,7 @@ public class CharacterAI : MonoBehaviour
             targetInRange = true;
             targetDir = (target.position - transform.position).normalized;
 
-            float distanceToTarget = Vector3.Distance(transform.position, target.position);
+            distanceToTarget = Vector3.Distance(transform.position, target.position);
 
             if (distanceToTarget <= attackRange)
             {
@@ -168,16 +171,13 @@ public class CharacterAI : MonoBehaviour
         {
             if (target == null) break;
 
-            // direction toward the target
             Vector3 toTarget = (target.position - transform.position).normalized;
 
             // perpendicular strafing direction
             Vector3 strafeDir = Vector3.Cross(toTarget, Vector3.up) * side;
 
-            // move sideways around target
             transform.position += strafeDir * Time.deltaTime * moveSpeed;
 
-            // always rotate to face the target
             Quaternion lookRot = Quaternion.LookRotation(toTarget);
             transform.rotation = Quaternion.Slerp(transform.rotation, lookRot, rotationSpeed * Time.deltaTime);
 

@@ -11,4 +11,14 @@ public class WeaponItem : MonoBehaviour
     {
         return weaponObject;
     }
+
+    public void AddStatsToPlayer()
+    {
+        weaponObject.AddStats();
+    }
+
+    public void RemoveStatsFromPlayer()
+    {
+        weaponObject.RemoveStats();
+    }
 }

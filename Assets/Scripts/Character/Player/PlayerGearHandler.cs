@@ -52,6 +52,15 @@ public class PlayerGearHandler : MonoBehaviour
 
     public void EquipWeapon(WeaponItem newWeapon)
     {
+        if (newWeapon == null)
+        {
+            currentWeapon.RemoveStatsFromPlayer();
+            Destroy(weaponInstanceBack);
+            Destroy(weaponInstanceCombat);
+            currentWeapon = null;
+            weaponEquipped = null;
+        }
+
         if (weaponInstanceBack != null || weaponInstanceCombat != null)
         {
             currentWeapon.RemoveStatsFromPlayer();
