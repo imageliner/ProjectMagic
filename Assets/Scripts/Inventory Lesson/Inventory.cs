@@ -49,6 +49,17 @@ public class Inventory : MonoBehaviour
     {
         return allItems.Contains(toCheck);
     }
+    public void AddCurrency(int currencyAmount)
+    {
+        currency += currencyAmount;
+        FindAnyObjectByType<UIInventory>().UpdateCurrencyText(currency);
+    }
+
+    public void RemoveCurrency(int currencyAmount)
+    {
+        currency -= currencyAmount;
+        FindAnyObjectByType<UIInventory>().UpdateCurrencyText(currency);
+    }
 
     public void EquipNewHelmet(EquipInventoryItem newHelmet)
     {

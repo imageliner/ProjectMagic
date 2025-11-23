@@ -66,6 +66,11 @@ public class UIInventory : MonoBehaviour
         emptySlot.InitializeItemDisplay(item);
     }
 
+    public void UpdateCurrencyText(int currencyAmount)
+    {
+        goldText.text = "Gold: " + currencyAmount.ToString();
+    }
+
     public void RemoveSpecificItem(InventoryItem item)
     {
         foreach (var slot in allClonedSlots)

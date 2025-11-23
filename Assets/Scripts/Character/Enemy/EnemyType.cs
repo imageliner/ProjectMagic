@@ -67,6 +67,7 @@ public class EnemyType : CharacterBase
             {
                 GameManager.singleton.playerLevel.AddEXP(expToGive);
                 lootPool.GetRandomDrop();
+                lootPool.GetCurrencyDropAmount();
                 Destroy(gameObject);
             }
 
