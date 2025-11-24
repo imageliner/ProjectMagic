@@ -16,7 +16,7 @@ public class NPCChaseState : NPCState
     {
         if (!character.targetInRange)
         {
-            character.ChangeState(new NPCIdleState(character));
+            character.ChangeState(new NPCWanderingState(character));
         }
     }
 

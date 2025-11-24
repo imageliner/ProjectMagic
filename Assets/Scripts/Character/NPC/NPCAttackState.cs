@@ -4,6 +4,7 @@ public class NPCAttackState : NPCState
 {
     public override void OnStateEnter()
     {
+        character.PlayAttackAnim();
         character.StartMovement(character.Attack());
     }
 

@@ -16,7 +16,7 @@ MonoBehaviour:
   attackAbility: {fileID: 11400000, guid: 5906a108e0edd874fbe8effce2484225, type: 2}
   itemName: Test Sword 2
   itemIcon: {fileID: 0}
-  pAtk: 999
+  pAtk: 5
   mAtk: 0
   atkSpeed: 0
   critRate: 0

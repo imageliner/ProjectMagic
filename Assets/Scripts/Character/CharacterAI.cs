@@ -18,21 +18,31 @@ public class CharacterAI : MonoBehaviour
     public float attackRange = 2;
     public float distanceToTarget;
 
-    public float moveSpeed { get; private set; } = 1f;
+    public float moveSpeed = 1f;
     public float rotationSpeed { get; private set; } = 6f;
 
     [SerializeField] private Vector3 moveDir;
     public Vector3 targetDir;
     [SerializeField] private float moveAmount;
-    private float moveTimer;
 
-    [SerializeField] private LayerMask layer;
+    [System.Serializable]
+    public struct MoveAmountRange
+    {
+        public int min;
+        public int max;
+    }
+    [SerializeField] private MoveAmountRange moveAmountRange;
+
+    [SerializeField] private LayerMask layerToTarget;
 
     private Rigidbody ownerRB;
+
+    [SerializeField] private Animator _animator;
 
     private void Awake()
     {
         ownerRB = gameObject.GetComponent<Rigidbody>();
+        _animator = gameObject.GetComponentInChildren<Animator>();
     }
 
     private void Start()
@@ -62,7 +72,16 @@ public class CharacterAI : MonoBehaviour
             currentState.OnStateRun();
         }
 
-        Collider[] hitsDetection = Physics.OverlapSphere(transform.position, detectionRange, layer);
+        if (!isMoving)
+        {
+            if (_animator == null)
+                return;
+
+            _animator.SetFloat("Horizontal", 0);
+            _animator.SetFloat("Vertical", 0);
+        }
+
+        Collider[] hitsDetection = Physics.OverlapSphere(transform.position, detectionRange, layerToTarget);
         if (hitsDetection.Length > 0)
         {
             target = hitsDetection[0].transform;
@@ -85,6 +104,14 @@ public class CharacterAI : MonoBehaviour
         {
             targetInRange = false;
         }
+    }
+
+    public void PlayAttackAnim()
+    {
+        if (_animator == null)
+            return;
+
+        _animator.SetTrigger("startAttack");
     }
 
     public bool IsMoving()
@@ -117,15 +144,31 @@ public class CharacterAI : MonoBehaviour
         transform.rotation = Quaternion.Slerp(transform.rotation, lookRot, rotationSpeed * Time.deltaTime);
     }
 
+    private void AnimatorWalkBlend()
+    {
+        if (_animator == null)
+            return;
+
+        Vector3 localMove = transform.InverseTransformDirection(moveDir);
+
+        _animator.SetFloat("Horizontal", localMove.x, 0.1f, Time.deltaTime);
+        _animator.SetFloat("Vertical", localMove.z, 0.1f, Time.deltaTime);
+    }
+
     public IEnumerator Wander()
     {
-        moveDir = new Vector3(Random.Range(-10, 10), Random.Range(-10, 10), Random.Range(-10, 10)).normalized;
-        moveAmount = Random.Range(2, 8);
+        moveDir = new Vector3(Random.Range(-10, 10), 0, Random.Range(-10, 10)).normalized;
+        moveAmount = Random.Range(moveAmountRange.min, moveAmountRange.max);
         isMoving = true;
+
+        
+
         float timer = moveAmount;
         while (timer > 0f)
         {
             transform.position += moveDir * Time.deltaTime * moveSpeed;
+
+            AnimatorWalkBlend();
 
             if (moveDir.sqrMagnitude > 0.001f)    // prevent LookRotation errors
             {
@@ -141,12 +184,14 @@ public class CharacterAI : MonoBehaviour
         isMoving = false;
     }
 
-
     public IEnumerator Chase()
     {
+        isMoving = true;
         while (targetInRange)
         {
             transform.position += targetDir * Time.deltaTime * moveSpeed;
+
+            AnimatorWalkBlend();
 
             if (targetDir.sqrMagnitude > 0.001f)
             {
@@ -157,12 +202,15 @@ public class CharacterAI : MonoBehaviour
             }
             yield return null;
         }
+        isMoving = false;
 
     }
 
     public IEnumerator Strafe()
     {
         isMoving = true;
+
+        
 
         // pick left (-1) or right (+1) randomly
         int side = Random.value < 0.5f ? -1 : 1;
@@ -175,11 +223,14 @@ public class CharacterAI : MonoBehaviour
 
             // perpendicular strafing direction
             Vector3 strafeDir = Vector3.Cross(toTarget, Vector3.up) * side;
+            moveDir = strafeDir;
 
             transform.position += strafeDir * Time.deltaTime * moveSpeed;
 
             Quaternion lookRot = Quaternion.LookRotation(toTarget);
             transform.rotation = Quaternion.Slerp(transform.rotation, lookRot, rotationSpeed * Time.deltaTime);
+
+            AnimatorWalkBlend();
 
             yield return null;
         }
