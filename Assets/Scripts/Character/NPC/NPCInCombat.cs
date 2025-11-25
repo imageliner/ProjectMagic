@@ -42,7 +42,7 @@ public class NPCInCombat : NPCState
         {
             if (character.distanceToTarget <= character.attackRange / 1.2)
             {
-                character.transform.position -= character.targetDir * Time.deltaTime * (character.moveSpeed * 2);
+                character.transform.position -= character.targetDir * Time.deltaTime * (character.moveSpeed);
 
                 if (character.targetDir.sqrMagnitude > 0.001f)
                 {

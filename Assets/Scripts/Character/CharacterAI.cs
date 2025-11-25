@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CharacterAI : MonoBehaviour
 {
+    public EnemyType enemyType;
     [SerializeField] private NPCState currentState;
 
     [SerializeField] public bool canStrafe;
@@ -41,6 +42,7 @@ public class CharacterAI : MonoBehaviour
 
     private void Awake()
     {
+        enemyType = gameObject.GetComponent<EnemyType>();
         ownerRB = gameObject.GetComponent<Rigidbody>();
         _animator = gameObject.GetComponentInChildren<Animator>();
     }
@@ -238,12 +240,28 @@ public class CharacterAI : MonoBehaviour
         isMoving = false;
     }
 
-    public IEnumerator Attack()
+    public IEnumerator Attack1()
     {
         moveDir = new Vector3(Random.Range(-10, 10), Random.Range(-10, 10), Random.Range(-10, 10)).normalized;
 
         ownerRB.AddForce(transform.forward * 5, ForceMode.Impulse);
         yield return new WaitForSeconds(2);
+    }
+
+    public IEnumerator Attack(WeaponObject weapon, Vector3 direction, int attackID, string enemyAtk)
+    {
+        PlayAttackAnim();
+        enemyType.spawnAttack = false;
+
+        yield return new WaitUntil(() => enemyType.spawnAttack == true);
+        ownerRB.AddForce(transform.forward * 3, ForceMode.Impulse);
+
+        weapon.attackAbility.Use(attackID, transform, enemyAtk, enemyType.GetDamage());
+        enemyType.spawnAttack = false;
+
+        
+
+        yield return new WaitForSeconds(1f);
     }
 
     private void OnDrawGizmos()

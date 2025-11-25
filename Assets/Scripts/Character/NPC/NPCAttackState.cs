@@ -4,13 +4,13 @@ public class NPCAttackState : NPCState
 {
     public override void OnStateEnter()
     {
-        character.PlayAttackAnim();
-        character.StartMovement(character.Attack());
+       
+        character.StartCoroutine(character.Attack(character.enemyType.enemyWeapon.GetWeaponObject(), character.targetDir, 0, character.enemyType.GetCharacterType()));
     }
 
     public override void OnStateExit()
     {
-        character.StopMovement();
+        
     }
 
     public override void OnStateRun()

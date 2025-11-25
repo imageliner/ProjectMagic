@@ -20,8 +20,14 @@ public class PlayerGearHandler : MonoBehaviour
 
     private void Awake()
     {
-        weaponHandSocket = GameObject.Find("DEF-hand.socket.R").transform;
-        weaponBackSocket = GameObject.Find("DEF-back.socket").transform;
+        foreach (var t in GetComponentsInChildren<Transform>(true))
+        {
+            if (t.name == "DEF-hand.socket.R")
+                weaponHandSocket = t;
+
+            if (t.name == "DEF-back.socket")
+                weaponBackSocket = t;
+        }
     }
 
     
@@ -52,13 +58,45 @@ public class PlayerGearHandler : MonoBehaviour
 
     public void EquipWeapon(WeaponItem newWeapon)
     {
+        if (currentWeapon != null)
+        {
+            currentWeapon.RemoveStatsFromPlayer();
+            Destroy(weaponInstanceBack);
+            Destroy(weaponInstanceCombat);
+        }
+
+        // If nothing replace with default
+        if (newWeapon == null)
+        {
+            currentWeapon = Resources.Load<WeaponItem>("Default_WeaponItem");
+            weaponEquipped = currentWeapon.GetWeaponObject();
+
+            weaponInstanceBack = Instantiate(currentWeapon.gameObject, weaponBackSocket);
+            weaponInstanceCombat = Instantiate(currentWeapon.gameObject, weaponHandSocket);
+            weaponInstanceCombat.SetActive(false);
+            return;
+        }
+
+        // Equip the new weapon
+        currentWeapon = newWeapon;
+        weaponEquipped = currentWeapon.GetWeaponObject();
+        currentWeapon.AddStatsToPlayer();
+
+        weaponInstanceBack = Instantiate(currentWeapon.gameObject, weaponBackSocket);
+        weaponInstanceCombat = Instantiate(currentWeapon.gameObject, weaponHandSocket);
+        weaponInstanceCombat.SetActive(false);
+    }
+
+
+    public void EquipWeapon_Old(WeaponItem newWeapon)
+    {
         if (newWeapon == null)
         {
             currentWeapon.RemoveStatsFromPlayer();
             Destroy(weaponInstanceBack);
             Destroy(weaponInstanceCombat);
-            currentWeapon = null;
-            weaponEquipped = null;
+            currentWeapon = Resources.Load<WeaponItem>("Default_WeaponItem");
+            weaponEquipped = currentWeapon.GetWeaponObject();
         }
 
         if (weaponInstanceBack != null || weaponInstanceCombat != null)

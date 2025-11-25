@@ -18,6 +18,11 @@ public class CharacterBase : MonoBehaviour
         Player
     }
 
+    public string GetCharacterType()
+    {
+        return characterType.ToString();
+    }
+
     protected virtual void Awake()
     {
         if (numberPool == null)

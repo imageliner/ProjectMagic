@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3526725592341400037}
   - component: {fileID: 8712957058662623964}
   m_Layer: 0
-  m_Name: test_PlayerHitBox
+  m_Name: Default_Hitbox
   m_TagString: PlayerHitbox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

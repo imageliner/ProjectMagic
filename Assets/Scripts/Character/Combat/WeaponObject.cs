@@ -22,15 +22,16 @@ public class WeaponObject : ScriptableObject
 
     public enum ClassType
     {
+        Any,
         Warrior,
         Mage,
         Ranger
     }
 
 
-    public void Attack(int attackID, Transform playerPos, Transform mousePos, string fromEntity)
+    public void Attack(int attackID, Transform playerPos, Transform mousePos, string fromEntity, int damage)
     {
-        attackAbility.Use(attackID, playerPos, fromEntity);
+        attackAbility.Use(attackID, playerPos, fromEntity, damage);
     }
 
     public string GetClass()

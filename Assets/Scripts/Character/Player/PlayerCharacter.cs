@@ -107,7 +107,7 @@ public class PlayerCharacter : CharacterBase
             if(!_combat.isAttacking)
             {
                 _combat.StandardAttack(_gear.weaponEquipped, _mouseTracker.mouseAim, characterType.ToString());
-                if (_gear.weaponEquipped.GetClass() == "Warrior")
+                if (_gear.weaponEquipped.GetClass() == "Warrior" || _gear.weaponEquipped.GetClass() == "Any")
                 {
                     _animator.SetAnimationState(AnimationStates.AttackMelee);
                 }

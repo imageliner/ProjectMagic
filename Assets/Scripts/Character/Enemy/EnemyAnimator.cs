@@ -1,15 +1,18 @@
 using System.Collections;
 using UnityEngine;
 
-public class PlayerAnimator : MonoBehaviour
+public class EnemyAnimator : MonoBehaviour
 {
     [SerializeField] private Animator animator;
-    
+    [SerializeField] private EnemyType _combat;
+
+    public bool spawnHitbox;
 
 
     private void Awake()
     {
         animator = GetComponent<Animator>();
+        _combat = GetComponentInParent<EnemyType>();
     }
 
     public void SetCombatState(bool combatState)
@@ -65,5 +68,13 @@ public class PlayerAnimator : MonoBehaviour
         }
     }
 
-    
+    public void Flag_SpawnHitbox()
+    {
+        _combat.spawnAttack = true;
+    }
+
+    public void Flag_DespawnHitBox()
+    {
+        _combat.spawnAttack = false;
+    }
 }

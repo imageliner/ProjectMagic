@@ -100,9 +100,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterType: 1
   numberPool: {fileID: 0}
+  enemyWeapon: {fileID: -3132096779811524399, guid: 6d49f4f4326a07a4ba55c91eb01b49d4, type: 3}
+  spawnAttack: 0
+  flagHandler: {fileID: 0}
   enemyName: test_Skeleton
   health:
-    baseValue: 20
+    baseValue: 125
   level: 7
   damage: 25
   defence: 5
@@ -126,6 +129,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a41e6e31b0d6b8941a0cb5e8368aa977, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyType: {fileID: 869739792083773649}
   canStrafe: 1
   isAggressive: 1
   target: {fileID: 0}
@@ -230,6 +234,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 443d3d234804c254b82bd15a8ebab45f, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6535363272128979364}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 443d3d234804c254b82bd15a8ebab45f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 9062598632845713253}
   m_SourcePrefab: {fileID: 100100000, guid: 443d3d234804c254b82bd15a8ebab45f, type: 3}
 --- !u!1 &4018726512420528591 stripped
 GameObject:
@@ -258,6 +265,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &9062598632845713253
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4018726512420528591}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6dcc77d9e2dd8ed4e9a0c39243672729, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &4363621712923032437 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 443d3d234804c254b82bd15a8ebab45f, type: 3}

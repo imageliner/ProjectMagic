@@ -22,6 +22,15 @@ public class PlayerCombat : MonoBehaviour
     public Action SheatheWeapon;
     public Action UnsheatheWeapon;
 
+    [SerializeField] private CharacterAnimator_FlagHandler flagHandler;
+
+    private void Awake()
+    {
+        flagHandler = GetComponentInChildren<CharacterAnimator_FlagHandler>();
+        flagHandler.OnSpawnAttack += SpawnHitbox;
+        flagHandler.OnDespawnAttack += DespawnHitbox;
+    }
+
     private void Update()
     {
         if (combatTimer > 0)
@@ -36,6 +45,7 @@ public class PlayerCombat : MonoBehaviour
         }
     }
 
+    
 
     public void StandardAttack(WeaponObject weapon, Vector3 attackDir, string playerAtk)
     {
@@ -58,7 +68,9 @@ public class PlayerCombat : MonoBehaviour
 
         yield return new WaitUntil(() => spawnAttack == true);
 
-        weapon.attackAbility.Use(attackID, transform, playerAtk);
+        int playerDamage = GameManager.singleton.playerStats.statCalcs.CalculatePhysAtkDmg(GameManager.singleton.playerStats.finalPhysAtk);
+
+        weapon.attackAbility.Use(attackID, transform, playerAtk, playerDamage);
         spawnAttack = false;
 
         float elapsed = 0f;
@@ -82,10 +94,10 @@ public class PlayerCombat : MonoBehaviour
 
     public void SpawnHitbox()
     {
-
+        spawnAttack = true;
     }
     public void DespawnHitbox()
     {
-
+        spawnAttack = false;
     }
 }

@@ -6,10 +6,20 @@ using UnityEngine.UI;
 
 public class EnemyType : CharacterBase
 {
+    public WeaponItem enemyWeapon;
+    private WeaponObject enemyWeaponEquipped;
+    private Transform weaponHandSocket;
+    private GameObject weaponInstance;
+
+    public bool spawnAttack;
+
+    [SerializeField] private CharacterAnimator_FlagHandler flagHandler;
+
+
     [SerializeField] private string enemyName;
     [SerializeField] private Resource health;
     [SerializeField] private int level;
-    [SerializeField] private int damage;
+    [SerializeField] private int baseDamage;
     [SerializeField] private int defence;
     [SerializeField] private int expToGive;
 
@@ -29,12 +39,34 @@ public class EnemyType : CharacterBase
         base.Awake();
         _rb = GetComponent<Rigidbody>();
         lootPool = GetComponent<LootPool>();
+        flagHandler = GetComponentInChildren<CharacterAnimator_FlagHandler>();
+        flagHandler.OnSpawnAttack += SpawnHitbox;
+        flagHandler.OnDespawnAttack += DespawnHitbox;
+
+        foreach (var t in GetComponentsInChildren<Transform>(true))
+        {
+            if (t.name == "DEF-hand.socket.R")
+                weaponHandSocket = t;
+        }
+
+        
     }
 
     private void Start()
     {
         health.SetCurrentValue(health.baseValue);
 
+        if (enemyWeapon == null)
+        {
+            enemyWeapon = Resources.Load<WeaponItem>("Default_WeaponItem");
+            enemyWeaponEquipped = enemyWeapon.GetWeaponObject();
+            weaponInstance = Instantiate(enemyWeapon.gameObject, weaponHandSocket);
+        }
+        else
+        {
+            enemyWeaponEquipped = enemyWeapon.GetWeaponObject();
+            weaponInstance = Instantiate(enemyWeapon.gameObject, weaponHandSocket);
+        }
     }
 
     private void Update()
@@ -55,8 +87,16 @@ public class EnemyType : CharacterBase
         {
             PlayerCharacter player = collision.collider.GetComponent<PlayerCharacter>();
             player.TakeDamage(Random.Range(0, 9999), 1);
-            _rb.AddForce((transform.position - collision.transform.position) * 5, ForceMode.Impulse);
+            _rb.AddForce((transform.position - collision.transform.position) * 2.5f, ForceMode.Impulse);
         }
+    }
+
+    public int GetDamage()
+    {
+        int lowAtk = Mathf.CeilToInt(baseDamage - (baseDamage / 2));
+        int highAtk = Mathf.CeilToInt(baseDamage + (baseDamage / 2));
+
+        return Mathf.Max(0, Random.Range(lowAtk - 1, highAtk + 1));
     }
 
     public void TakeDamage(int attackID, int dmg, GameObject obj)
@@ -75,5 +115,14 @@ public class EnemyType : CharacterBase
             health.SubtractResource(dmg);
             _rb.AddForce((transform.position - obj.transform.position) * 5, ForceMode.Impulse);
         }
+    }
+
+    public void SpawnHitbox()
+    {
+        spawnAttack = true;
+    }
+    public void DespawnHitbox()
+    {
+        spawnAttack = false;
     }
 }
