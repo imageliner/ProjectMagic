@@ -100,9 +100,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterType: 1
   numberPool: {fileID: 0}
+  abilities: []
   enemyWeapon: {fileID: -3132096779811524399, guid: 6d49f4f4326a07a4ba55c91eb01b49d4, type: 3}
   spawnAttack: 0
   flagHandler: {fileID: 0}
+  enemyAbilities:
+  - {fileID: 11400000, guid: 65431a02f5e728048ae4f84ea77d4048, type: 2}
+  - {fileID: 11400000, guid: 1614cfabcd65bf549b4b0d6368ecec5b, type: 2}
   enemyName: test_Skeleton
   health:
     baseValue: 125

@@ -38,10 +38,19 @@ public class OvertimeHitbox : Hitbox
                 }
                 else
                 {
-                    player.TakeDamage(attackID, damage);
-                    HitEffectPool effPool = FindAnyObjectByType<HitEffectPool>();
-                    HitEffect newEffect = effPool.GetAvailableEffect();
-                    newEffect.UseEffect(impactEffect, player.transform);
+                    if (timer != timeForConsecutiveHits)
+                    {
+                        timer += 1 * Time.deltaTime;
+                    }
+
+                    if (timer >= timeForConsecutiveHits)
+                    {
+                        player.TakeDamage(attackID, damage);
+                        HitEffectPool effPool = FindAnyObjectByType<HitEffectPool>();
+                        HitEffect newEffect = effPool.GetAvailableEffect();
+                        newEffect.UseEffect(impactEffect, player.transform);
+                        timer = 0;
+                    }
                 }
             }
         }
@@ -56,14 +65,14 @@ public class OvertimeHitbox : Hitbox
                     timer += 1 * Time.deltaTime;
                 }
                 
-                 if (timer >= timeForConsecutiveHits)
-                 {
-                     enemy.TakeDamage(attackID, damage, this.gameObject, knockback);
-                     HitEffectPool effPool = FindAnyObjectByType<HitEffectPool>();
-                     HitEffect newEffect = effPool.GetAvailableEffect();
-                     newEffect.UseEffect(impactEffect, enemy.transform);
-                     timer = 0;
-                 }
+                if (timer >= timeForConsecutiveHits)
+                {
+                    enemy.TakeDamage(attackID, damage, this.gameObject, knockback);
+                    HitEffectPool effPool = FindAnyObjectByType<HitEffectPool>();
+                    HitEffect newEffect = effPool.GetAvailableEffect();
+                    newEffect.UseEffect(impactEffect, enemy.transform);
+                    timer = 0;
+                }
                 
             }
         }

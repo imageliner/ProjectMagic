@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using static CharacterBase;
 
 
 public class CharacterAI : MonoBehaviour
@@ -260,6 +261,40 @@ public class CharacterAI : MonoBehaviour
         enemyType.spawnAttack = false;
 
         
+
+        yield return new WaitForSeconds(1f);
+    }
+
+    public IEnumerator CastTargetAbility()
+    {
+        PlayAttackAnim();
+        enemyType.spawnAttack = false;
+
+        yield return new WaitUntil(() => enemyType.spawnAttack == true);
+        ownerRB.AddForce(transform.forward * 3, ForceMode.Impulse);
+
+        //enemyType.enemyAbilities[Random.Range(0, enemyType.enemyAbilities.Length)].Use(Random.Range(0, 999), target, enemyType.GetCharacterType(), enemyType.GetDamage()/2);
+        enemyType.enemyAbilities[0].Use(Random.Range(0, 999), target, enemyType.GetCharacterType(), enemyType.GetDamage() / 2);
+        enemyType.spawnAttack = false;
+
+
+
+        yield return new WaitForSeconds(1f);
+    }
+
+    public IEnumerator CastAbility()
+    {
+        PlayAttackAnim();
+        enemyType.spawnAttack = false;
+
+        yield return new WaitUntil(() => enemyType.spawnAttack == true);
+        ownerRB.AddForce(transform.forward * 3, ForceMode.Impulse);
+
+        //enemyType.enemyAbilities[Random.Range(0, enemyType.enemyAbilities.Length)].Use(Random.Range(0, 999), target, enemyType.GetCharacterType(), enemyType.GetDamage()/2);
+        enemyType.enemyAbilities[1].Use(Random.Range(0, 999), transform, enemyType.GetCharacterType(), enemyType.GetDamage() / 2);
+        enemyType.spawnAttack = false;
+
+
 
         yield return new WaitForSeconds(1f);
     }
