@@ -8,6 +8,8 @@ public class CharacterBase : MonoBehaviour
 
     [SerializeField] private DisplayNumberPool numberPool;
 
+    [SerializeField] protected CharacterAbility[] abilities;
+
     //keep track of attack hitboxes received
     protected HashSet<int> processedAttackIDs = new HashSet<int>();
 

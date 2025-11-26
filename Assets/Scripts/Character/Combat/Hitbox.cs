@@ -8,6 +8,7 @@ public class Hitbox : MonoBehaviour
     public bool debugHitbox = false;
     public int debugDmg = 0;
 
+    [SerializeField] protected float knockback;
 
     public int damage;
 
@@ -39,7 +40,7 @@ public class Hitbox : MonoBehaviour
             if (enemy != null)
             {
                 GameManager.singleton.hitstopManager.HitStop?.Invoke();
-                enemy.TakeDamage(attackID, damage, this.gameObject);
+                enemy.TakeDamage(attackID, damage, this.gameObject, knockback);
                 HitEffectPool effPool = FindAnyObjectByType<HitEffectPool>();
                 HitEffect newEffect = effPool.GetAvailableEffect();
                 newEffect.UseEffect(impactEffect, enemy.transform);

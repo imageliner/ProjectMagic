@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3526725592341400037}
   - component: {fileID: 2445610576967521656}
   m_Layer: 0
-  m_Name: Ability_IceBolt
+  m_Name: Hitbox_IceBolt
   m_TagString: PlayerHitbox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -128,6 +128,7 @@ MonoBehaviour:
   fromEntity: NPC
   debugHitbox: 0
   debugDmg: 0
+  knockback: 3
   damage: 0
   impactEffect: {fileID: 7920742112468597477}
 --- !u!1 &6648335517501646293

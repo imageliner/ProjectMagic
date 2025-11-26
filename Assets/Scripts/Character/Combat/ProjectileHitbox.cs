@@ -32,7 +32,7 @@ public class ProjectileHitbox : Hitbox
             EnemyType enemy = other.GetComponent<EnemyType>();
             if (enemy != null)
             {
-                enemy.TakeDamage(attackID, damage, this.gameObject);
+                enemy.TakeDamage(attackID, damage, this.gameObject, knockback);
                 HitEffectPool effPool = FindAnyObjectByType<HitEffectPool>();
                 HitEffect newEffect = effPool.GetAvailableEffect();
                 newEffect.UseEffect(impactEffect, enemy.transform);

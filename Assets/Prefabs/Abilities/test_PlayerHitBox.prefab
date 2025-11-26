@@ -126,6 +126,7 @@ MonoBehaviour:
   fromEntity: NPC
   debugHitbox: 0
   debugDmg: 0
+  knockback: 4
   damage: 0
   impactEffect: {fileID: 5086735921427531221}
 --- !u!1001 &6161359580204659180

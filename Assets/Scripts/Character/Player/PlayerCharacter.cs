@@ -58,6 +58,15 @@ public class PlayerCharacter : CharacterBase
         lookRotation.z = 0;
         if (_movement.isMoving)
             transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
+
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            abilities[0].Use(Random.Range(0,999), transform, characterType.ToString(), 15);
+        }
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            abilities[1].Use(Random.Range(0, 999), _mouseTracker.transform, characterType.ToString(), 15);
+        }
     }
 
     private void ApplyHitStop()

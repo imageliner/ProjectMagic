@@ -100,7 +100,7 @@ public class EnemyType : CharacterBase
         return Mathf.Max(0, Random.Range(lowAtk - 1, highAtk + 1));
     }
 
-    public void TakeDamage(int attackID, int dmg, GameObject obj)
+    public void TakeDamage(int attackID, int dmg, GameObject obj, float knockback)
     {
         if (!processedAttackIDs.Contains(attackID))
         {
@@ -117,8 +117,13 @@ public class EnemyType : CharacterBase
 
             SpawnDmgNumber(dmg, Color.red);
             health.SubtractResource(dmg);
-            _rb.AddForce((transform.position - obj.transform.position) * 5, ForceMode.Impulse);
+            TakeKnockback(obj, knockback);
         }
+    }
+
+    private void TakeKnockback(GameObject obj, float amount)
+    {
+        _rb.AddForce((transform.position - obj.transform.position) * amount, ForceMode.Impulse);
     }
 
     public void SpawnHitbox()
