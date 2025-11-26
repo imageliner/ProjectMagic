@@ -20,6 +20,11 @@ public class ProjectileHitbox : Hitbox
                     player.TakeDamage(Random.Range(1, 9999), debugDmg);
                 else
                     player.TakeDamage(attackID, damage);
+
+                HitEffectPool effPool = FindAnyObjectByType<HitEffectPool>();
+                HitEffect newEffect = effPool.GetAvailableEffect();
+                newEffect.UseEffect(impactEffect, player.transform);
+                Destroy(this.gameObject);
             }
         }
         if (fromEntity == "Player")
@@ -28,6 +33,10 @@ public class ProjectileHitbox : Hitbox
             if (enemy != null)
             {
                 enemy.TakeDamage(attackID, damage, this.gameObject);
+                HitEffectPool effPool = FindAnyObjectByType<HitEffectPool>();
+                HitEffect newEffect = effPool.GetAvailableEffect();
+                newEffect.UseEffect(impactEffect, enemy.transform);
+                Destroy(this.gameObject);
             }
         }
 

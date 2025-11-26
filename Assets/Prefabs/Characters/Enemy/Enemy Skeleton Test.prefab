@@ -107,7 +107,7 @@ MonoBehaviour:
   health:
     baseValue: 125
   level: 7
-  damage: 25
+  baseDamage: 0
   defence: 5
   expToGive: 215
   hpBar: {fileID: 8093510018350492588}
@@ -117,6 +117,7 @@ MonoBehaviour:
   nameText: {fileID: 8160411978212764551}
   _rb: {fileID: 0}
   lootPool: {fileID: 0}
+  deathEffect: {fileID: 7226888052703040407, guid: 7ec363c8df426644ea85f8d6d570561c, type: 3}
 --- !u!114 &5111156286013075849
 MonoBehaviour:
   m_ObjectHideFlags: 0

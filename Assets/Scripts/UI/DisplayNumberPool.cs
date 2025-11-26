@@ -18,7 +18,7 @@ public class DisplayNumberPool : MonoBehaviour
     private void CreatePooledNumber()
     {
         UIDamageNumber numberClone = Instantiate(numberRef, transform);
-        numberClone.InitializePooledNumbers(this);
+        numberClone.InitializePooledNumber(this);
 
         numberClone.gameObject.name = availableNumbers.Count.ToString();
         availableNumbers.Add(numberClone);

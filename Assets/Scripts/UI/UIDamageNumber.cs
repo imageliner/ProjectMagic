@@ -31,7 +31,7 @@ public class UIDamageNumber : MonoBehaviour
         Invoke("ResetNumber", 1f);
     }
 
-    public void InitializePooledNumbers(DisplayNumberPool owner)
+    public void InitializePooledNumber(DisplayNumberPool owner)
     {
         poolOwner = owner;
     }

@@ -33,6 +33,7 @@ public class EnemyType : CharacterBase
 
     [SerializeField] LootPool lootPool;
 
+    [SerializeField] private ParticleSystem deathEffect;
 
     protected override void Awake()
     {
@@ -105,6 +106,9 @@ public class EnemyType : CharacterBase
         {
             if (health.currentValue - dmg <= 0)
             {
+                //Quaternion effRot = new Vector3 (0, 0, 0);
+                ParticleSystem deathEffClone = Instantiate(deathEffect, transform.position, deathEffect.transform.rotation);
+                deathEffClone.Play();
                 GameManager.singleton.playerLevel.AddEXP(expToGive);
                 lootPool.GetRandomDrop();
                 lootPool.GetCurrencyDropAmount();

@@ -240,8 +240,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pickUpKey: 102
-  itemData: {fileID: 11400000, guid: 4874b5272c021bb438bae8dbcc64c0ab, type: 2}
   interactCanvas: {fileID: 4427232476341018082}
+  itemData: {fileID: 11400000, guid: 4874b5272c021bb438bae8dbcc64c0ab, type: 2}
   pickupEffect: {fileID: 1361300960567682}
 --- !u!1 &5854779105855102227
 GameObject:
