@@ -21,8 +21,12 @@ public class PlayerInputHandler : MonoBehaviour
         controls.Player.Look.performed += OnLookPerformed;
         controls.Player.Move.performed += OnMovePerformed;
         controls.Player.Move.canceled += OnMoveCanceled;
-        controls.Player.Dash.performed += OnDashPerformed;
         controls.Player.Attack.performed += OnAttackPerformed;
+
+        controls.Player.Ability0.performed += OnAbility0Performed;
+        controls.Player.Ability1.performed += OnAbility1Performed;
+        controls.Player.Ability2.performed += OnAbility2Performed;
+
     }
 
     private void OnLookPerformed(InputAction.CallbackContext context)
@@ -50,6 +54,21 @@ public class PlayerInputHandler : MonoBehaviour
     private void OnAttackPerformed(InputAction.CallbackContext context)
     {
         playerCharacter.Attack();
+    }
+
+    private void OnAbility0Performed(InputAction.CallbackContext context)
+    {
+        playerCharacter.AbilityInput(0);
+    }
+
+    private void OnAbility1Performed(InputAction.CallbackContext context)
+    {
+        playerCharacter.AbilityInput(1);
+    }
+
+    private void OnAbility2Performed(InputAction.CallbackContext context)
+    {
+        playerCharacter.AbilityInput(2);
     }
 
     private void Update()

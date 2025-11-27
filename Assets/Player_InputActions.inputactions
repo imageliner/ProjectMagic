@@ -69,9 +69,27 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Dash",
+                    "name": "Ability0",
                     "type": "Button",
                     "id": "641cd816-40e6-41b4-8c3d-04687c349290",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Ability1",
+                    "type": "Button",
+                    "id": "693a507a-7069-43cd-b43d-2ecae9dfd2e5",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Ability2",
+                    "type": "Button",
+                    "id": "f5ff169f-9079-4080-8f94-77b4b94ad14c",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -350,18 +368,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
-                    "action": "Dash",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "9a25553f-4560-48db-8076-e832b5749bae",
-                    "path": "<Keyboard>/space",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard&Mouse",
-                    "action": "Dash",
+                    "action": "Ability0",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -372,7 +379,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "Dash",
+                    "action": "Ability0",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -383,7 +390,29 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "XR",
-                    "action": "Dash",
+                    "action": "Ability0",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "98f0c0e0-ee9d-40de-9e03-0912173b667a",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Ability1",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ff9d7364-4ac8-4e93-8455-e35e1d5f9b46",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Ability2",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

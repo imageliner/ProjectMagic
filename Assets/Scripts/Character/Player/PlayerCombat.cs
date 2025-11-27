@@ -12,8 +12,7 @@ public class PlayerCombat : MonoBehaviour
     private float attackDashPower = 5f;
     private float attackDashTime = 0.15f;
     private float attackCoolDown = 0.5f;
-    private int attackCountMax = 2;
-    private int attackCount = 0;
+
 
     private int currentAttackID = 0;
 
@@ -86,13 +85,13 @@ public class PlayerCombat : MonoBehaviour
             elapsed += Time.deltaTime;
             yield return null;
         }
-        attackCount++;
         
         yield return new WaitForSeconds(attackCoolDown);
 
         isAttacking = false;
-        attackCount = 0;
     }
+
+
 
     public void SpawnHitbox()
     {

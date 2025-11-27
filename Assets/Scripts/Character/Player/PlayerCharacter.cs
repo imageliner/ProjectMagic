@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using static PlayerAnimator;
@@ -24,6 +25,10 @@ public class PlayerCharacter : CharacterBase
 
     public Vector3 mouseWorldPos;
 
+    public Action[] useAbilityEvents = new Action[3];
+
+    private Coroutine[] cooldownCoroutines;
+
     protected override void Awake()
     {
         base.Awake();
@@ -46,6 +51,8 @@ public class PlayerCharacter : CharacterBase
         _combat.SheatheWeapon += CombatState;
         _combat.UnsheatheWeapon += CombatState;
         GameManager.singleton.hitstopManager.HitStop += ApplyHitStop;
+
+        cooldownCoroutines = new Coroutine[abilities.Length];
     }
     private void Update()
     {
@@ -59,14 +66,16 @@ public class PlayerCharacter : CharacterBase
         if (_movement.isMoving)
             transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
 
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            abilities[0].Use(Random.Range(0,999), transform, characterType.ToString(), 15);
-        }
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            abilities[1].Use(Random.Range(0, 999), _mouseTracker.transform, characterType.ToString(), 15);
-        }
+        //if (Input.GetKeyDown(KeyCode.Q))
+        //{
+        //    abilities[0].Use(UnityEngine.Random.Range(0, 999), transform, characterType.ToString(), 15);
+        //    useAbilityQ?.Invoke();
+        //}
+        //if (Input.GetKeyDown(KeyCode.E))
+        //{
+        //    abilities[1].Use(UnityEngine.Random.Range(0, 999), _mouseTracker.transform, characterType.ToString(), 15);
+        //    useAbilityE?.Invoke();
+        //}
     }
 
     private void ApplyHitStop()
@@ -142,5 +151,39 @@ public class PlayerCharacter : CharacterBase
             SpawnDmgNumber(dmg, Color.yellow);
             health.SubtractResource(dmg);
         }
+    }
+
+    public void AbilityInput(int index)
+    {
+        var ability = abilities[index];
+        if (ability == null) return;
+
+        if (ability.currentCooldown > 0) return;
+
+        Transform t = ability.ability.mousePosAim ? _mouseTracker.transform : transform;
+        ability.ability.Use(UnityEngine.Random.Range(0, 999), t, characterType.ToString(), 15);
+
+        ability.currentCooldown = ability.ability.GetCooldown();
+
+        if (cooldownCoroutines[index] == null)
+            cooldownCoroutines[index] = StartCoroutine(AbilityCooldown(index, ability));
+
+        useAbilityEvents[index]?.Invoke();
+    }
+
+    private IEnumerator AbilityCooldown(int index, AbilityClass ability)
+    {
+        float cd = ability.ability.GetCooldown();
+        ability.currentCooldown = cd;
+
+        while (ability.currentCooldown > 0)
+        {
+            ability.currentCooldown -= Time.deltaTime;
+            yield return null;
+        }
+
+        ability.currentCooldown = 0;
+
+        cooldownCoroutines[index] = null;
     }
 }
