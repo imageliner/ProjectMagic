@@ -15,8 +15,6 @@ public class EnemyType : CharacterBase
 
     [SerializeField] private CharacterAnimator_FlagHandler flagHandler;
 
-    public CharacterAbility[] enemyAbilities;
-
     [SerializeField] private string enemyName;
     [SerializeField] private Resource health;
     [SerializeField] private int level;

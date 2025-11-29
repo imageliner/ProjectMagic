@@ -33,8 +33,7 @@ public class UIPlayerHUD : MonoBehaviour
     {
         int currentHP = GameManager.singleton.playerStats.health.currentValue;
         int maxHP = GameManager.singleton.playerStats.maxHealth;
-        //int currentStam = GameManager.singleton.playerStats.currentStamina;
-        //int maxStam = GameManager.singleton.playerStats.maxStamina;
+
         int currentMana = GameManager.singleton.playerStats.mana.currentValue;
         int maxMana = GameManager.singleton.playerStats.maxMana;
 
@@ -42,24 +41,6 @@ public class UIPlayerHUD : MonoBehaviour
         float healthCurrentPercent = (float)currentHP / maxHP;
         healthBarSlider.value = healthCurrentPercent;
 
-        //staminaBarText.text = $"{currentStam} / {maxStam}";
-        //float staminaCurrentPercent = (float)currentStam / maxStam;
-        //staminaBarSlider.value = staminaCurrentPercent;
-
-        //stamina cooldown timer
-        //if (currentStam < maxStam)
-        //{
-        //    staminaRegenTimer += Time.deltaTime;
-        //    if (staminaRegenTimer >= staminaRegenInterval)
-        //    {
-        //        staminaCurrent += 1;
-        //        staminaRegenTimer = 0f;
-        //    }
-        //}
-        //else
-        //{
-        //    staminaRegenTimer = 0f;
-        //}
 
         manaBarText.text = $"{currentMana} / {maxMana}";
         float manaCurrentPercent = (float)currentMana / maxMana;

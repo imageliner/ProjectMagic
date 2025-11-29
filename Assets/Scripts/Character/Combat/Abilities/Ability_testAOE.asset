@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89e3c98b29137684c8293a7e594a5309, type: 3}
   m_Name: Ability_testAOE
   m_EditorClassIdentifier: 
+  icon: {fileID: 21300000, guid: 6eed21ce7bc004d4daace9baaf267e6a, type: 3}
   mousePosAim: 1
   cooldown: 15
+  manaCost: 5
   abilityPrefab: {fileID: 3251799386050929195, guid: ebf639b1be83752418d710961cde164c, type: 3}
   lifeTime: 4.5
   timeForConsecutiveHits: 0.5

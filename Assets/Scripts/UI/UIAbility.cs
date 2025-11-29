@@ -23,6 +23,7 @@ public class UIAbility : MonoBehaviour
             {
                 float maxCD = abilities[i].ability.GetCooldown();
                 float currentCD = abilities[i].currentCooldown;
+                abilityIcons[i].abilityIcon.sprite = abilities[i].ability.icon;
                 float fill = 1f - (currentCD / maxCD);
                 abilityIcons[i].CooldownVisual(fill);
             }

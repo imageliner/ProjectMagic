@@ -8,7 +8,7 @@ public class Ability_testAOE : CharacterAbility
     [SerializeField] private float lifeTime = 0.5f;
     [SerializeField] private float timeForConsecutiveHits = 0.5f;
 
-    public override void Use(int attackID, Transform t, string fromEntity, int damage)
+    public override void Use(int attackID, Transform t, string fromEntity, int damage, Rigidbody ownerRB)
     {
         Vector3 spawnPos = t.position;
         Quaternion spawnRot = t.rotation;

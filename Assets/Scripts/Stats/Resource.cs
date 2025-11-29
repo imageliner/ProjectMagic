@@ -41,9 +41,8 @@ public class Resource
 
     public void SubtractResource(int amount)
     {
-        if (currentValue - amount <= 0)
+        currentValue -= amount;
+        if (currentValue < 0)
             currentValue = 0;
-        else
-            currentValue -= amount;
     }
 }

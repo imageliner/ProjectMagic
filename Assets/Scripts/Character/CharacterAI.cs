@@ -257,7 +257,7 @@ public class CharacterAI : MonoBehaviour
         yield return new WaitUntil(() => enemyType.spawnAttack == true);
         ownerRB.AddForce(transform.forward * 3, ForceMode.Impulse);
 
-        weapon.attackAbility.Use(attackID, transform, enemyAtk, enemyType.GetDamage());
+        weapon.attackAbility.Use(attackID, transform, enemyAtk, enemyType.GetDamage(), ownerRB);
         enemyType.spawnAttack = false;
 
         
@@ -274,7 +274,7 @@ public class CharacterAI : MonoBehaviour
         ownerRB.AddForce(transform.forward * 3, ForceMode.Impulse);
 
         //enemyType.enemyAbilities[Random.Range(0, enemyType.enemyAbilities.Length)].Use(Random.Range(0, 999), target, enemyType.GetCharacterType(), enemyType.GetDamage()/2);
-        enemyType.enemyAbilities[0].Use(Random.Range(0, 999), target, enemyType.GetCharacterType(), enemyType.GetDamage() / 2);
+        enemyType.abilities[0].ability.Use(Random.Range(0, 999), target, enemyType.GetCharacterType(), enemyType.GetDamage() / 2, ownerRB);
         enemyType.spawnAttack = false;
 
 
@@ -291,7 +291,7 @@ public class CharacterAI : MonoBehaviour
         ownerRB.AddForce(transform.forward * 3, ForceMode.Impulse);
 
         //enemyType.enemyAbilities[Random.Range(0, enemyType.enemyAbilities.Length)].Use(Random.Range(0, 999), target, enemyType.GetCharacterType(), enemyType.GetDamage()/2);
-        enemyType.enemyAbilities[1].Use(Random.Range(0, 999), transform, enemyType.GetCharacterType(), enemyType.GetDamage() / 2);
+        enemyType.abilities[1].ability.Use(Random.Range(0, 999), transform, enemyType.GetCharacterType(), enemyType.GetDamage() / 2, ownerRB);
         enemyType.spawnAttack = false;
 
 

@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -13,39 +14,43 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float dashCoolDown = 0.5f;
     [SerializeField] private int dashStaminaNeeded = 0;
 
+    private bool dashing = false;
+    private float dashDuration = 0.25f;
+
     public void Movement(Vector2 inputAxis, Vector3 moveDir)
     {
-        //if (isDashing || isAttacking) return;
+        if (dashing) return;
 
         transform.position += moveDir * moveSpeed * Time.deltaTime;
 
         bool moving = moveDir.sqrMagnitude > 0.01f;
         isMoving = moving;
     }
-    public void Dash()
+
+    public void StartDash(Vector3 direction, float force, float duration, Rigidbody rb)
     {
-        //if (!isDashing && GameManager.singleton.playerStats.currentStamina >= dashStaminaNeeded)
-        //{
-            //animator.SetTrigger("startDash");
-            //Vector3 dashDir = new Vector3(mousePosition.x, 0f, mousePosition.z).normalized;
-            //StartCoroutine(DashCoroutine(dashDir));
-        //}
+        if (!dashing)
+            StartCoroutine(DashRoutine(direction, force, duration, rb));
     }
 
-    //private IEnumerator DashCoroutine(Vector3 direction)
-    //{
-    //    isDashing = true;
-    //
-    //    GameManager.singleton.playerStats.SubtractStamina(dashStaminaNeeded);
-    //    float elapsed = 0f;
-    //    while (elapsed < dashTime)
-    //    {
-    //        transform.position += direction * dashPower * Time.deltaTime;
-    //        elapsed += Time.deltaTime;
-    //        yield return null;
-    //    }
-    //    yield return new WaitForSeconds(dashCoolDown);
-    //    isDashing = false;
-    //
-    //}
+    private IEnumerator DashRoutine(Vector3 direction, float force, float duration, Rigidbody rb)
+    {
+        dashing = true;
+
+        float time = 0f;
+        // Optional: disable regular movement while dashing
+        //_movement.canMove = false;
+
+        while (time < duration)
+        {
+            //rb.MovePosition(rb.position + direction * force * Time.deltaTime);
+            rb.transform.position += direction * force * Time.deltaTime;
+            time += Time.deltaTime;
+            yield return null;
+        }
+
+        //_movement.canMove = true; // restore movement control
+        dashing = false;
+    }
+
 }

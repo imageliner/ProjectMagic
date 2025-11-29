@@ -15,7 +15,6 @@ public class InventoryItem : ScriptableObject
 
     
 
-    public bool canEquip;
     public bool canDrop;
 
     public Color SetRarityColor()

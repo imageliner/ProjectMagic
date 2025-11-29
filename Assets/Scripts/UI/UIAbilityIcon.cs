@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 public class UIAbilityIcon : MonoBehaviour
 {
-    [SerializeField] private Image abilityIcon;
+    public Image abilityIcon;
 
     public void CooldownVisual(float fill)
     {

@@ -38,6 +38,13 @@ public class Inventory : MonoBehaviour
         FindAnyObjectByType<UIInventory>().RemoveSpecificItem(toRemove);
     }
 
+    public void DeleteItem(InventoryItem toDelete)
+    {
+        allItems.Remove(toDelete);
+
+        FindAnyObjectByType<UIInventory>().RemoveSpecificItem(toDelete);
+    }
+
     public void RemoveItemForEquip(InventoryItem toRemove)
     {
         allItems.Remove(toRemove);
@@ -93,6 +100,21 @@ public class Inventory : MonoBehaviour
         equippedWeapon = newWeapon;
         FindAnyObjectByType<UIEquipment>().EquipToSlot(newWeapon);
         FindAnyObjectByType<PlayerGearHandler>().EquipWeapon(newWeapon.weaponItem);
+
+        //Update visuals of player
+        //Update UI (equipped) checkmark
+    }
+
+    public void UseItem(UsableItem newUsable)
+    {
+        if (newUsable.usableType == UsableType.Health)
+            GameManager.singleton.playerStats.health.AddResource(newUsable.value);
+        if (newUsable.usableType == UsableType.Mana)
+            GameManager.singleton.playerStats.mana.AddResource(newUsable.value);
+        
+
+        DeleteItem(newUsable);
+
 
         //Update visuals of player
         //Update UI (equipped) checkmark

@@ -5,7 +5,7 @@ public class Ability_testMelee : CharacterAbility
 {
     [SerializeField] public GameObject attackHitBox;
 
-    public override void Use(int attackID, Transform t, string fromEntity, int damage)
+    public override void Use(int attackID, Transform t, string fromEntity, int damage, Rigidbody ownerRB)
     {
         GameObject attackBox = Instantiate(attackHitBox, t);
         Hitbox hitbox = attackBox.GetComponent<Hitbox>();

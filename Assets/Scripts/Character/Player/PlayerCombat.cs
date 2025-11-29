@@ -71,7 +71,7 @@ public class PlayerCombat : MonoBehaviour
 
         int playerDamage = GameManager.singleton.playerStats.statCalcs.CalculatePhysAtkDmg(GameManager.singleton.playerStats.finalPhysAtk);
 
-        weapon.attackAbility.Use(attackID, transform, playerAtk, playerDamage);
+        weapon.attackAbility.Use(attackID, transform, playerAtk, playerDamage, null);
         spawnAttack = false;
 
         float elapsed = 0f;

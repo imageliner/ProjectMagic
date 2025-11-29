@@ -12,10 +12,12 @@ public class UIInventorySlot : MonoBehaviour
     public InventoryItem itemData;
 
     [SerializeField] private UIItemDescription itemDesc;
+    [SerializeField] private UIUsableDescription usableDesc;
 
     private void Awake()
     {
         itemDesc = FindAnyObjectByType<UIItemDescription>();
+        usableDesc = FindAnyObjectByType<UIUsableDescription>();
     }
 
     public void InitializeItemDisplay(InventoryItem item)
@@ -48,6 +50,19 @@ public class UIInventorySlot : MonoBehaviour
     {
         Vector3 posOffset = new Vector3(-100, 25, 0);
         Vector3 newPos = transform.position + posOffset;
+
+        if (itemData is UsableItem usable)
+        {
+            if (usableDesc == null)
+            {
+                usableDesc = FindAnyObjectByType<UIUsableDescription>();
+            }
+            usableDesc.EnableWindow();
+            usableDesc.transform.position = newPos;
+            usableDesc.InitializeUsableDescription(usable);
+
+            return;
+        }
 
         if (itemData is EquipInventoryItem equip)
         {

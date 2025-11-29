@@ -9,12 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: daacdc6924415d84f9c5dd72d81032ab, type: 3}
-  m_Name: Staff
+  m_Script: {fileID: 11500000, guid: b9608805ded368d438420e8400ab7b4e, type: 3}
+  m_Name: Ability_testDash
   m_EditorClassIdentifier: 
-  itemID: 0
-  itemName: Staff
-  itemDescription: A Magical Staff
-  itemIcon: {fileID: 21300000, guid: 02ff976d39577774bb44b83610e61dec, type: 3}
-  itemRarity: 1
-  canDrop: 0
+  icon: {fileID: 21300000, guid: 4c2d00409c0b3494f9802468f35fd9b5, type: 3}
+  mousePosAim: 1
+  cooldown: 2
+  manaCost: 2
+  attackHitBox: {fileID: 0}
+  dashForce: 15
+  dashDuration: 0.1

@@ -153,22 +153,35 @@ public class PlayerCharacter : CharacterBase
         }
     }
 
+    public void UseMana(int amt)
+    {
+        Resource mana = GameManager.singleton.playerStats.mana;
+
+        mana.SubtractResource(amt);
+    }
+
     public void AbilityInput(int index)
     {
         var ability = abilities[index];
         if (ability == null) return;
+        int manaCost = ability.ability.GetManaCost();
 
-        if (ability.currentCooldown > 0) return;
+        if (ability.currentCooldown > 0 || GameManager.singleton.playerStats.mana.currentValue < manaCost) return;
+
 
         Transform t = ability.ability.mousePosAim ? _mouseTracker.transform : transform;
-        ability.ability.Use(UnityEngine.Random.Range(0, 999), t, characterType.ToString(), 15);
+        ability.ability.Use(UnityEngine.Random.Range(0, 999), t, characterType.ToString(), 15, _rb);
 
         ability.currentCooldown = ability.ability.GetCooldown();
 
         if (cooldownCoroutines[index] == null)
             cooldownCoroutines[index] = StartCoroutine(AbilityCooldown(index, ability));
 
+        
+
         useAbilityEvents[index]?.Invoke();
+
+        UseMana(manaCost);
     }
 
     private IEnumerator AbilityCooldown(int index, AbilityClass ability)

@@ -15,9 +15,8 @@ MonoBehaviour:
   itemID: 0
   itemName: Developer Sword
   itemDescription: The Dev Sword
-  itemIcon: {fileID: 21300000, guid: ce683041f000c7c48b73e8fbda566384, type: 3}
+  itemIcon: {fileID: 21300000, guid: 90e99a7fde056a4418b9fe16084adb5c, type: 3}
   itemRarity: 4
-  canEquip: 1
   canDrop: 1
   equipType: 2
   weaponItem: {fileID: -3132096779811524399, guid: 6249ced0d5db6194e969871ee866094b, type: 3}
