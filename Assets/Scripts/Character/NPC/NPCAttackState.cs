@@ -6,7 +6,7 @@ public class NPCAttackState : NPCState
     {
         int randomInt = Random.Range(0, 100);
         if (randomInt >= 25)
-            character.StartCoroutine(character.Attack(character.enemyType.enemyWeapon.GetWeaponObject(), character.targetDir, 0, character.enemyType.GetCharacterType()));
+            character.StartCoroutine(character.Attack(character.enemyType.enemyWeapon.GetGearObject(), character.targetDir, 0, character.enemyType.GetCharacterType()));
         if (randomInt <= 25)
             if (randomInt <= 15)
                 character.StartCoroutine(character.CastTargetAbility());

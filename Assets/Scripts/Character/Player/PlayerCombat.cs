@@ -48,7 +48,7 @@ public class PlayerCombat : MonoBehaviour
 
     
 
-    public void StandardAttack(WeaponObject weapon, Vector3 attackDir, string playerAtk)
+    public void StandardAttack(GearObject weapon, Vector3 attackDir, string playerAtk)
     {
         if (!isAttacking)
         {
@@ -62,7 +62,7 @@ public class PlayerCombat : MonoBehaviour
         }
     }
 
-    private IEnumerator Attack(WeaponObject weapon, Vector3 direction, int attackID, string playerAtk)
+    private IEnumerator Attack(GearObject weapon, Vector3 direction, int attackID, string playerAtk)
     {
         isAttacking = true;
         spawnAttack = false;

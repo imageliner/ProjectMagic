@@ -1,10 +1,11 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-[CreateAssetMenu(fileName = "WeaponObject", menuName = "Scriptable Objects/WeaponObject")]
-public class WeaponObject : ScriptableObject
+[CreateAssetMenu(fileName = "Gear", menuName = "Gears/GearObject")]
+public class GearObject : ScriptableObject
 {
     [SerializeField] private ClassType classType;
+    [SerializeField] private GearType gearType;
     public CharacterAbility attackAbility;
 
     [SerializeField] private string itemName;
@@ -28,6 +29,13 @@ public class WeaponObject : ScriptableObject
         Ranger
     }
 
+    public enum GearType
+    {
+        Weapon,
+        Helmet,
+        Armor
+    }
+
 
     public void Attack(int attackID, Transform playerPos, Transform mousePos, string fromEntity, int damage)
     {
@@ -37,6 +45,11 @@ public class WeaponObject : ScriptableObject
     public string GetClass()
     {
         return classType.ToString();
+    }
+
+    public string GetGearType()
+    {
+        return gearType.ToString();
     }
 
     public void AddStats()

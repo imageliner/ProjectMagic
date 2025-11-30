@@ -9,12 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: daacdc6924415d84f9c5dd72d81032ab, type: 3}
-  m_Name: Staff
+  m_Script: {fileID: 11500000, guid: 219ead047b4df764db5e47dd8c2cd65a, type: 3}
+  m_Name: Helmet_Iron
   m_EditorClassIdentifier: 
   itemID: 0
-  itemName: Staff
-  itemDescription: A Magical Staff
-  itemIcon: {fileID: 21300000, guid: 02ff976d39577774bb44b83610e61dec, type: 3}
+  itemName: Test Helmet
+  itemDescription: 
+  itemIcon: {fileID: 21300000, guid: b227c6c1c35b36940b602110d9556b13, type: 3}
   itemRarity: 1
   canDrop: 1
+  equipType: 0
+  gearItem: {fileID: -3132096779811524399, guid: e390e6af525bf8449abf7a095df6e1c2, type: 3}

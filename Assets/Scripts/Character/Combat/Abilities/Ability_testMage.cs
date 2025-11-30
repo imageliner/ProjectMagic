@@ -7,7 +7,7 @@ public class Ability_testMage : CharacterAbility
     [SerializeField] public GameObject abilityPrefab;
     [SerializeField] private float lifeTime = 0.5f;
 
-    public override void Use(int attackID, Transform t, string fromEntity, int damage)
+    public override void Use(int attackID, Transform t, string fromEntity, int damage, Rigidbody ownerRB)
     {
         Vector3 spawnPos = t.position + t.forward * 2;
         Quaternion spawnRot = t.rotation;

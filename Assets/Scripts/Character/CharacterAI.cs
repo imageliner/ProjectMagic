@@ -249,7 +249,7 @@ public class CharacterAI : MonoBehaviour
         yield return new WaitForSeconds(2);
     }
 
-    public IEnumerator Attack(WeaponObject weapon, Vector3 direction, int attackID, string enemyAtk)
+    public IEnumerator Attack(GearObject weapon, Vector3 direction, int attackID, string enemyAtk)
     {
         PlayAttackAnim();
         enemyType.spawnAttack = false;

@@ -4,18 +4,22 @@ using UnityEngine;
 
 public class PlayerGearHandler : MonoBehaviour
 {
-    public WeaponObject weaponEquipped;
+    [Header("Weapon")]
+    public GearObject weaponEquipped;
     [SerializeField] private Transform weaponHandSocket;
     [SerializeField] private Transform weaponBackSocket;
 
-    [SerializeField] private WeaponItem currentWeapon;
+    [SerializeField] private GearItem currentWeapon;
     private GameObject weaponInstanceCombat;
     private GameObject weaponInstanceBack;
 
-    [Header("Debug")]
-    [SerializeField] private WeaponItem debug_Wep_WAR;
-    [SerializeField] private WeaponItem debug_Wep_MAGE;
-    [SerializeField] private WeaponItem debug_Wep_ARCH;
+    [Header("Helmet")]
+    public GearObject helmetEquipped;
+    [SerializeField] private Transform helmetSocket;
+
+    [SerializeField] private GearItem currentHelmet;
+    private GameObject helmetInstance;
+
 
 
     private void Awake()
@@ -27,16 +31,12 @@ public class PlayerGearHandler : MonoBehaviour
 
             if (t.name == "DEF-back.socket")
                 weaponBackSocket = t;
+
+            if (t.name == "DEF-head")
+                helmetSocket = t;
         }
     }
 
-    
-
-    #region DEBUG
-    public void Debug_EquipWeapon_WAR() => EquipWeapon(debug_Wep_WAR);
-    public void Debug_EquipWeapon_MAGE() => EquipWeapon(debug_Wep_MAGE);
-    public void Debug_EquipWeapon_ARCH() => EquipWeapon(debug_Wep_ARCH);
-    #endregion
 
     public void SheatheWeapon()
     {
@@ -56,7 +56,34 @@ public class PlayerGearHandler : MonoBehaviour
         }
     }
 
-    public void EquipWeapon(WeaponItem newWeapon)
+    public void EquipGearType(GearItem newGear, string newType)
+    {
+        if (newGear == null)
+        {
+            if (newType == "Weapon")
+            {
+                EquipWeapon(null);
+            }
+            if (newType == "Helmet")
+            {
+                EquipHelmet(null);
+            }
+        }
+        if (newGear != null)
+        {
+            //if (newGear.GetGearObject().GetGearType() == "Weapon")
+            if (newType == "Weapon")
+            {
+                EquipWeapon(newGear);
+            }
+            if (newType == "Helmet")
+            {
+                EquipHelmet(newGear);
+            }
+        }
+    }
+
+    public void EquipWeapon(GearItem newWeapon)
     {
         if (currentWeapon != null)
         {
@@ -65,11 +92,10 @@ public class PlayerGearHandler : MonoBehaviour
             Destroy(weaponInstanceCombat);
         }
 
-        // If nothing replace with default
         if (newWeapon == null)
         {
-            currentWeapon = Resources.Load<WeaponItem>("Default_WeaponItem");
-            weaponEquipped = currentWeapon.GetWeaponObject();
+            currentWeapon = Resources.Load<GearItem>("Default_WeaponItem");
+            weaponEquipped = currentWeapon.GetGearObject();
 
             weaponInstanceBack = Instantiate(currentWeapon.gameObject, weaponBackSocket);
             weaponInstanceCombat = Instantiate(currentWeapon.gameObject, weaponHandSocket);
@@ -77,9 +103,8 @@ public class PlayerGearHandler : MonoBehaviour
             return;
         }
 
-        // Equip the new weapon
         currentWeapon = newWeapon;
-        weaponEquipped = currentWeapon.GetWeaponObject();
+        weaponEquipped = currentWeapon.GetGearObject();
         currentWeapon.AddStatsToPlayer();
 
         weaponInstanceBack = Instantiate(currentWeapon.gameObject, weaponBackSocket);
@@ -87,40 +112,36 @@ public class PlayerGearHandler : MonoBehaviour
         weaponInstanceCombat.SetActive(false);
     }
 
-
-    public void EquipWeapon_Old(WeaponItem newWeapon)
+    public void EquipHelmet(GearItem newHelmet)
     {
-        if (newWeapon == null)
+        if (currentHelmet != null)
         {
-            currentWeapon.RemoveStatsFromPlayer();
-            Destroy(weaponInstanceBack);
-            Destroy(weaponInstanceCombat);
-            currentWeapon = Resources.Load<WeaponItem>("Default_WeaponItem");
-            weaponEquipped = currentWeapon.GetWeaponObject();
+            currentHelmet.RemoveStatsFromPlayer();
+            Destroy(helmetInstance);
         }
 
-        if (weaponInstanceBack != null || weaponInstanceCombat != null)
+        if (newHelmet == null)
         {
-            currentWeapon.RemoveStatsFromPlayer();
-            Destroy(weaponInstanceBack);
-            Destroy(weaponInstanceCombat);
-            
+            //currentHelmet.RemoveStatsFromPlayer();
+            currentHelmet = null;
+            helmetEquipped = null;
+            Destroy(helmetInstance);
+
+            //currentHelmet = Resources.Load<GearItem>("Default_WeaponItem");
+            //helmetEquipped = currentHelmet.GetGearObject();
+
+            //helmetInstance = Instantiate(currentHelmet.gameObject, helmetSocket);
+            return;
         }
 
-        currentWeapon = newWeapon;
-        weaponEquipped = currentWeapon.GetWeaponObject();
-        currentWeapon.AddStatsToPlayer();
+        currentHelmet = newHelmet;
+        helmetEquipped = currentHelmet.GetGearObject();
+        currentHelmet.AddStatsToPlayer();
 
-        if (newWeapon != null)
-        {
-            weaponInstanceBack = Instantiate(newWeapon.gameObject, weaponBackSocket);
-            weaponInstanceCombat = Instantiate(newWeapon.gameObject, weaponHandSocket);
-            weaponInstanceCombat.SetActive(false);
-            //currentWeapon.transform.localPosition = Vector3.zero;
-            //currentWeapon.transform.localRotation = Quaternion.identity;
-        }
+        helmetInstance = Instantiate(currentHelmet.gameObject, helmetSocket);
     }
 
+    //not going to use yet
     public void GetCurrentWeaponClass()
     {
         weaponEquipped.GetClass();

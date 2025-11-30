@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
-using static WeaponObject;
+using static GearObject;
 
 public class CharacterBase : MonoBehaviour
 {

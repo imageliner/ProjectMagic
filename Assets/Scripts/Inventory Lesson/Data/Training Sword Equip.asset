@@ -15,9 +15,8 @@ MonoBehaviour:
   itemID: 0
   itemName: Training Sword
   itemDescription: A sword used for training the royal guards
-  itemIcon: {fileID: 21300000, guid: ce683041f000c7c48b73e8fbda566384, type: 3}
+  itemIcon: {fileID: 21300000, guid: 95052c6b62fb3de4695beaa99f842ac2, type: 3}
   itemRarity: 1
-  canEquip: 1
   canDrop: 1
   equipType: 2
   weaponItem: {fileID: -3132096779811524399, guid: 6d49f4f4326a07a4ba55c91eb01b49d4, type: 3}

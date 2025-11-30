@@ -53,11 +53,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3717943851118863786}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d7b5bc4fcf367894b8d4a15820f1c151, type: 3}
+  m_Script: {fileID: 11500000, guid: 847b35f9ecccd6a4f84f979a516cc928, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponObject: {fileID: 11400000, guid: 52e8db44d7a33464cb6d6e50dbd2e087, type: 2}
-  attackAnim: {fileID: 0}
+  gearObject: {fileID: 11400000, guid: 09210a9c1b7977c41a67fcbaa5487ebf, type: 2}
 --- !u!1001 &2374963105623305876
 PrefabInstance:
   m_ObjectHideFlags: 0

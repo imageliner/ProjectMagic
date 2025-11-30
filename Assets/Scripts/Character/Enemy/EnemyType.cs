@@ -6,8 +6,8 @@ using UnityEngine.UI;
 
 public class EnemyType : CharacterBase
 {
-    public WeaponItem enemyWeapon;
-    private WeaponObject enemyWeaponEquipped;
+    public GearItem enemyWeapon;
+    private GearObject enemyWeaponEquipped;
     private Transform weaponHandSocket;
     private GameObject weaponInstance;
 
@@ -58,13 +58,13 @@ public class EnemyType : CharacterBase
 
         if (enemyWeapon == null)
         {
-            enemyWeapon = Resources.Load<WeaponItem>("Default_WeaponItem");
-            enemyWeaponEquipped = enemyWeapon.GetWeaponObject();
+            enemyWeapon = Resources.Load<GearItem>("Default_WeaponItem");
+            enemyWeaponEquipped = enemyWeapon.GetGearObject();
             weaponInstance = Instantiate(enemyWeapon.gameObject, weaponHandSocket);
         }
         else
         {
-            enemyWeaponEquipped = enemyWeapon.GetWeaponObject();
+            enemyWeaponEquipped = enemyWeapon.GetGearObject();
             weaponInstance = Instantiate(enemyWeapon.gameObject, weaponHandSocket);
         }
     }

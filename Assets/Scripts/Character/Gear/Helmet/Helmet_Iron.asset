@@ -10,20 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3188f028f58bcf14f98e530e5ad57350, type: 3}
-  m_Name: Default_WeaponObject
+  m_Name: Helmet_Iron
   m_EditorClassIdentifier: 
   classType: 0
-  gearType: 0
-  attackAbility: {fileID: 11400000, guid: e0784c661f6807c41b52463d834b5062, type: 2}
-  itemName: 
+  gearType: 1
+  attackAbility: {fileID: 11400000, guid: 5906a108e0edd874fbe8effce2484225, type: 2}
+  itemName: Iron Helmet
   itemIcon: {fileID: 0}
-  pAtk: 0
+  pAtk: 5
   mAtk: 0
   atkSpeed: 0
   critRate: 0
   critDmg: 0
   vitality: 0
   wisdom: 0
-  strength: 0
+  strength: 5
   intelligence: 0
   dexterity: 0

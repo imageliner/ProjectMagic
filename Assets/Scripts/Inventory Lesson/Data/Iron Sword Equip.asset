@@ -19,4 +19,4 @@ MonoBehaviour:
   itemRarity: 3
   canDrop: 1
   equipType: 2
-  weaponItem: {fileID: -3132096779811524399, guid: ce36915c2f77ec74cab03d7efd8be7e2, type: 3}
+  gearItem: {fileID: -3132096779811524399, guid: ce36915c2f77ec74cab03d7efd8be7e2, type: 3}

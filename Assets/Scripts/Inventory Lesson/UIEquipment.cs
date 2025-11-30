@@ -19,13 +19,13 @@ public class UIEquipment : MonoBehaviour
         {
             FindAnyObjectByType<Inventory>().RemoveItemForEquip(equip);
             armorSlot.itemData = equip;
-            weaponSlot.InitializeItemDisplay(equip);
+            armorSlot.InitializeItemDisplay(equip);
         }
         if (equip.equipType == EquipType.Helmet)
         {
             FindAnyObjectByType<Inventory>().RemoveItemForEquip(equip);
             helmetSlot.itemData = equip;
-            weaponSlot.InitializeItemDisplay(equip);
+            helmetSlot.InitializeItemDisplay(equip);
         }
     }
 }

@@ -11,8 +11,10 @@ public class Inventory : MonoBehaviour
 
     [SerializeField] private int currency;
 
-    public EquipInventoryItem equippedHelmet;
+    
     public EquipInventoryItem equippedWeapon;
+    public EquipInventoryItem equippedHelmet;
+    public EquipInventoryItem equippedArmor;
 
     private void Awake()
     {
@@ -75,10 +77,13 @@ public class Inventory : MonoBehaviour
             //means one is equiped
             //unequip current one
             //update ui (equipped) checkmark 
-
+            AddItem(equippedHelmet);
+            equippedHelmet = null;
         }
         allItems.Remove(newHelmet);
         equippedHelmet = newHelmet;
+        FindAnyObjectByType<UIEquipment>().EquipToSlot(newHelmet);
+        FindAnyObjectByType<PlayerGearHandler>().EquipGearType(newHelmet.gearItem, newHelmet.gearItem.GetGearObject().GetGearType());
 
         //Update visuals of player
         //Update UI (equipped) checkmark
@@ -99,7 +104,7 @@ public class Inventory : MonoBehaviour
         allItems.Remove(newWeapon);
         equippedWeapon = newWeapon;
         FindAnyObjectByType<UIEquipment>().EquipToSlot(newWeapon);
-        FindAnyObjectByType<PlayerGearHandler>().EquipWeapon(newWeapon.weaponItem);
+        FindAnyObjectByType<PlayerGearHandler>().EquipGearType(newWeapon.gearItem, newWeapon.gearItem.GetGearObject().GetGearType());
 
         //Update visuals of player
         //Update UI (equipped) checkmark

@@ -12,5 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4641cdd1eb929144a3d5046fe8c6b17, type: 3}
   m_Name: Ability_testMage
   m_EditorClassIdentifier: 
+  mousePosAim: 0
+  cooldown: 2
+  manaCost: 0
   abilityPrefab: {fileID: 3251799386050929195, guid: 32027ae1f79360a4f995433cc88c28a5, type: 3}
   lifeTime: 1
