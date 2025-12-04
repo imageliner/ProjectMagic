@@ -120,6 +120,16 @@ public class EnemyType : CharacterBase
         }
     }
 
+    public void TakeHeal(int attackID, int amt)
+    {
+        if (!processedAttackIDs.Contains(attackID))
+        {
+
+            SpawnDmgNumber(amt, Color.green);
+            health.AddResource(amt);
+        }
+    }
+
     private void TakeKnockback(GameObject obj, float amount)
     {
         _rb.AddForce((transform.position - obj.transform.position) * amount, ForceMode.Impulse);

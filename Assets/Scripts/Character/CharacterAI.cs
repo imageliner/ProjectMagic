@@ -63,7 +63,7 @@ public class CharacterAI : MonoBehaviour
         currentState = newState;
         currentState.OnStateEnter();
 
-        Debug.Log(newState.ToString());
+        //Debug.Log(newState.ToString());
     }
 
 

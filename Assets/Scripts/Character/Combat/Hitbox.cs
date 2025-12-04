@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class Hitbox : MonoBehaviour
 {
+    [SerializeField] protected bool isHeal = false;
     public int attackID;
     public string fromEntity = "NPC";
 

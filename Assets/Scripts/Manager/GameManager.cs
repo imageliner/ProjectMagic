@@ -1,9 +1,11 @@
-using Unity.VisualScripting;
+using System;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager singleton;
+
+    public GameObject menuObject;
 
     public HitstopManager hitstopManager;
 
@@ -11,6 +13,9 @@ public class GameManager : MonoBehaviour
 
     public PlayerStats playerStats;
     public LevelSystem playerLevel;
+
+    public bool inMenu;
+    public Action toggleMenu;
 
     private void Awake()
     {
@@ -25,5 +30,20 @@ public class GameManager : MonoBehaviour
         }
 
         hitstopManager = gameObject.GetComponent<HitstopManager>();
+        toggleMenu += ToggleMenu;
+    }
+
+    private void Start()
+    {
+        menuObject.SetActive(false);
+        inMenu = false;
+    }
+
+    private void ToggleMenu()
+    {
+        inMenu = !inMenu;
+
+        menuObject.SetActive(inMenu);
+        
     }
 }

@@ -108,7 +108,6 @@ MonoBehaviour:
   enemyWeapon: {fileID: -3132096779811524399, guid: 6d49f4f4326a07a4ba55c91eb01b49d4, type: 3}
   spawnAttack: 0
   flagHandler: {fileID: 0}
-  enemyAbilities: []
   enemyName: test_Skeleton
   health:
     baseValue: 125

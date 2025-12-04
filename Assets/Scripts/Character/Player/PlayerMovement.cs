@@ -27,19 +27,21 @@ public class PlayerMovement : MonoBehaviour
         isMoving = moving;
     }
 
-    public void StartDash(Vector3 direction, float force, float duration, Rigidbody rb)
+    public void StartDash(Vector3 direction, float force, float duration, Rigidbody rb, GameObject dashTrail)
     {
         if (!dashing)
-            StartCoroutine(DashRoutine(direction, force, duration, rb));
+            StartCoroutine(DashRoutine(direction, force, duration, rb, dashTrail));
     }
 
-    private IEnumerator DashRoutine(Vector3 direction, float force, float duration, Rigidbody rb)
+    private IEnumerator DashRoutine(Vector3 direction, float force, float duration, Rigidbody rb, GameObject dashTrail)
     {
         dashing = true;
 
         float time = 0f;
         // Optional: disable regular movement while dashing
         //_movement.canMove = false;
+
+        GameObject cloneDashTrail = Instantiate(dashTrail, transform);
 
         while (time < duration)
         {
@@ -51,6 +53,7 @@ public class PlayerMovement : MonoBehaviour
 
         //_movement.canMove = true; // restore movement control
         dashing = false;
+        Destroy(cloneDashTrail,0.15f);
     }
 
 }

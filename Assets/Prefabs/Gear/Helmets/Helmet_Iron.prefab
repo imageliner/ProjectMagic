@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 834128299473122405}
   - component: {fileID: 3354887233928425636}
   - component: {fileID: -3132096779811524399}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Helmet_Iron
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -106,6 +106,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: b2749501b0231bd428c328a9fcfb17eb, type: 3}
       propertyPath: m_Name
       value: hat_iron
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: b2749501b0231bd428c328a9fcfb17eb, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

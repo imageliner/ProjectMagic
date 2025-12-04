@@ -153,6 +153,16 @@ public class PlayerCharacter : CharacterBase
         }
     }
 
+    public void TakeHeal(int attackID, int amt)
+    {
+        Resource health = GameManager.singleton.playerStats.health;
+        if (!processedAttackIDs.Contains(attackID))
+        {
+            SpawnDmgNumber(amt, Color.green);
+            health.AddResource(amt);
+        }
+    }
+
     public void UseMana(int amt)
     {
         Resource mana = GameManager.singleton.playerStats.mana;
@@ -198,5 +208,16 @@ public class PlayerCharacter : CharacterBase
         ability.currentCooldown = 0;
 
         cooldownCoroutines[index] = null;
+    }
+
+    public void SwapAbility(int index, CharacterAbility newAbility)
+    {
+        AbilityClass newSlot = new AbilityClass();
+
+        newSlot.ability = newAbility;
+
+        newSlot.currentCooldown = 0;
+
+        abilities[index] = newSlot;
     }
 }

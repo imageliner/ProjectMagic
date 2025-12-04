@@ -4,9 +4,12 @@ using UnityEngine.UI;
 public abstract class CharacterAbility : ScriptableObject
 {
     public Sprite icon;
+    public string abilityName;
+    public string abilityDescription;
     public bool mousePosAim;
     [SerializeField] protected float cooldown;
     [SerializeField] protected int manaCost;
+    [SerializeField] protected ParticleSystem effect;
 
 
     public float GetCooldown()

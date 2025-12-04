@@ -23,6 +23,8 @@ public class PlayerInputHandler : MonoBehaviour
         controls.Player.Move.canceled += OnMoveCanceled;
         controls.Player.Attack.performed += OnAttackPerformed;
 
+        controls.Player.OpenMenu.performed += OnMenuPerformed;
+
         controls.Player.Ability0.performed += OnAbility0Performed;
         controls.Player.Ability1.performed += OnAbility1Performed;
         controls.Player.Ability2.performed += OnAbility2Performed;
@@ -53,7 +55,8 @@ public class PlayerInputHandler : MonoBehaviour
     }
     private void OnAttackPerformed(InputAction.CallbackContext context)
     {
-        playerCharacter.Attack();
+        if (!GameManager.singleton.inMenu)
+            playerCharacter.Attack();
     }
 
     private void OnAbility0Performed(InputAction.CallbackContext context)
@@ -69,6 +72,13 @@ public class PlayerInputHandler : MonoBehaviour
     private void OnAbility2Performed(InputAction.CallbackContext context)
     {
         playerCharacter.AbilityInput(2);
+
+    }
+
+    private void OnMenuPerformed(InputAction.CallbackContext context)
+    {
+        GameManager.singleton.toggleMenu?.Invoke();
+        
     }
 
     private void Update()

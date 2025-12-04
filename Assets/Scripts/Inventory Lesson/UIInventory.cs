@@ -13,8 +13,15 @@ public class UIInventory : MonoBehaviour
 
     [SerializeField] TextMeshProUGUI goldText;
 
+
+    private Inventory inventoryRef;
+
     private void Start()
     {
+        inventoryRef = FindAnyObjectByType<Inventory>();
+        inventoryRef.onCurrencyChanged += UpdateCurrencyText;
+        inventoryRef.onInventoryChanged += ()=> RefreshInventory(inventoryRef);
+
         for (int i = 0; i < maxSlots; i++)
         {
             UIInventorySlot slotClone = Instantiate(slotPrefab, inventoryParent);
@@ -23,18 +30,14 @@ public class UIInventory : MonoBehaviour
         }
     }
 
+    private void OnEnable()
+    {
+        if (inventoryRef != null)
+            RefreshInventory(inventoryRef);
+    }
+
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            RefreshInventory(FindAnyObjectByType<Inventory>());
-            // or close window (disabled)
-        }
-
-        if (Input.GetKeyDown(KeyCode.O))
-        {
-            ClearUpUI();
-        }
     }
 
     public void ClearUpUI()
@@ -45,7 +48,7 @@ public class UIInventory : MonoBehaviour
 
     public void RefreshInventory(Inventory inventoryRef)
     {
-        // simply clear slot contents, not the slots themselves
+        //clear slot contents, not the slots themselves
         foreach (var slot in allClonedSlots)
             slot.ClearSlot();
 

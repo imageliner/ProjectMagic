@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 219ead047b4df764db5e47dd8c2cd65a, type: 3}
+  m_Name: Wood Staff Equip
+  m_EditorClassIdentifier: 
+  itemID: 0
+  itemName: Wooden Staff
+  itemDescription: A wooden staff for apprentice mages
+  itemIcon: {fileID: 21300000, guid: 02ff976d39577774bb44b83610e61dec, type: 3}
+  itemRarity: 0
+  canDrop: 1
+  equipType: 2
+  gearItem: {fileID: 716439404366381790, guid: 68ea083381d8e424e9fe2bbd40494b56, type: 3}

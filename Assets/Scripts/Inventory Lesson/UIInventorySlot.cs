@@ -51,6 +51,11 @@ public class UIInventorySlot : MonoBehaviour
         Vector3 posOffset = new Vector3(-100, 25, 0);
         Vector3 newPos = transform.position + posOffset;
 
+        //if (itemData is not UsableItem || itemData is not EquipInventoryItem)
+        //{
+        //    return;
+        //}
+
         if (itemData is UsableItem usable)
         {
             if (usableDesc == null)

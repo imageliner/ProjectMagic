@@ -22,11 +22,7 @@ public class UIPlayerHUD : MonoBehaviour
 
         UpdateStats();
 
-        if (Input.GetKeyDown(KeyCode.I))
-        {
-            isDebugView = !isDebugView;
-            statsDebug?.SetActive(isDebugView);
-        }
+        
     }
 
     public void UpdateStats()

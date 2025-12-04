@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -16,6 +17,9 @@ public class Inventory : MonoBehaviour
     public EquipInventoryItem equippedHelmet;
     public EquipInventoryItem equippedArmor;
 
+    public Action<int> onCurrencyChanged;
+    public Action onInventoryChanged;
+
     private void Awake()
     {
         playerPos = FindAnyObjectByType<PlayerCharacter>().transform;
@@ -25,8 +29,8 @@ public class Inventory : MonoBehaviour
     {
         //check if inv. full
         allItems.Add(toAdd);
-        FindAnyObjectByType<UIInventory>().AddItemIconToInventory(toAdd);
-        //update UI maybe
+        onInventoryChanged?.Invoke();
+        
     }
 
     public void RemoveItem(InventoryItem toRemove)
@@ -37,21 +41,27 @@ public class Inventory : MonoBehaviour
 
         allItems.Remove(toRemove);
 
-        FindAnyObjectByType<UIInventory>().RemoveSpecificItem(toRemove);
+        onInventoryChanged?.Invoke();
+
+        //FindAnyObjectByType<UIInventory>().RemoveSpecificItem(toRemove);
     }
 
     public void DeleteItem(InventoryItem toDelete)
     {
         allItems.Remove(toDelete);
 
-        FindAnyObjectByType<UIInventory>().RemoveSpecificItem(toDelete);
+        onInventoryChanged?.Invoke();
+
+        //FindAnyObjectByType<UIInventory>().RemoveSpecificItem(toDelete);
     }
 
     public void RemoveItemForEquip(InventoryItem toRemove)
     {
         allItems.Remove(toRemove);
 
-        FindAnyObjectByType<UIInventory>().RemoveSpecificItem(toRemove);
+        onInventoryChanged?.Invoke();
+
+        //FindAnyObjectByType<UIInventory>().RemoveSpecificItem(toRemove);
     }
 
     public bool HasItem (InventoryItem toCheck)
@@ -61,13 +71,15 @@ public class Inventory : MonoBehaviour
     public void AddCurrency(int currencyAmount)
     {
         currency += currencyAmount;
-        FindAnyObjectByType<UIInventory>().UpdateCurrencyText(currency);
+        onCurrencyChanged?.Invoke(currency);
+        //FindAnyObjectByType<UIInventory>().UpdateCurrencyText(currency);
     }
 
     public void RemoveCurrency(int currencyAmount)
     {
         currency -= currencyAmount;
-        FindAnyObjectByType<UIInventory>().UpdateCurrencyText(currency);
+        onCurrencyChanged?.Invoke(currency);
+        //FindAnyObjectByType<UIInventory>().UpdateCurrencyText(currency);
     }
 
     public void EquipNewHelmet(EquipInventoryItem newHelmet)
@@ -120,8 +132,6 @@ public class Inventory : MonoBehaviour
 
         DeleteItem(newUsable);
 
-
-        //Update visuals of player
-        //Update UI (equipped) checkmark
+        onInventoryChanged?.Invoke();
     }
 }
