@@ -61,7 +61,6 @@ public class UIUsableDescription : MonoBehaviour
         
         FindAnyObjectByType<Inventory>().UseItem(usableData);
         
-        //FindAnyObjectByType<Inventory>().RemoveItem(itemData);
         DisableWindow();
     }
 

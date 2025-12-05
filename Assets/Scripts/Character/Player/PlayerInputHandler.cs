@@ -29,6 +29,9 @@ public class PlayerInputHandler : MonoBehaviour
         controls.Player.Ability1.performed += OnAbility1Performed;
         controls.Player.Ability2.performed += OnAbility2Performed;
 
+        controls.Player.Item1.performed += OnItem1Performed;
+        controls.Player.Item2.performed += OnItem2Performed;
+
     }
 
     private void OnLookPerformed(InputAction.CallbackContext context)
@@ -73,6 +76,16 @@ public class PlayerInputHandler : MonoBehaviour
     {
         playerCharacter.AbilityInput(2);
 
+    }
+
+    private void OnItem1Performed(InputAction.CallbackContext context)
+    {
+        FindAnyObjectByType<Inventory>().GetFirstHealthPotion();
+    }
+
+    private void OnItem2Performed(InputAction.CallbackContext context)
+    {
+        FindAnyObjectByType<Inventory>().GetFirstManaPotion();
     }
 
     private void OnMenuPerformed(InputAction.CallbackContext context)

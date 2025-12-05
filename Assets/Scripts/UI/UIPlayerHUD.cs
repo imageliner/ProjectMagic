@@ -11,6 +11,9 @@ public class UIPlayerHUD : MonoBehaviour
     public Slider manaBarSlider;
     public TextMeshProUGUI manaBarText;
 
+    public UIPotionHUD hpPot;
+    public UIPotionHUD mpPot;
+
     public GameObject statsDebug;
     private bool isDebugView = false;
 
@@ -22,7 +25,6 @@ public class UIPlayerHUD : MonoBehaviour
 
         UpdateStats();
 
-        
     }
 
     public void UpdateStats()
@@ -45,4 +47,12 @@ public class UIPlayerHUD : MonoBehaviour
 
     }
 
+    public void UpdatePotionCount(int count, string type)
+    {
+        if (type == "health")
+            hpPot.SetItemCount(count);
+
+        if (type == "mana")
+            mpPot.SetItemCount(count);
+    }
 }
