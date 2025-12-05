@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3188f028f58bcf14f98e530e5ad57350, type: 3}
-  m_Name: Helmet_Iron
+  m_Name: Helmet_Slime
   m_EditorClassIdentifier: 
   classType: 0
   gearType: 1
@@ -18,12 +18,12 @@ MonoBehaviour:
   itemName: Iron Helmet
   itemIcon: {fileID: 0}
   pAtk: 5
-  mAtk: 0
+  mAtk: 5
   atkSpeed: 0
   critRate: 0
   critDmg: 0
   vitality: 0
-  wisdom: 0
-  strength: 3
-  intelligence: 0
+  wisdom: 5
+  strength: 5
+  intelligence: 5
   dexterity: 0
