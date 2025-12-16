@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3188f028f58bcf14f98e530e5ad57350, type: 3}
+  m_Name: war_wep_IronSword
+  m_EditorClassIdentifier: 
+  classType: 1
+  gearType: 0
+  attackAbility: {fileID: 11400000, guid: 5906a108e0edd874fbe8effce2484225, type: 2}
+  itemName: Iron Sword
+  itemIcon: {fileID: 0}
+  pAtk: 7
+  mAtk: 0
+  pDef: 0
+  mDef: 0
+  atkSpeed: 0
+  critRate: 0
+  critDmg: 0
+  vitality: 0
+  wisdom: 0
+  strength: 1
+  intelligence: 0
+  dexterity: 2
