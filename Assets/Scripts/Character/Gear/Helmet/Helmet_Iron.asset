@@ -19,6 +19,8 @@ MonoBehaviour:
   itemIcon: {fileID: 0}
   pAtk: 5
   mAtk: 0
+  pDef: 8
+  mDef: 2
   atkSpeed: 0
   critRate: 0
   critDmg: 0

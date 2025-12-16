@@ -18,7 +18,10 @@ MonoBehaviour:
   mousePosAim: 0
   cooldown: 2
   manaCost: 3
+  abilityDamage: 5
+  damageScaling: 0.8
   effect: {fileID: 0}
+  damageType: 1
   abilityPrefab: {fileID: 3251799386050929195, guid: 605610427a2366842adf44f28007af9f, type: 3}
   lifeTime: 3.5
-  timeForConsecutiveHits: 1.5
+  timeForConsecutiveHits: 0.5

@@ -22,6 +22,8 @@ public class UIInventory : MonoBehaviour
         inventoryRef.onCurrencyChanged += UpdateCurrencyText;
         inventoryRef.onInventoryChanged += ()=> RefreshInventory(inventoryRef);
 
+        UpdateCurrencyText(inventoryRef.currency);
+
         for (int i = 0; i < maxSlots; i++)
         {
             UIInventorySlot slotClone = Instantiate(slotPrefab, inventoryParent);
@@ -54,6 +56,8 @@ public class UIInventory : MonoBehaviour
 
         foreach (InventoryItem item in inventoryRef.allItems)
             AddItemIconToInventory(item);
+
+        UpdateCurrencyText(inventoryRef.currency);
     }
 
     public void AddItemIconToInventory(InventoryItem item)

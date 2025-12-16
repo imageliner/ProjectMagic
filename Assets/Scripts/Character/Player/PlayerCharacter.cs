@@ -6,7 +6,6 @@ using static PlayerAnimator;
 public class PlayerCharacter : CharacterBase
 {
     [SerializeField] private Rigidbody _rb;
-    [SerializeField] private GameObject _mesh;
 
     [Header("Player Components")]
     [SerializeField] private PlayerInputHandler inputHandler;
@@ -33,6 +32,8 @@ public class PlayerCharacter : CharacterBase
     {
         base.Awake();
 
+        
+
         inputHandler = GetComponent<PlayerInputHandler>();
 
         if (_mouseTracker == null)
@@ -44,16 +45,44 @@ public class PlayerCharacter : CharacterBase
         _movement = GetComponent<PlayerMovement>();
         _gear = GetComponent<PlayerGearHandler>();
         _combat = GetComponent<PlayerCombat>();
+        _mouseTracker = FindAnyObjectByType<MouseTracker>();
+        rotateTarget = _mouseTracker.transform;
     }
 
     private void Start()
     {
         _combat.SheatheWeapon += CombatState;
         _combat.UnsheatheWeapon += CombatState;
+        _combat.AttackStart += () => _movement.MovespeedReduce();
+        _combat.AttackEnd += () => _movement.MovespeedNormal();
+
         GameManager.singleton.hitstopManager.HitStop += ApplyHitStop;
 
         cooldownCoroutines = new Coroutine[abilities.Length];
+
+        GameManager.singleton.RegisterPlayer(this);
     }
+
+    private void OnDestroy()
+    {
+        if (GameManager.singleton != null &&
+            GameManager.singleton.hitstopManager != null)
+        {
+            GameManager.singleton.hitstopManager.HitStop -= ApplyHitStop;
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (GameManager.singleton != null &&
+            GameManager.singleton.hitstopManager != null)
+        {
+            GameManager.singleton.hitstopManager.HitStop -= ApplyHitStop;
+        }
+    }
+
+
+
     private void Update()
     {
 
@@ -65,22 +94,36 @@ public class PlayerCharacter : CharacterBase
         lookRotation.z = 0;
         if (_movement.isMoving)
             transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
-
-        //if (Input.GetKeyDown(KeyCode.Q))
-        //{
-        //    abilities[0].Use(UnityEngine.Random.Range(0, 999), transform, characterType.ToString(), 15);
-        //    useAbilityQ?.Invoke();
-        //}
-        //if (Input.GetKeyDown(KeyCode.E))
-        //{
-        //    abilities[1].Use(UnityEngine.Random.Range(0, 999), _mouseTracker.transform, characterType.ToString(), 15);
-        //    useAbilityE?.Invoke();
-        //}
     }
 
     private void ApplyHitStop()
     {
-        StartCoroutine(_animator.FreezeCurrentAnim(1.0f));
+        if (!this) return; // destroyed object safety guard
+        StartCoroutine(_animator.FreezeCurrentAnim(0.5f));
+        //StartCoroutine(FreezeAllParticles(1f));
+    }
+
+    private IEnumerator FreezeAllParticles(float duration)
+    {
+        ParticleSystem[] allParticles = FindObjectsByType<ParticleSystem>(FindObjectsSortMode.None);
+
+        foreach (ParticleSystem ps in allParticles)
+        {
+            if (ps.isPlaying)
+            {
+                ps.Pause();
+            }
+        }
+
+        yield return new WaitForSeconds(duration);
+
+        foreach (ParticleSystem ps in allParticles)
+        {
+            if (ps)
+            {
+                ps.Play();
+            }
+        }
     }
 
     public void CombatState()
@@ -124,8 +167,8 @@ public class PlayerCharacter : CharacterBase
         {
             if(!_combat.isAttacking)
             {
-                _combat.StandardAttack(_gear.weaponEquipped, _mouseTracker.mouseAim, characterType.ToString());
-                if (_gear.weaponEquipped.GetClass() == "Warrior" || _gear.weaponEquipped.GetClass() == "Any")
+                _combat.StandardAttack(_gear.currentWeapon, _mouseTracker.mouseAim, characterType.ToString());
+                if (_gear.currentWeapon.GetGearObject().GetClass() == "Warrior")
                 {
                     _animator.SetAnimationState(AnimationStates.AttackMelee);
                 }
@@ -137,19 +180,33 @@ public class PlayerCharacter : CharacterBase
         }
     }
 
-    public void TakeDamage(int attackID, int dmg)
+    public void TakeDamage(int attackID, int dmg, DamageType damageType)
     {
         Resource health = GameManager.singleton.playerStats.health;
         if (!processedAttackIDs.Contains(attackID))
         {
-            if (health.currentValue - dmg <= 0)
+            int calculatedDmg;
+            if (damageType == DamageType.Magic)
             {
-                
-                //Destroy(gameObject);
+                calculatedDmg = Mathf.RoundToInt(dmg - ((GameManager.singleton.playerStats.finalMDef) / 2f));
+
+            }
+            else
+                calculatedDmg = Mathf.RoundToInt(dmg - ((GameManager.singleton.playerStats.finalPhysDef) / 2f));
+
+            if (calculatedDmg <= 0)
+                calculatedDmg = 0;
+
+            if (health.currentValue - calculatedDmg <= 0)
+            {
+                GameManager.singleton.GameFailed();
+                inputHandler.enabled = false;
             }
 
-            SpawnDmgNumber(dmg, Color.yellow);
-            health.SubtractResource(dmg);
+            Debug.Log(damageType.ToString() + "damage taken");
+
+            SpawnDmgNumber(calculatedDmg, Color.white);
+            health.SubtractResource(calculatedDmg);
         }
     }
 
@@ -176,11 +233,20 @@ public class PlayerCharacter : CharacterBase
         if (ability == null) return;
         int manaCost = ability.ability.GetManaCost();
 
-        if (ability.currentCooldown > 0 || GameManager.singleton.playerStats.mana.currentValue < manaCost) return;
+        if (ability.currentCooldown > 0 || GameManager.singleton.playerStats.mana.currentValue < manaCost || _combat.isAttacking)
+        {
+            SoundManager.singleton.PlayAudio(SoundManager.singleton.sfx_Deny);
+            return;
+        }  
 
 
         Transform t = ability.ability.mousePosAim ? _mouseTracker.transform : transform;
-        ability.ability.Use(UnityEngine.Random.Range(0, 999), t, characterType.ToString(), 15, _rb);
+
+        int abilityDmg = _combat.GetDamageType(_gear.currentWeapon, ability.ability.GetDamageType());
+
+        ability.ability.Use(UnityEngine.Random.Range(0, 999), t, characterType.ToString(), abilityDmg, _rb);
+
+        _animator.SetAnimationState(AnimationStates.CastingSpell);
 
         ability.currentCooldown = ability.ability.GetCooldown();
 
@@ -220,4 +286,6 @@ public class PlayerCharacter : CharacterBase
 
         abilities[index] = newSlot;
     }
+
+
 }

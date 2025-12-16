@@ -12,18 +12,44 @@ public class Ability_testDash : CharacterAbility
 
     public override void Use(int attackID, Transform t, string fromEntity, int damage, Rigidbody ownerRB)
     {
-        if (attackHitBox != null)
+        SoundManager.singleton.PlayAudio(SoundManager.singleton.sfx_Dash);
+        if (fromEntity == "Player")
         {
-            GameObject attackBox = Instantiate(attackHitBox, ownerRB.transform);
-            Hitbox hitbox = attackBox.GetComponent<Hitbox>();
-            hitbox.damage = damage;
-            hitbox.attackID = attackID;
-            hitbox.fromEntity = fromEntity;
-            Destroy(attackBox, 0.3f);
+            if (attackHitBox != null)
+            {
+                GameObject attackBox = Instantiate(attackHitBox, ownerRB.transform);
+                Hitbox hitbox = attackBox.GetComponent<Hitbox>();
+
+                hitbox.damage = Mathf.RoundToInt(abilityDamage + (damage * damageScaling));
+
+                hitbox.attackID = attackID;
+                hitbox.fromEntity = fromEntity;
+                Destroy(attackBox, 0.3f);
+            }
+            Vector3 aimDir = (t.position - ownerRB.transform.position).normalized;
+
+
+            ownerRB.GetComponent<PlayerMovement>().StartDash(aimDir, dashForce, dashDuration, ownerRB, dashTrail);
         }
-        Vector3 aimDir = (t.position - ownerRB.transform.position).normalized;
+        else if (fromEntity == "Enemy")
+        {
+            if (attackHitBox != null)
+            {
+                GameObject attackBox = Instantiate(attackHitBox, ownerRB.transform);
+                Hitbox hitbox = attackBox.GetComponent<Hitbox>();
+
+                hitbox.SetDamageType(damageType);
+                hitbox.damage = Mathf.RoundToInt(abilityDamage + (damage * damageScaling));
+
+                hitbox.attackID = attackID;
+                hitbox.fromEntity = fromEntity;
+                Destroy(attackBox, 0.3f);
+            }
+            Vector3 aimDir = ownerRB.transform.forward;
 
 
-        ownerRB.GetComponent<PlayerMovement>().StartDash(aimDir, dashForce, dashDuration, ownerRB, dashTrail);
+            ownerRB.GetComponent<EnemyType>().StartDash(aimDir, dashForce, dashDuration, ownerRB, dashTrail);
+        }
+        
     }
 }

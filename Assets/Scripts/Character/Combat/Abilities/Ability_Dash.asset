@@ -16,10 +16,13 @@ MonoBehaviour:
   abilityName: Dash
   abilityDescription: A quick short range dash.
   mousePosAim: 1
-  cooldown: 2
-  manaCost: 2
+  cooldown: 4
+  manaCost: 0
+  abilityDamage: 0
+  damageScaling: 1
   effect: {fileID: 0}
+  damageType: 0
   attackHitBox: {fileID: 0}
   dashTrail: {fileID: 5623097589423042972, guid: 2ce602bb3ad1ee9409cfff6e507f4cf4, type: 3}
-  dashForce: 20
+  dashForce: 30
   dashDuration: 0.15

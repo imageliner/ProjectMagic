@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5111156286013075849}
   - component: {fileID: 6971350601198743753}
   m_Layer: 0
-  m_Name: Enemy Skeleton Test
+  m_Name: Enemy Skeleton Warrior
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -68,7 +68,7 @@ Rigidbody:
   m_GameObject: {fileID: 106055326008994}
   serializedVersion: 4
   m_Mass: 1
-  m_Drag: 0
+  m_Drag: 2
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
@@ -84,7 +84,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 80
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!114 &869739792083773649
 MonoBehaviour:
@@ -101,20 +101,22 @@ MonoBehaviour:
   characterType: 1
   numberPool: {fileID: 0}
   abilities:
-  - ability: {fileID: 11400000, guid: 65431a02f5e728048ae4f84ea77d4048, type: 2}
+  - ability: {fileID: 11400000, guid: fc22cefb01c6a2a45a175840a35ad3eb, type: 2}
     currentCooldown: 0
-  - ability: {fileID: 11400000, guid: 1614cfabcd65bf549b4b0d6368ecec5b, type: 2}
+  - ability: {fileID: 11400000, guid: fc22cefb01c6a2a45a175840a35ad3eb, type: 2}
     currentCooldown: 0
+  useAbilities: 1
+  isMiniBoss: 0
   enemyWeapon: {fileID: -3132096779811524399, guid: 6d49f4f4326a07a4ba55c91eb01b49d4, type: 3}
   spawnAttack: 0
   flagHandler: {fileID: 0}
-  enemyName: test_Skeleton
+  enemyName: Skeleton Knight
   health:
-    baseValue: 125
-  level: 7
-  baseDamage: 0
-  defence: 5
-  expToGive: 215
+    baseValue: 30
+  level: 1
+  baseDamage: 4
+  defence: 3
+  expToGive: 200
   hpBar: {fileID: 8093510018350492588}
   hpText: {fileID: 2571432262455775531}
   dmgNumberTest: {fileID: 2315735033545349367, guid: 564c96b18353fc74987f187671bda2fb, type: 3}
@@ -138,19 +140,26 @@ MonoBehaviour:
   enemyType: {fileID: 869739792083773649}
   canStrafe: 1
   isAggressive: 1
+  attackMoveForce: 4
   target: {fileID: 0}
   isMoving: 0
   targetInRange: 0
-  detectionRange: 6
+  detectionRange: 8
   attackRange: 3.5
   distanceToTarget: 0
   moveSpeed: 2.5
   moveDir: {x: 0, y: 0, z: 0}
   targetDir: {x: 0, y: 0, z: 0}
   moveAmount: 0
+  wanderRay:
+    serializedVersion: 2
+    m_Bits: 512
   moveAmountRange:
     min: 1
     max: 5
+  attackFrequency:
+    min: 0.8
+    max: 3
   layerToTarget:
     serializedVersion: 2
     m_Bits: 256
@@ -171,11 +180,15 @@ MonoBehaviour:
   currencyDropPrefab: {fileID: 2086493741296456858, guid: 7b9bc945f2b2d824eadf63742dd11f25, type: 3}
   lootTable:
   - item: {fileID: 11400000, guid: 2c1d4964747ce4740853a152d3e3c033, type: 2}
-    dropChance: 15
-  - item: {fileID: 11400000, guid: 4874b5272c021bb438bae8dbcc64c0ab, type: 2}
-    dropChance: 25
-  - item: {fileID: 11400000, guid: b27361a328d6c1d4a94af69143a03b27, type: 2}
     dropChance: 5
+  - item: {fileID: 11400000, guid: b27361a328d6c1d4a94af69143a03b27, type: 2}
+    dropChance: 15
+  - item: {fileID: 11400000, guid: ae1e3f29dd2bb5c4cb6783207702243f, type: 2}
+    dropChance: 15
+  - item: {fileID: 11400000, guid: d8ea11d6669a8fb489be9df2f3b23908, type: 2}
+    dropChance: 75
+  - item: {fileID: 11400000, guid: b14b5ba9b0f52024490f57256f902342, type: 2}
+    dropChance: 50
   - item: {fileID: 0}
     dropChance: 100
   currencyRange:
@@ -283,6 +296,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6dcc77d9e2dd8ed4e9a0c39243672729, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  footstepSource: {fileID: 0}
 --- !u!4 &4363621712923032437 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 443d3d234804c254b82bd15a8ebab45f, type: 3}

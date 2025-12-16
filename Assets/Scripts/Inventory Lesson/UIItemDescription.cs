@@ -14,7 +14,9 @@ public class UIItemDescription : MonoBehaviour
 
     public Image itemIcon;
     public TextMeshProUGUI itemName;
+    public TextMeshProUGUI itemDamage;
     public TextMeshProUGUI itemDescription;
+    public TextMeshProUGUI itemStatsText;
 
     private void Start()
     {
@@ -42,6 +44,7 @@ public class UIItemDescription : MonoBehaviour
         itemIcon.enabled = true;
         itemIcon.sprite = item.itemIcon;
         itemDescription.text = item.itemDescription;
+        itemStatsText.text = "";
     }
 
     public void InitializeEquipDescription(EquipInventoryItem equip)
@@ -53,13 +56,23 @@ public class UIItemDescription : MonoBehaviour
         itemName.color = equip.SetRarityColor();
         itemIcon.enabled = true;
         itemIcon.sprite = equip.itemIcon;
-        itemDescription.text = equipData.itemDescription;
+        itemDamage.text = "Phys Atk " + equip.GetDamage().ToString();
+        itemDescription.text = equip.itemDescription;
+        itemStatsText.text = equip.GetStats();
     }
 
     public void OnEquipClick()
     {
-        
-        FindAnyObjectByType<Inventory>().EquipNewWeapon(equipData);
+        if (equipData.equipType == EquipType.Helmet)
+        {
+            FindAnyObjectByType<Inventory>().EquipNewHelmet(equipData);
+        }
+        if (equipData.equipType == EquipType.Weapon)
+        {
+            FindAnyObjectByType<Inventory>().EquipNewWeapon(equipData);
+        }
+
+        SoundManager.singleton.PlayAudio(SoundManager.singleton.sfx_Equip);
         
         //FindAnyObjectByType<Inventory>().RemoveItem(itemData);
         DisableWindow();
@@ -76,11 +89,15 @@ public class UIItemDescription : MonoBehaviour
             itemToDrop = itemData;
         }
         FindAnyObjectByType<Inventory>().RemoveItem(itemToDrop);
+
+        SoundManager.singleton.PlayAudio(SoundManager.singleton.sfx_Pickup);
+
         DisableWindow();
     }
 
     public void OnWindowClose()
     {
+        SoundManager.singleton.PlayAudio(SoundManager.singleton.sfx_Deny);
         DisableWindow();
     }
 }

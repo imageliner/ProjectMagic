@@ -153,8 +153,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d849b947cae2d445aa7167d395cf904, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pickUpKey: 102
   interactCanvas: {fileID: 4427232476341018082}
+  interactEvent:
+    m_PersistentCalls:
+      m_Calls: []
   currencyAmount: 0
 --- !u!1 &5515403842342292934
 GameObject:
@@ -10264,19 +10266,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6849484180546409408, guid: a68c02dfe83ab1e47aa4900a6527c03a, type: 3}
       propertyPath: m_fontColor.b
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6849484180546409408, guid: a68c02dfe83ab1e47aa4900a6527c03a, type: 3}
       propertyPath: m_fontColor.g
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6849484180546409408, guid: a68c02dfe83ab1e47aa4900a6527c03a, type: 3}
       propertyPath: m_fontColor.r
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6849484180546409408, guid: a68c02dfe83ab1e47aa4900a6527c03a, type: 3}
       propertyPath: m_fontColor32.rgba
-      value: 4278190080
+      value: 4294967295
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

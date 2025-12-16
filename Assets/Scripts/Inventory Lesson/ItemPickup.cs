@@ -8,17 +8,16 @@ public class ItemPickup : BasePickup
 
     
 
-    protected override void Update()
+    protected void Update()
     {
         var main = pickupEffect.main;
         main.startColor = itemData.SetRarityColor();
 
-        base.Update();
     }
 
-    protected override void PickUpItem()
+    public override void OnInteract()
     {
         FindAnyObjectByType<Inventory>().AddItem(itemData);
-        base.PickUpItem();
+        base.OnInteract();
     }
 }

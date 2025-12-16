@@ -51,6 +51,8 @@ public class UIInventorySlot : MonoBehaviour
         Vector3 posOffset = new Vector3(-100, 25, 0);
         Vector3 newPos = transform.position + posOffset;
 
+        SoundManager.singleton.PlayAudio(SoundManager.singleton.sfx_Click);
+
         //if (itemData is not UsableItem || itemData is not EquipInventoryItem)
         //{
         //    return;
@@ -84,21 +86,24 @@ public class UIInventorySlot : MonoBehaviour
                 itemDesc.transform.position = newPos;
                 itemDesc.InitializeEquipDescription(equip);
 
-                //FindAnyObjectByType<Inventory>().EquipNewWeapon(equip);
             }
             else if (equip.equipType == EquipType.Helmet)
             {
-                FindAnyObjectByType<Inventory>().EquipNewHelmet(equip);
+                if (itemDesc == null)
+                {
+                    itemDesc = FindAnyObjectByType<UIItemDescription>();
+                }
+
+                itemDesc.EnableWindow();
+                itemDesc.transform.position = newPos;
+                itemDesc.InitializeEquipDescription(equip);
+
             }
 
         }
         else
         {
-            //FindAnyObjectByType<Inventory>().RemoveItem(itemData);
-            
 
-            //UIItemDescription clonedDescription = Instantiate(itemDesc, newPos, transform.rotation, this.transform);
-            //clonedDescription.InitializeItemDescription(itemData);
 
             if (itemDesc == null)
             {

@@ -4,15 +4,20 @@ public class NPCAttackState : NPCState
 {
     public override void OnStateEnter()
     {
-        int randomInt = Random.Range(0, 100);
-        if (randomInt >= 25)
-            character.StartCoroutine(character.Attack(character.enemyType.enemyWeapon.GetGearObject(), character.targetDir, 0, character.enemyType.GetCharacterType()));
-        if (randomInt <= 25)
-            if (randomInt <= 15)
-                character.StartCoroutine(character.CastTargetAbility());
-            else
-                character.StartCoroutine(character.CastAbility());
-        
+        if (character.enemyType.useAbilities)
+        {
+            int randomInt = Random.Range(0, 100);
+            if (randomInt >= 20)
+                character.StartCoroutine(character.Attack(character.enemyType.enemyWeapon.GetGearObject(), character.targetDir, 0, character.enemyType.GetCharacterType()));
+            if (randomInt <= 20)
+                if (randomInt <= 10)
+                    character.StartCoroutine(character.CastAbility());
+                else
+                    character.StartCoroutine(character.CastTargetAbility());
+        }
+        else character.StartCoroutine(character.Attack(character.enemyType.enemyWeapon.GetGearObject(), character.targetDir, 0, character.enemyType.GetCharacterType()));
+
+
     }
 
     public override void OnStateExit()

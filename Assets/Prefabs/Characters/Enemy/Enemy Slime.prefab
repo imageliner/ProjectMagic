@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5319902082005821454}
   - component: {fileID: 7588383713257462790}
   m_Layer: 0
-  m_Name: Enemy Slime Test
+  m_Name: Enemy Slime
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -68,7 +68,7 @@ Rigidbody:
   m_GameObject: {fileID: 8655666166685648489}
   serializedVersion: 4
   m_Mass: 1
-  m_Drag: 0
+  m_Drag: 2
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
@@ -84,7 +84,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 80
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!114 &808837553590816296
 MonoBehaviour:
@@ -105,16 +105,18 @@ MonoBehaviour:
     currentCooldown: 0
   - ability: {fileID: 11400000, guid: e0784c661f6807c41b52463d834b5062, type: 2}
     currentCooldown: 0
+  useAbilities: 0
+  isMiniBoss: 0
   enemyWeapon: {fileID: 0}
   spawnAttack: 0
   flagHandler: {fileID: 0}
-  enemyName: test_Slime
+  enemyName: Slime
   health:
-    baseValue: 25
+    baseValue: 15
   level: 1
-  baseDamage: 0
+  baseDamage: 1
   defence: 0
-  expToGive: 15
+  expToGive: 75
   hpBar: {fileID: 4990139275773274212}
   hpText: {fileID: 1639016994236764899}
   dmgNumberTest: {fileID: 2315735033545349367, guid: 564c96b18353fc74987f187671bda2fb, type: 3}
@@ -138,19 +140,26 @@ MonoBehaviour:
   enemyType: {fileID: 808837553590816296}
   canStrafe: 0
   isAggressive: 1
+  attackMoveForce: 6
   target: {fileID: 0}
   isMoving: 0
   targetInRange: 0
-  detectionRange: 6
-  attackRange: 3.5
+  detectionRange: 8
+  attackRange: 4
   distanceToTarget: 0
-  moveSpeed: 1
+  moveSpeed: 2
   moveDir: {x: 0, y: 0, z: 0}
   targetDir: {x: 0, y: 0, z: 0}
   moveAmount: 0
+  wanderRay:
+    serializedVersion: 2
+    m_Bits: 512
   moveAmountRange:
     min: 1
     max: 7
+  attackFrequency:
+    min: 0.8
+    max: 3
   layerToTarget:
     serializedVersion: 2
     m_Bits: 256
@@ -170,12 +179,18 @@ MonoBehaviour:
   dropPrefab: {fileID: 37165964965405407, guid: 1bc383f71a34b734c8d105bfc71076ff, type: 3}
   currencyDropPrefab: {fileID: 2086493741296456858, guid: 7b9bc945f2b2d824eadf63742dd11f25, type: 3}
   lootTable:
-  - item: {fileID: 11400000, guid: 2c1d4964747ce4740853a152d3e3c033, type: 2}
+  - item: {fileID: 11400000, guid: 197e1032d6e560d468fd27d3e3a935b4, type: 2}
     dropChance: 15
-  - item: {fileID: 11400000, guid: 4874b5272c021bb438bae8dbcc64c0ab, type: 2}
+  - item: {fileID: 11400000, guid: d8ea11d6669a8fb489be9df2f3b23908, type: 2}
     dropChance: 25
-  - item: {fileID: 11400000, guid: b27361a328d6c1d4a94af69143a03b27, type: 2}
+  - item: {fileID: 11400000, guid: ab259e781f298f545a3c8cdee94ac571, type: 2}
     dropChance: 5
+  - item: {fileID: 11400000, guid: 2960f162e91b17645afa71cc8912b3c1, type: 2}
+    dropChance: 25
+  - item: {fileID: 11400000, guid: b14b5ba9b0f52024490f57256f902342, type: 2}
+    dropChance: 15
+  - item: {fileID: 11400000, guid: 913c63daaa1abaf40869498f78345321, type: 2}
+    dropChance: 1
   - item: {fileID: 0}
     dropChance: 100
   currencyRange:
@@ -420,6 +435,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6dcc77d9e2dd8ed4e9a0c39243672729, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  footstepSource: {fileID: 0}
 --- !u!1001 &4872556728649075104
 PrefabInstance:
   m_ObjectHideFlags: 0

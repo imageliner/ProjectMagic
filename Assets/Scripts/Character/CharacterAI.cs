@@ -11,6 +11,8 @@ public class CharacterAI : MonoBehaviour
     [SerializeField] public bool canStrafe;
     [SerializeField] public bool isAggressive;
 
+    [SerializeField] float attackMoveForce = 3f;
+
     private Coroutine movementRoutine;
 
     public Transform target;
@@ -21,11 +23,14 @@ public class CharacterAI : MonoBehaviour
     public float distanceToTarget;
 
     public float moveSpeed = 1f;
+    private float baseMoveSpeed;
     public float rotationSpeed { get; private set; } = 6f;
 
     [SerializeField] private Vector3 moveDir;
     public Vector3 targetDir;
     [SerializeField] private float moveAmount;
+
+    public LayerMask wanderRay;
 
     [System.Serializable]
     public struct MoveAmountRange
@@ -34,6 +39,14 @@ public class CharacterAI : MonoBehaviour
         public int max;
     }
     [SerializeField] private MoveAmountRange moveAmountRange;
+
+    [System.Serializable]
+    public struct AttackFrequencyRange
+    {
+        public float min;
+        public float max;
+    }
+    public AttackFrequencyRange attackFrequency;
 
     [SerializeField] private LayerMask layerToTarget;
 
@@ -50,6 +63,7 @@ public class CharacterAI : MonoBehaviour
 
     private void Start()
     {
+        baseMoveSpeed = moveSpeed;
         ChangeState(new NPCWanderingState(this));
     }
 
@@ -115,6 +129,15 @@ public class CharacterAI : MonoBehaviour
             return;
 
         _animator.SetTrigger("startAttack");
+    }
+
+    public void PlayCastAnim()
+    {
+        if (_animator == null)
+            return;
+
+        _animator.SetTrigger("startCast");
+        SoundManager.singleton.PlayAudio(SoundManager.singleton.sfx_Cast);
     }
 
     public bool IsMoving()
@@ -251,22 +274,29 @@ public class CharacterAI : MonoBehaviour
 
     public IEnumerator Attack(GearObject weapon, Vector3 direction, int attackID, string enemyAtk)
     {
+        moveSpeed = moveSpeed * 0.5f;
         PlayAttackAnim();
         enemyType.spawnAttack = false;
 
         yield return new WaitUntil(() => enemyType.spawnAttack == true);
-        ownerRB.AddForce(transform.forward * 3, ForceMode.Impulse);
+        ownerRB.AddForce(transform.forward * attackMoveForce, ForceMode.Impulse);
 
         weapon.attackAbility.Use(attackID, transform, enemyAtk, enemyType.GetDamage(), ownerRB);
         enemyType.spawnAttack = false;
 
-        
 
+        moveSpeed = baseMoveSpeed;
         yield return new WaitForSeconds(1f);
+        
     }
 
     public IEnumerator CastTargetAbility()
     {
+        moveSpeed = moveSpeed * 0.2f;
+        PlayCastAnim();
+
+        yield return new WaitForSeconds(1f);
+
         PlayAttackAnim();
         enemyType.spawnAttack = false;
 
@@ -278,24 +308,29 @@ public class CharacterAI : MonoBehaviour
         enemyType.spawnAttack = false;
 
 
-
+        moveSpeed = baseMoveSpeed;
         yield return new WaitForSeconds(1f);
     }
 
     public IEnumerator CastAbility()
     {
+        moveSpeed = moveSpeed * 0.5f;
+        PlayCastAnim();
+
+        yield return new WaitForSeconds(0.2f);
+
+
         PlayAttackAnim();
         enemyType.spawnAttack = false;
 
         yield return new WaitUntil(() => enemyType.spawnAttack == true);
         ownerRB.AddForce(transform.forward * 3, ForceMode.Impulse);
 
-        //enemyType.enemyAbilities[Random.Range(0, enemyType.enemyAbilities.Length)].Use(Random.Range(0, 999), target, enemyType.GetCharacterType(), enemyType.GetDamage()/2);
         enemyType.abilities[1].ability.Use(Random.Range(0, 999), transform, enemyType.GetCharacterType(), enemyType.GetDamage() / 2, ownerRB);
         enemyType.spawnAttack = false;
 
 
-
+        moveSpeed = baseMoveSpeed;
         yield return new WaitForSeconds(1f);
     }
 

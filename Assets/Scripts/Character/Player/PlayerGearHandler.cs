@@ -9,7 +9,7 @@ public class PlayerGearHandler : MonoBehaviour
     [SerializeField] private Transform weaponHandSocket;
     [SerializeField] private Transform weaponBackSocket;
 
-    [SerializeField] private GearItem currentWeapon;
+    public GearItem currentWeapon;
     private GameObject weaponInstanceCombat;
     private GameObject weaponInstanceBack;
 
@@ -145,5 +145,10 @@ public class PlayerGearHandler : MonoBehaviour
     public void GetCurrentWeaponClass()
     {
         weaponEquipped.GetClass();
+    }
+
+    public GearItem GetCurrentWeapon()
+    {
+        return currentWeapon;
     }
 }

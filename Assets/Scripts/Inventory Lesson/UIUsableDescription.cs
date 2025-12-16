@@ -60,7 +60,8 @@ public class UIUsableDescription : MonoBehaviour
     {
         
         FindAnyObjectByType<Inventory>().UseItem(usableData);
-        
+        SoundManager.singleton.PlayAudio(SoundManager.singleton.sfx_Equip);
+
         DisableWindow();
     }
 
@@ -75,11 +76,15 @@ public class UIUsableDescription : MonoBehaviour
             itemToDrop = itemData;
         }
         FindAnyObjectByType<Inventory>().RemoveItem(itemToDrop);
+        SoundManager.singleton.PlayAudio(SoundManager.singleton.sfx_Pickup);
+
         DisableWindow();
     }
 
     public void OnWindowClose()
     {
+        SoundManager.singleton.PlayAudio(SoundManager.singleton.sfx_Deny);
+
         DisableWindow();
     }
 }

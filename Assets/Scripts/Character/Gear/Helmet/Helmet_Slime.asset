@@ -19,6 +19,8 @@ MonoBehaviour:
   itemIcon: {fileID: 0}
   pAtk: 5
   mAtk: 5
+  pDef: 6
+  mDef: 6
   atkSpeed: 0
   critRate: 0
   critDmg: 0
@@ -26,4 +28,4 @@ MonoBehaviour:
   wisdom: 5
   strength: 5
   intelligence: 5
-  dexterity: 0
+  dexterity: 5

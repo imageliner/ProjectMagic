@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3188f028f58bcf14f98e530e5ad57350, type: 3}
   m_Name: mage_wep_WoodStaff
   m_EditorClassIdentifier: 
-  classType: 0
+  classType: 2
   gearType: 0
   attackAbility: {fileID: 11400000, guid: bbecf6f9f62e79448898cea987c735a3, type: 2}
   itemName: Wood Staff

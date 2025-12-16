@@ -45,6 +45,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   numberRef: {fileID: 2315735033545349367, guid: 564c96b18353fc74987f187671bda2fb, type: 3}
-  availableNumbers:
-  - {fileID: 0}
+  availableNumbers: []
   unavailableNumbers: []

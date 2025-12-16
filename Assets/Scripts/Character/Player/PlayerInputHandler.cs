@@ -1,4 +1,4 @@
-using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -8,6 +8,8 @@ public class PlayerInputHandler : MonoBehaviour
     [SerializeField] private PlayerCharacter playerCharacter;
     public Vector2 lookAxisValue;
     public Vector2 movementAxisValue;
+
+    public List<Interactable> interactableList = new List<Interactable>();
 
     private void Awake()
     {
@@ -31,6 +33,8 @@ public class PlayerInputHandler : MonoBehaviour
 
         controls.Player.Item1.performed += OnItem1Performed;
         controls.Player.Item2.performed += OnItem2Performed;
+
+        controls.Player.Interact.performed += OnInteractPerformed;
 
     }
 
@@ -90,8 +94,15 @@ public class PlayerInputHandler : MonoBehaviour
 
     private void OnMenuPerformed(InputAction.CallbackContext context)
     {
-        GameManager.singleton.toggleMenu?.Invoke();
-        
+        GameManager.singleton.toggleMenu?.Invoke();   
+    }
+
+    private void OnInteractPerformed(InputAction.CallbackContext context)
+    {
+        if (interactableList.Count == 0)
+            return;
+
+        interactableList[interactableList.Count - 1].OnInteract();
     }
 
     private void Update()

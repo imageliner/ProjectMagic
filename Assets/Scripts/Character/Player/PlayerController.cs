@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    private PlayerInputHandler inputHandler;
     [SerializeField] private Animator animator;
     [SerializeField] private GameObject testAttackBox;
 
@@ -12,14 +11,9 @@ public class PlayerController : MonoBehaviour
     private float rotationSpeed = 100.0f;
 
     //private Vector3 velocity;
-    private bool isDashing;
-    private float dashPower = 15f;
-    private float dashTime = 0.25f;
-    private float dashCoolDown = 0.5f;
-    private int dashStaminaNeeded = 0;
+
 
     public bool isAttacking;
-    private int attackStaminaNeeded = 0;
     private float attackDashPower = 5f;
     private float attackDashTime = 0.15f;
     private float attackCoolDown = 0.15f;
@@ -36,7 +30,6 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
-        inputHandler = GetComponent<PlayerInputHandler>();
         animator = GetComponentInChildren<Animator>();
     }
 
@@ -56,7 +49,7 @@ public class PlayerController : MonoBehaviour
     #region Movement
     public void Movement(Vector2 inputAxis)
     {
-        if (isDashing || isAttacking) return;
+        if (isAttacking) return;
 
         Vector3 moveDir = new Vector3(inputAxis.x, 0f, inputAxis.y);
 

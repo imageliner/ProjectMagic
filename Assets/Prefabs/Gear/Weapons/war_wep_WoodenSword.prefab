@@ -55,6 +55,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gearObject: {fileID: 11400000, guid: 57bee6e82cdee9c4ea6ad7f4e739203d, type: 2}
+  swingEff: {fileID: 6710139492206580334, guid: 95b8d3d65b5d7f1409c4ed1723887826, type: 3}
 --- !u!1001 &5308094543229604518
 PrefabInstance:
   m_ObjectHideFlags: 0

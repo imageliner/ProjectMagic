@@ -8,6 +8,16 @@ public class EquipInventoryItem : InventoryItem
 
     public GearItem gearItem;
 
+
+    public string GetStats()
+    {
+        return gearItem.GetGearObject().GetStats();
+    }
+
+    public int GetDamage()
+    {
+        return gearItem.GetGearObject().GetDamage();
+    }
 }
 public enum EquipType
 {

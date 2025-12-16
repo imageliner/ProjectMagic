@@ -6,9 +6,9 @@ public class CharacterStats : MonoBehaviour
     public StatCalculations statCalcs;
     [SerializeField] int vitalityToHealthConversion = 5;
     [SerializeField] int wisdomToManaConversion = 2;
-    [SerializeField] int strengthToPhysAtk = 2;
+    [SerializeField] int strengthToPhysAtk = 1;
     [SerializeField] float strengthToPhysDef = 1.2f;
-    [SerializeField] int intelligenceToMAtk = 2;
+    [SerializeField] int intelligenceToMAtk = 1;
     [SerializeField] float intelligenceToMDef = 1.2f;
     [SerializeField] float dexToAtkSpeed = 1.2f;
 
@@ -79,11 +79,11 @@ public class CharacterStats : MonoBehaviour
         }
     }
 
-    public int finalAtkSpeed
+    public float finalAtkSpeed
     {
         get
         {
-            return Mathf.CeilToInt(dexterity.GetTotalValueTest(dexterity, 2));
+            return 1 + (dexterity.GetTotalValue() * 0.05f);
         }
     }
 

@@ -14,8 +14,11 @@ public class Ability_testMage : CharacterAbility
 
         GameObject attackBox = Instantiate(abilityPrefab, spawnPos, spawnRot);
         Hitbox hitbox = attackBox.GetComponent<Hitbox>();
-        hitbox.damage = damage;
-            //GameManager.singleton.playerStats.statCalcs.CalculateMagAtkDmg(GameManager.singleton.playerStats.finalMAtk);
+
+        hitbox.SetDamageType(damageType);
+
+        hitbox.damage = Mathf.RoundToInt(abilityDamage + (damage * damageScaling));
+
         hitbox.attackID = attackID;
         hitbox.fromEntity = fromEntity;
 

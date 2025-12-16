@@ -4,8 +4,6 @@ using UnityEngine;
 public class PlayerAnimator : MonoBehaviour
 {
     [SerializeField] private Animator animator;
-    
-
 
     private void Awake()
     {
@@ -23,21 +21,43 @@ public class PlayerAnimator : MonoBehaviour
         Dash,
         AttackMelee,
         AttackMage,
-        InCombat
+        InCombat,
+        CastingSpell
     }
 
     public IEnumerator FreezeCurrentAnim(float duration)
     {
         animator.speed = 0f;
+
+        ParticleSystem[] allParticles = FindObjectsByType<ParticleSystem>(FindObjectsSortMode.None);
+
+        foreach (ParticleSystem ps in allParticles)
+        {
+            if (ps.isPlaying)
+            {
+                ps.Pause();
+            }
+        }
+        
+
         yield return new WaitForSeconds(duration);
-        animator.speed = 1f;
+        animator.speed = 1.0f;
+        foreach (ParticleSystem ps in allParticles)
+        {
+            if (ps)
+            {
+                ps.Play();
+            }
+        }
     }
+
 
     public void SetAnimationState(AnimationStates states, Vector3 localMove = new Vector3())
     {
         switch (states)
         {
             case AnimationStates.MoveBlend:
+                animator.SetFloat("AttackSpeed", Mathf.Clamp(GameManager.singleton.playerStats.finalAtkSpeed, 0.5f, 3.0f));
                 animator.SetFloat("Horizontal", localMove.x, 0.1f, Time.deltaTime);
                 animator.SetFloat("Vertical", localMove.z, 0.1f, Time.deltaTime);
                 break;
@@ -47,16 +67,23 @@ public class PlayerAnimator : MonoBehaviour
                 break;
 
             case AnimationStates.AttackMelee:
+                animator.SetFloat("AttackSpeed", Mathf.Clamp(GameManager.singleton.playerStats.finalAtkSpeed, 0.5f, 3.0f));
                 animator.SetTrigger("startAttack");
                 break;
 
             case AnimationStates.AttackMage:
+                animator.SetFloat("AttackSpeed", Mathf.Clamp(GameManager.singleton.playerStats.finalAtkSpeed, 0.5f, 3.0f));
                 animator.SetTrigger("startAttackMage");
                 break;
 
             case AnimationStates.InCombat:
+                animator.SetFloat("AttackSpeed", Mathf.Clamp(GameManager.singleton.playerStats.finalAtkSpeed, 0.5f, 3.0f));
                 animator.SetFloat("Horizontal", localMove.x, 0.1f, Time.deltaTime);
                 animator.SetFloat("Vertical", localMove.z, 0.1f, Time.deltaTime);
+                break;
+
+            case AnimationStates.CastingSpell:
+                animator.SetTrigger("startCasting");
                 break;
 
             default:

@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8869730930703077221}
-  - component: {fileID: 3064222788548078448}
+  - component: {fileID: 720620418060918573}
   m_Layer: 0
   m_Name: EffectPool
   m_TagString: Untagged
@@ -32,7 +32,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3064222788548078448
+--- !u!114 &720620418060918573
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,9 +41,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1856119357377475632}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6f74883a99e1a354d8515db51ae7a508, type: 3}
+  m_Script: {fileID: 11500000, guid: 0f8e1bb38cb71ef408268b7e16f42fea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numberRef: {fileID: 2315735033545349367, guid: 564c96b18353fc74987f187671bda2fb, type: 3}
-  availableNumbers: []
-  unavailableNumbers: []
+  effectRef: {fileID: 7244050779927318804, guid: d4a5eca824509f44db4e061d87ab777b, type: 3}
+  availableEffects: []
+  unavailableEffects: []

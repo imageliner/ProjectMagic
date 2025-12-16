@@ -12,18 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3188f028f58bcf14f98e530e5ad57350, type: 3}
   m_Name: war_wep_DEV
   m_EditorClassIdentifier: 
-  classType: 0
+  classType: 1
   gearType: 0
   attackAbility: {fileID: 11400000, guid: 5906a108e0edd874fbe8effce2484225, type: 2}
   itemName: DEV SWORD
   itemIcon: {fileID: 0}
-  pAtk: 9999
+  pAtk: 999
   mAtk: 0
+  pDef: 0
+  mDef: 0
   atkSpeed: 0
   critRate: 0
   critDmg: 0
-  vitality: 0
-  wisdom: 0
-  strength: 9999
-  intelligence: 0
-  dexterity: 0
+  vitality: 999
+  wisdom: 999
+  strength: 999
+  intelligence: 999
+  dexterity: 999

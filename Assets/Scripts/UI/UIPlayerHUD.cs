@@ -15,7 +15,21 @@ public class UIPlayerHUD : MonoBehaviour
     public UIPotionHUD mpPot;
 
     public GameObject statsDebug;
-    private bool isDebugView = false;
+    //private bool isDebugView = false;
+
+    [SerializeField] private GameObject tutorialWindow;
+    [SerializeField] private GameObject pickupNotifContainer;
+    [SerializeField] private UIPickupNotif pickupNotifPrefab;
+
+    [SerializeField] private GameObject lvlupAlert;
+
+    private void Start()
+    {
+        tutorialWindow.SetActive(false);
+        lvlupAlert.SetActive(true);
+        PlayerStats.hasStatPoints += ()=> SetLvlUpNotif(true);
+        PlayerStats.noStatPoints += ()=> SetLvlUpNotif(false);
+    }
 
     private void Update()
     {
@@ -25,6 +39,11 @@ public class UIPlayerHUD : MonoBehaviour
 
         UpdateStats();
 
+    }
+
+    public void EnableTutorial()
+    {
+        tutorialWindow.SetActive(true);
     }
 
     public void UpdateStats()
@@ -55,4 +74,17 @@ public class UIPlayerHUD : MonoBehaviour
         if (type == "mana")
             mpPot.SetItemCount(count);
     }
+
+    public void SetPickedupItemText(InventoryItem newItem)
+    {
+        UIPickupNotif newNotif = Instantiate(pickupNotifPrefab, pickupNotifContainer.transform, true);
+        Destroy(newNotif.gameObject, 3f);
+        newNotif.InitializeNotif(newItem);
+    }
+
+    public void SetLvlUpNotif(bool active)
+    {
+        lvlupAlert.SetActive(active);
+    }
+
 }

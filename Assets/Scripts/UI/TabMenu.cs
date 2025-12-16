@@ -58,6 +58,11 @@ public class TabMenu : MonoBehaviour
         }
     }
 
+    private void OnEnable()
+    {
+        JumpToPage(0);
+    }
+
     private void CheckForTab(bool value)
     {
         for (int i = 0; i < tabs.Count; i++)
@@ -102,5 +107,10 @@ public class TabMenu : MonoBehaviour
         EnsureIndexIsInRange(page);
 
         tabs[pageIndex].isOn = true;
+    }
+
+    public void Resume()
+    {
+        GameManager.singleton.toggleMenu();
     }
 }

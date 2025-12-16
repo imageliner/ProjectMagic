@@ -1,5 +1,4 @@
-using TMPro;
-using UnityEditor.PackageManager.UI;
+using System;
 using UnityEngine;
 
 public class PlayerStats : CharacterStats
@@ -8,23 +7,19 @@ public class PlayerStats : CharacterStats
     [SerializeField] private int statPoints_Offset = 0;
     [SerializeField] private int statPoints_Spent = 0;
 
-    [SerializeField] TextMeshProUGUI statPointText;
-    [SerializeField] TextMeshProUGUI vitalityText;
-    [SerializeField] TextMeshProUGUI wisdomText;
-    [SerializeField] TextMeshProUGUI strengthText;
-    [SerializeField] TextMeshProUGUI dexText;
-    [SerializeField] TextMeshProUGUI intText;
-    [SerializeField] TextMeshProUGUI pAtkText;
-    [SerializeField] TextMeshProUGUI pDefText;
-    [SerializeField] TextMeshProUGUI mAtkText;
-    [SerializeField] TextMeshProUGUI mDefText;
-    [SerializeField] TextMeshProUGUI atkSpeedText;
+    private Stat[] allStats;
+
+    public Action StatsUpdated;
+
+    public static Action hasStatPoints;
+    public static Action noStatPoints;
 
     public int statPoints { get; protected set; } = 0;
 
     protected override void Awake()
     {
         base.Awake();
+        allStats = new Stat[] { vitality, wisdom, strength, dexterity, intelligence, pAtk, pDef, mAtk, mDef, atkSpeed };
     }
 
     public enum StatType
@@ -34,6 +29,24 @@ public class PlayerStats : CharacterStats
         Strength,
         Dexterity,
         Intelligence
+    }
+
+    public void ResetStats()
+    {
+
+        foreach (Stat stat in allStats)
+        {
+            stat.SetBaseValue(0);
+            stat.SetBonusValue(0);
+        }
+
+        statPoints_Spent = 0;
+        statPoints = 2;
+
+        StatsUpdated?.Invoke();
+
+        health.SetCurrentValue(initialHealth);
+        mana.SetCurrentValue(initialMana);
     }
 
     protected override void InitializeStats()
@@ -51,6 +64,9 @@ public class PlayerStats : CharacterStats
 
         statPoints--;
         statPoints_Spent++;
+
+        if (statPoints > 0)
+            noStatPoints?.Invoke();
 
         switch (statType)
         {
@@ -78,23 +94,9 @@ public class PlayerStats : CharacterStats
                 Debug.LogWarning("Unknown stat type in SpendStatPoint");
                 break;
         }
+        SoundManager.singleton.PlayAudio(SoundManager.singleton.sfx_UseItem);
 
-        UpdateStatTexts();
-    }
-
-    public void UpdateStatTexts()
-    {
-        statPointText.text = $"Stat Points: {statPoints}";
-        vitalityText.text = $"Vitality: {vitality.GetTotalValue()}";
-        wisdomText.text = $"Wisdom: {wisdom.GetTotalValue()}";
-        strengthText.text = $"Strength: {strength.GetTotalValue()}";
-        dexText.text = $"Dexterity: {dexterity.GetTotalValue()}";
-        intText.text = $"Intelligence: {intelligence.GetTotalValue()}";
-        pAtkText.text = $"Phys Atk: {finalPhysAtk}";
-        pDefText.text = $"Phys Def: {finalPhysDef}";
-        mAtkText.text = $"Magic Atk: {finalMAtk}";
-        mDefText.text = $"Magic Def: {finalMDef}";
-        atkSpeedText.text = $"Atk Speed: {finalAtkSpeed}";
+        StatsUpdated?.Invoke();
     }
 
     public void OnUpdateLevel(int previousLevel, int currentLevel)
@@ -102,14 +104,8 @@ public class PlayerStats : CharacterStats
 
         statPoints += statPoints_perLevel;
 
-        statPointText.text = $"Stat Points: {statPoints}";
+        StatsUpdated?.Invoke();
+        hasStatPoints?.Invoke();
+
     }
-
-    
-
-    public void OnVitalityButtonClicked() => SpendStatPoint(StatType.Vitality);
-    public void OnWisdomButtonClicked() => SpendStatPoint(StatType.Wisdom);
-    public void OnStrengthButtonClicked() => SpendStatPoint(StatType.Strength);
-    public void OnDexButtonClicked() => SpendStatPoint(StatType.Dexterity);
-    public void OnIntButtonClicked() => SpendStatPoint(StatType.Intelligence);
 }

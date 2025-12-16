@@ -17,13 +17,14 @@ public class ProjectileHitbox : Hitbox
             if (player != null)
             {
                 if (debugHitbox == true)
-                    player.TakeDamage(Random.Range(1, 9999), debugDmg);
+                    player.TakeDamage(Random.Range(1, 9999), debugDmg, damageType);
                 else
-                    player.TakeDamage(attackID, damage);
+                    player.TakeDamage(attackID, damage, damageType);
 
                 HitEffectPool effPool = FindAnyObjectByType<HitEffectPool>();
                 HitEffect newEffect = effPool.GetAvailableEffect();
                 newEffect.UseEffect(impactEffect, player.transform);
+                SpawnAudio();
                 Destroy(this.gameObject);
             }
         }
@@ -36,6 +37,7 @@ public class ProjectileHitbox : Hitbox
                 HitEffectPool effPool = FindAnyObjectByType<HitEffectPool>();
                 HitEffect newEffect = effPool.GetAvailableEffect();
                 newEffect.UseEffect(impactEffect, enemy.transform);
+                SpawnAudio();
                 Destroy(this.gameObject);
             }
         }

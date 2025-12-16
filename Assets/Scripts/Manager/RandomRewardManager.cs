@@ -60,11 +60,15 @@ public class RandomRewardManager : MonoBehaviour
         {
             rewardContainerPrefab[i].gameObject.SetActive(true);
         }
-            
+
+        SoundManager.singleton.SlowMusicPitch();
+        Time.timeScale = 0.0f;
     }
 
     public void DisableUI()
     {
+        Time.timeScale = 1.0f;
+        SoundManager.singleton.ReturnMusicPitch();
         canvas.SetActive(false);
     }
 }

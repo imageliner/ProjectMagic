@@ -7,6 +7,6 @@ public class UISpriteRotation : MonoBehaviour
 
     private void Update()
     {
-        imageToRotate.Rotate(0f, 0f, rotationSpeed * Time.deltaTime);
+        imageToRotate.Rotate(0f, 0f, rotationSpeed * Time.unscaledDeltaTime);
     }
 }

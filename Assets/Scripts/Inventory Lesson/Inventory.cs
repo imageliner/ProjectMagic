@@ -12,7 +12,7 @@ public class Inventory : MonoBehaviour
 
     private Transform playerPos;
 
-    [SerializeField] private int currency;
+    public int currency;
 
     public EquipInventoryItem equippedWeapon;
     public EquipInventoryItem equippedHelmet;
@@ -21,11 +21,36 @@ public class Inventory : MonoBehaviour
     public Action<int> onCurrencyChanged;
     public Action onInventoryChanged;
 
+    public InventoryItem recentItem;
+
     private void Awake()
     {
         playerPos = FindAnyObjectByType<PlayerCharacter>().transform;
+
+        
     }
 
+    private void Start()
+    {
+        currency = SaveManager.singleton.data.currency;
+        onCurrencyChanged?.Invoke(currency);
+    }
+
+    public void ResetInventory()
+    {
+        allItems.Clear();
+        itemCounts.Clear();
+
+        equippedWeapon = null;
+        equippedHelmet = null;
+        equippedArmor = null;
+
+        onInventoryChanged?.Invoke();
+
+        var playerHUD = FindAnyObjectByType<UIPlayerHUD>();
+        playerHUD.hpPot.SetItemCount(0);
+        playerHUD.mpPot.SetItemCount(0);
+    }
 
     private void IncrementCount(InventoryItem item)
     {
@@ -63,6 +88,7 @@ public class Inventory : MonoBehaviour
 
     public void AddItem(InventoryItem toAdd)
     {
+        SoundManager.singleton.PlayAudio(SoundManager.singleton.sfx_Unequip);
         allItems.Add(toAdd);
         IncrementCount(toAdd);
 
@@ -70,6 +96,10 @@ public class Inventory : MonoBehaviour
 
         if (toAdd is UsableItem usable)
             UpdatePotionUI(usable);
+
+        var hud = FindAnyObjectByType<UIPlayerHUD>();
+        recentItem = toAdd;
+        hud.SetPickedupItemText(recentItem);
     }
 
     public void RemoveItem(InventoryItem toRemove)
@@ -111,13 +141,24 @@ public class Inventory : MonoBehaviour
     {
         currency += currencyAmount;
         onCurrencyChanged?.Invoke(currency);
+
+        SaveCurrency();
     }
 
     public void RemoveCurrency(int currencyAmount)
     {
         currency -= currencyAmount;
         onCurrencyChanged?.Invoke(currency);
+
+        SaveCurrency();
     }
+
+    private void SaveCurrency()
+    {
+        SaveManager.singleton.data.currency = currency;
+        SaveManager.singleton.SaveData();
+    }
+
 
     public void EquipNewHelmet(EquipInventoryItem newHelmet)
     {
@@ -183,6 +224,8 @@ public class Inventory : MonoBehaviour
         {
             if (item is UsableItem usable && usable.usableType == type)
             {
+                SoundManager.singleton.PlayAudio(SoundManager.singleton.sfx_Click);
+
                 UseItem(usable);
                 return;
             }

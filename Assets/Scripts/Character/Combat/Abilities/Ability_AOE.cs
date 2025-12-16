@@ -18,8 +18,10 @@ public class Ability_testAOE : CharacterAbility
         OvertimeHitbox hitbox = attackBox.GetComponent<OvertimeHitbox>();
         hitbox.setTimeForConsecutiveHits(timeForConsecutiveHits);
         lifeTime = hitbox.GetAOELifetime() - 0.5f;
-        hitbox.damage = damage;
-            //GameManager.singleton.playerStats.statCalcs.CalculateMagAtkDmg(GameManager.singleton.playerStats.finalMAtk);
+
+        hitbox.SetDamageType(damageType);
+        hitbox.damage = Mathf.RoundToInt(abilityDamage + (damage * damageScaling));
+
         hitbox.attackID = attackID;
         hitbox.fromEntity = fromEntity;
 

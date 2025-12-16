@@ -18,11 +18,23 @@ public class LevelSystem : MonoBehaviour
 
     [SerializeField] UnityEvent<int, int> OnLevelChanged = new UnityEvent<int, int>();
 
-    [SerializeField] private int maxLevel = 20;
+    [SerializeField] private int maxLevel = 10;
+
+    private void Awake()
+    {
+        DontDestroyOnLoad(gameObject);
+    }
 
     private void Start()
     {
         OnLevelChanged.Invoke(0, currentLevel);
+    }
+
+    public void ResetLevel()
+    {
+        OnLevelChanged.Invoke(currentLevel, 1);
+        currentLevel = 1;
+        currentEXP = 0;
     }
 
     public void AddEXP(int amount)
@@ -45,12 +57,18 @@ public class LevelSystem : MonoBehaviour
         }
         OnLevelChanged.Invoke(currentLevel, newLevel);
         currentLevel = newLevel;
+        Resource health = GameManager.singleton.playerStats.health;
+        Resource mana = GameManager.singleton.playerStats.mana;
+        health.SetCurrentValue(health.totalValue);
+        mana.SetCurrentValue(mana.totalValue);
         currentEXP = 0;
+
+        SoundManager.singleton.PlayAudio(SoundManager.singleton.sfx_UseItem);
     }
 
     private int GetEXPRequiredForNextLevel()
     {
-        return Mathf.CeilToInt(100 + (currentLevel * 250));
+        return Mathf.CeilToInt(100 + (currentLevel * 75));
     }
 
     private void Update()

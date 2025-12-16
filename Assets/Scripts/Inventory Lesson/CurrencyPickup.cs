@@ -5,9 +5,9 @@ public class CurrencyPickup : BasePickup
 {
     public int currencyAmount;
 
-    protected override void PickUpItem()
+    public override void OnInteract()
     {
         FindAnyObjectByType<Inventory>().AddCurrency(currencyAmount);
-        base.PickUpItem();
+        base.OnInteract();
     }
 }

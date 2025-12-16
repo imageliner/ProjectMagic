@@ -44,7 +44,7 @@ public class OvertimeHitbox : Hitbox
             {
                 if (debugHitbox == true)
                 {
-                    player.TakeDamage(Random.Range(1, 9999), debugDmg);
+                    player.TakeDamage(Random.Range(1, 9999), debugDmg, damageType);
                 }
                 else
                 {
@@ -84,10 +84,11 @@ public class OvertimeHitbox : Hitbox
 
             if (timer >= timeForConsecutiveHits)
             {
-                player.TakeDamage(attackID, damage);
+                player.TakeDamage(attackID, damage, damageType);
                 HitEffectPool effPool = FindAnyObjectByType<HitEffectPool>();
                 HitEffect newEffect = effPool.GetAvailableEffect();
                 newEffect.UseEffect(impactEffect, character.transform);
+                SpawnAudio();
                 timer = 0;
             }
         }
@@ -106,6 +107,7 @@ public class OvertimeHitbox : Hitbox
                 HitEffectPool effPool = FindAnyObjectByType<HitEffectPool>();
                 HitEffect newEffect = effPool.GetAvailableEffect();
                 newEffect.UseEffect(impactEffect, enemy.transform);
+                SpawnAudio();
                 timer = 0;
             }
         }
@@ -127,6 +129,7 @@ public class OvertimeHitbox : Hitbox
                 HitEffectPool effPool = FindAnyObjectByType<HitEffectPool>();
                 HitEffect newEffect = effPool.GetAvailableEffect();
                 newEffect.UseEffect(impactEffect, character.transform);
+                SpawnAudio();
                 timer = 0;
             }
         }
@@ -145,6 +148,7 @@ public class OvertimeHitbox : Hitbox
                 HitEffectPool effPool = FindAnyObjectByType<HitEffectPool>();
                 HitEffect newEffect = effPool.GetAvailableEffect();
                 newEffect.UseEffect(impactEffect, enemy.transform);
+                SpawnAudio();
                 timer = 0;
             }
         }

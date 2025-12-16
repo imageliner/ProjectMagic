@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9608805ded368d438420e8400ab7b4e, type: 3}
+  m_Name: Ability_DashAttack
+  m_EditorClassIdentifier: 
+  icon: {fileID: 21300000, guid: 8005c2643d64a5f40b00629ae3470f92, type: 3}
+  abilityName: Offensive Dash
+  abilityDescription: A quick short range shoulder bash.
+  mousePosAim: 1
+  cooldown: 3
+  manaCost: 2
+  abilityDamage: 1
+  damageScaling: 1
+  effect: {fileID: 0}
+  damageType: 0
+  attackHitBox: {fileID: 3251799386050929195, guid: 09cfac331cc7e6747a8d88811877b200, type: 3}
+  dashTrail: {fileID: 5623097589423042972, guid: 2ce602bb3ad1ee9409cfff6e507f4cf4, type: 3}
+  dashForce: 30
+  dashDuration: 0.15

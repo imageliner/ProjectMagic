@@ -12,4 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c945ac7bcd99d6f408d12946ac082805, type: 3}
   m_Name: Ability_baseMelee
   m_EditorClassIdentifier: 
+  icon: {fileID: 21300000, guid: ae1de6ae38f897544a368855b6df51ec, type: 3}
+  abilityName: Sword Swing
+  abilityDescription: 
+  mousePosAim: 0
+  cooldown: 5
+  manaCost: 1
+  abilityDamage: 0
+  damageScaling: 1
+  effect: {fileID: 0}
+  damageType: 0
   attackHitBox: {fileID: 3251799386050929195, guid: 6799deece1ff55e4b83d5b7aeb1713c4, type: 3}

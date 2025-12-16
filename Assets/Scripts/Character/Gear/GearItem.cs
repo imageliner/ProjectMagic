@@ -5,6 +5,7 @@ using UnityEngine;
 public class GearItem : MonoBehaviour
 {
     [SerializeField] private GearObject gearObject;
+    public ParticleSystem swingEff;
     //public AnimationClip attackAnim;
 
     public GearObject GetGearObject()

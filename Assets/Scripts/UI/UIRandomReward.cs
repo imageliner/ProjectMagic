@@ -9,6 +9,7 @@ public class UIRandomReward : MonoBehaviour
     [SerializeField] private Image icon;
     [SerializeField] private TextMeshProUGUI rewardName;
     [SerializeField] private TextMeshProUGUI rewardDesc;
+    [SerializeField] private TextMeshProUGUI rewardStats;
 
     [SerializeField] private GameObject itemButtons;
     [SerializeField] private GameObject abilityButtons;
@@ -18,6 +19,7 @@ public class UIRandomReward : MonoBehaviour
 
     private void OnEnable()
     {
+        SoundManager.singleton.PlayAudio(SoundManager.singleton.sfx_Confirm); //play music?
         RewardEntry reward = RandomRewardManager.singleton.GetRandomReward();
         RefreshUI(reward);
     }
@@ -33,6 +35,7 @@ public class UIRandomReward : MonoBehaviour
             icon.sprite = reward.ability.icon;
             rewardName.text = reward.ability.abilityName;
             rewardDesc.text = reward.ability.abilityDescription;
+            rewardStats.text = "DMG  " + reward.ability.GetBaseDmg() + " " + reward.ability.GetCooldown() + "s CD " + reward.ability.GetManaCost() + " Mana Cost";
 
             currentAbility = reward.ability;
         }
@@ -41,8 +44,17 @@ public class UIRandomReward : MonoBehaviour
             ToggleButtonTypes(false);
 
             icon.sprite = reward.item.itemIcon;
-            rewardName.text = reward.item.name;
+            rewardName.text = reward.item.itemName;
             rewardDesc.text = reward.item.itemDescription;
+            if (reward.item is EquipInventoryItem)
+            {
+                EquipInventoryItem equipReward = (EquipInventoryItem)reward.item;
+                rewardStats.text = "DMG " + equipReward.GetDamage() + " " + equipReward.GetStats();
+            }
+            else
+            {
+                rewardStats.text = "";
+            }
 
             currentItem = reward.item;
         }
@@ -67,6 +79,7 @@ public class UIRandomReward : MonoBehaviour
 
     public void OnClickItemSelect()
     {
+        SoundManager.singleton.PlayAudio(SoundManager.singleton.sfx_Confirm);
         Inventory playerInv = FindAnyObjectByType<Inventory>();
         playerInv.AddItem(currentItem);
         RandomRewardManager.singleton.DisableUI();
@@ -74,6 +87,7 @@ public class UIRandomReward : MonoBehaviour
 
     public void OnClickAbility1()
     {
+        SoundManager.singleton.PlayAudio(SoundManager.singleton.sfx_Confirm);
         GameManager.singleton.player.SwapAbility(0, currentAbility);
 
 
@@ -82,6 +96,7 @@ public class UIRandomReward : MonoBehaviour
 
     public void OnClickAbility2()
     {
+        SoundManager.singleton.PlayAudio(SoundManager.singleton.sfx_Confirm);
         GameManager.singleton.player.SwapAbility(1, currentAbility);
 
 
@@ -90,6 +105,7 @@ public class UIRandomReward : MonoBehaviour
 
     public void OnClickAbility3()
     {
+        SoundManager.singleton.PlayAudio(SoundManager.singleton.sfx_Confirm);
         GameManager.singleton.player.SwapAbility(2, currentAbility);
 
 

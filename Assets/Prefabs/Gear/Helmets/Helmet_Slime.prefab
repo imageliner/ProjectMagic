@@ -54,7 +54,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 847b35f9ecccd6a4f84f979a516cc928, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gearObject: {fileID: 11400000, guid: b20a24dfa6dcd8644893b304a3a54b87, type: 2}
+  gearObject: {fileID: 11400000, guid: 86d32e558c648c74fb43f04174fe7bd6, type: 2}
+  swingEff: {fileID: 0}
 --- !u!1001 &8545231161409788129
 PrefabInstance:
   m_ObjectHideFlags: 0
