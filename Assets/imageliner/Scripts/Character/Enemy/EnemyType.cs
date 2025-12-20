@@ -48,8 +48,11 @@ public class EnemyType : CharacterBase
         _rb = GetComponent<Rigidbody>();
         lootPool = GetComponent<LootPool>();
         flagHandler = GetComponentInChildren<CharacterAnimator_FlagHandler>();
-        flagHandler.OnSpawnAttack += SpawnHitbox;
-        flagHandler.OnDespawnAttack += DespawnHitbox;
+        if (flagHandler != null)
+        {
+            flagHandler.OnSpawnAttack += SpawnHitbox;
+            flagHandler.OnDespawnAttack += DespawnHitbox;
+        }
 
         foreach (var t in GetComponentsInChildren<Transform>(true))
         {
