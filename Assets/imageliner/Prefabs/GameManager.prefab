@@ -151,18 +151,8 @@ MonoBehaviour:
   intelligenceToMDef: 1.2
   dexToAtkSpeed: 1.2
   initialHealth: 25
+  initialStamina: 2
   initialMana: 10
   statPoints_perLevel: 2
   statPoints_Offset: 0
   statPoints_Spent: 0
-  statPointText: {fileID: 0}
-  vitalityText: {fileID: 0}
-  wisdomText: {fileID: 0}
-  strengthText: {fileID: 0}
-  dexText: {fileID: 0}
-  intText: {fileID: 0}
-  pAtkText: {fileID: 0}
-  pDefText: {fileID: 0}
-  mAtkText: {fileID: 0}
-  mDefText: {fileID: 0}
-  atkSpeedText: {fileID: 0}

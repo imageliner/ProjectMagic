@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using UnityEditor.Playables;
 using UnityEngine;
 using static PlayerAnimator;
 
@@ -15,6 +16,8 @@ public class PlayerCharacter : CharacterBase
     [SerializeField] private PlayerGearHandler _gear;
     [SerializeField] private PlayerCombat _combat;
 
+    public Vector3 moveDirAim;
+
     [SerializeField] private float rotationSpeed = 15.0f;
     [SerializeField] private Vector3 mousePosition;
     [SerializeField] private Transform rotateTarget;
@@ -24,6 +27,8 @@ public class PlayerCharacter : CharacterBase
 
     public Vector3 mouseWorldPos;
 
+    [SerializeField] private AbilityClass dashAbility;
+
     public Action[] useAbilityEvents = new Action[3];
 
     private Coroutine[] cooldownCoroutines;
@@ -31,7 +36,6 @@ public class PlayerCharacter : CharacterBase
     protected override void Awake()
     {
         base.Awake();
-
         
 
         inputHandler = GetComponent<PlayerInputHandler>();
@@ -85,7 +89,6 @@ public class PlayerCharacter : CharacterBase
 
     private void Update()
     {
-
         mouseWorldPos = _mouseTracker.mouseWorldPosition;
 
         mousePosition = (rotateTarget.position - transform.position).normalized;
@@ -152,6 +155,7 @@ public class PlayerCharacter : CharacterBase
             
             Vector3 moveDir = new Vector3(inputAxis.x, 0f, inputAxis.y);
             Vector3 localMove = transform.InverseTransformDirection(moveDir.normalized);
+            moveDirAim = transform.position + moveDir;
 
             _movement.Movement(inputAxis, moveDir);
 
@@ -177,6 +181,27 @@ public class PlayerCharacter : CharacterBase
                     _animator.SetAnimationState(AnimationStates.AttackMage);
                 }
             }
+        }
+    }
+
+    public void Dash()
+    {
+        if (dashAbility != null)
+        {
+            if (GameManager.singleton.playerStats.stamina.currentValue == 0 || _combat.isAttacking)
+            {
+                return;
+            }
+
+            GameObject temp = new GameObject("DashDirection");
+            temp.transform.position = moveDirAim;
+            temp.transform.rotation = Quaternion.LookRotation(moveDirAim);
+
+            Transform t = _mouseTracker.transform;
+
+            dashAbility.ability.Use(0, temp.transform, characterType.ToString(), 0, _rb);
+
+            GameManager.singleton.playerStats.stamina.SubtractResource(1);
         }
     }
 

@@ -293,12 +293,16 @@ MonoBehaviour:
   _movement: {fileID: 7654315632290717996}
   _gear: {fileID: 5699329049162116188}
   _combat: {fileID: 5115874537467744953}
+  moveDir: {x: 0, y: 0, z: 0}
   rotationSpeed: 10
   mousePosition: {x: 0, y: 0, z: 0}
   rotateTarget: {fileID: 0}
   lookRotation: {x: 0, y: 0, z: 0, w: 0}
   inCombat: 0
   mouseWorldPos: {x: 0, y: 0, z: 0}
+  dashAbility:
+    ability: {fileID: 11400000, guid: 7975f773dbe0d0e4085cf2d84fe0bfc5, type: 2}
+    currentCooldown: 0
 --- !u!114 &7654315632290717996
 MonoBehaviour:
   m_ObjectHideFlags: 0

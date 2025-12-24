@@ -24,6 +24,7 @@ public class PlayerInputHandler : MonoBehaviour
         controls.Player.Move.performed += OnMovePerformed;
         controls.Player.Move.canceled += OnMoveCanceled;
         controls.Player.Attack.performed += OnAttackPerformed;
+        controls.Player.Dash.performed += OnDashPerformed;
 
         controls.Player.OpenMenu.performed += OnMenuPerformed;
 
@@ -58,7 +59,8 @@ public class PlayerInputHandler : MonoBehaviour
     }
     private void OnDashPerformed(InputAction.CallbackContext context)
     {
-        //playerController.Dash();
+        if (!GameManager.singleton.inMenu)
+            playerCharacter.Dash();
     }
     private void OnAttackPerformed(InputAction.CallbackContext context)
     {

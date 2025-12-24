@@ -5,6 +5,7 @@ public class CharacterStats : MonoBehaviour
 {
     public StatCalculations statCalcs;
     [SerializeField] int vitalityToHealthConversion = 5;
+    [SerializeField] int dexToStamConversion = 1;
     [SerializeField] int wisdomToManaConversion = 2;
     [SerializeField] int strengthToPhysAtk = 1;
     [SerializeField] float strengthToPhysDef = 1.2f;
@@ -13,9 +14,11 @@ public class CharacterStats : MonoBehaviour
     [SerializeField] float dexToAtkSpeed = 1.2f;
 
     [SerializeField] protected int initialHealth;
+    [SerializeField] protected int initialStamina;
     [SerializeField] protected int initialMana;
 
     public Resource health { get; protected set; }
+    public Resource stamina { get; protected set; }
     public Resource mana { get; protected set; }
     public Stat vitality { get; protected set; }
     public Stat wisdom { get; protected set; }
@@ -36,6 +39,14 @@ public class CharacterStats : MonoBehaviour
         get
         {
             return health.GetTotalValue(vitality, vitalityToHealthConversion);
+        }
+    }
+
+    public int maxStamina
+    {
+        get
+        {
+            return stamina.GetTotalValue(dexterity, dexToStamConversion);
         }
     }
 
@@ -96,6 +107,7 @@ public class CharacterStats : MonoBehaviour
     protected virtual void InitializeStats()
     {
         health = new Resource();
+        stamina = new Resource();
         mana = new Resource();
         health.SetBaseValue(initialHealth);
         health.SetCurrentValue(initialHealth);
