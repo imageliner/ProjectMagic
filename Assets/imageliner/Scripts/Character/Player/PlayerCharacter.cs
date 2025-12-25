@@ -188,7 +188,7 @@ public class PlayerCharacter : CharacterBase
     {
         if (dashAbility != null)
         {
-            if (GameManager.singleton.playerStats.stamina.currentValue == 0 || _combat.isAttacking)
+            if (GameManager.singleton.playerStats.stamina.currentValue == 0) //|| _combat.isAttacking
             {
                 return;
             }

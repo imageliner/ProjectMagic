@@ -14,7 +14,7 @@ public class PlayerStats : CharacterStats
     public static Action hasStatPoints;
     public static Action noStatPoints;
 
-    private float stamRegen = 3f;
+    private float stamRegen = 5f;
     private float stamRegenTimer;
 
     public int statPoints { get; protected set; } = 0;
