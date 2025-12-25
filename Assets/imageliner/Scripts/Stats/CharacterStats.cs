@@ -111,6 +111,8 @@ public class CharacterStats : MonoBehaviour
         mana = new Resource();
         health.SetBaseValue(initialHealth);
         health.SetCurrentValue(initialHealth);
+        stamina.SetBaseValue(initialStamina);
+        stamina.SetCurrentValue(initialStamina);
         mana.SetBaseValue(initialMana);
         mana.SetCurrentValue(initialMana);
         vitality = new Stat();

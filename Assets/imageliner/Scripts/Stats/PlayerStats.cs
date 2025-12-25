@@ -14,12 +14,31 @@ public class PlayerStats : CharacterStats
     public static Action hasStatPoints;
     public static Action noStatPoints;
 
+    private float stamRegen = 3f;
+    private float stamRegenTimer;
+
     public int statPoints { get; protected set; } = 0;
 
     protected override void Awake()
     {
         base.Awake();
         allStats = new Stat[] { vitality, wisdom, strength, dexterity, intelligence, pAtk, pDef, mAtk, mDef, atkSpeed };
+
+        stamRegenTimer = stamRegen;
+    }
+
+    private void Update()
+    {
+        if (stamina.currentValue < maxStamina)
+        {
+            stamRegenTimer -= Time.deltaTime;
+            if (stamRegenTimer <=0)
+            {
+                stamina.AddResource(1);
+                stamRegenTimer = stamRegen;
+                return;
+            }
+        }
     }
 
     public enum StatType
