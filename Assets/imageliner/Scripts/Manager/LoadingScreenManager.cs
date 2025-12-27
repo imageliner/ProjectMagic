@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
 using UnityEngine;
+using UnityEngine.Playables;
 using UnityEngine.SceneManagement;
 
 public class LoadingScreenManager : MonoBehaviour
@@ -97,13 +98,13 @@ public class LoadingScreenManager : MonoBehaviour
 
         if (!generate)
         {
-            StartCoroutine(LoadSceneAsync(index));
+            StartCoroutine(LoadSceneAsync(index, false, true));
             return;
         }
         StartCoroutine(LoadSceneAsync(index, true));
     }
 
-    IEnumerator LoadSceneAsync(int index, bool generate = false)
+    IEnumerator LoadSceneAsync(int index, bool generate = false, bool cutscene = false)
     {
         AsyncOperation operation = SceneManager.LoadSceneAsync(index);
 
@@ -155,7 +156,18 @@ public class LoadingScreenManager : MonoBehaviour
 
         yield return new WaitForSeconds(0.5f);
 
+
         loadingBar.gameObject.SetActive(false);
+
+        if (cutscene)
+        {
+            var director = FindAnyObjectByType<PlayableDirector>(FindObjectsInactive.Include);
+            if (director != null)
+            {
+                director.gameObject.SetActive(true);
+                director.Play();
+            }
+        }
 
     }
 }

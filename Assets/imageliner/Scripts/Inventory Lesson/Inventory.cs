@@ -200,7 +200,8 @@ public class Inventory : MonoBehaviour
     {
         if (newUsable.usableType == UsableType.Health)
         {
-            GameManager.singleton.playerStats.health.AddResource(newUsable.value);
+            FindAnyObjectByType<PlayerCharacter>().TakeHeal(0, newUsable.value);
+            //GameManager.singleton.playerStats.health.AddResource(newUsable.value);
         }
         else if (newUsable.usableType == UsableType.Mana)
         {

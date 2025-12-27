@@ -112,6 +112,7 @@ public class GameManager : MonoBehaviour
             playerStats.ResetStats();
             var inv = FindAnyObjectByType<Inventory>();
             inv.ResetInventory();
+            FindAnyObjectByType<PlayerCharacter>().CheckLowHP();
         }   
     }
 

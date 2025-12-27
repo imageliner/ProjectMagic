@@ -59,8 +59,9 @@ public class LevelSystem : MonoBehaviour
         currentLevel = newLevel;
         Resource health = GameManager.singleton.playerStats.health;
         Resource mana = GameManager.singleton.playerStats.mana;
-        health.SetCurrentValue(health.totalValue);
-        mana.SetCurrentValue(mana.totalValue);
+        health.SetCurrentValue(GameManager.singleton.playerStats.maxHealth);
+        FindAnyObjectByType<PlayerCharacter>().CheckLowHP();
+        mana.SetCurrentValue(GameManager.singleton.playerStats.maxMana);
         currentEXP = 0;
 
         SoundManager.singleton.PlayAudio(SoundManager.singleton.sfx_UseItem);

@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -23,12 +24,21 @@ public class UIPlayerHUD : MonoBehaviour
 
     [SerializeField] private GameObject lvlupAlert;
 
+    [SerializeField] private GameObject deathAlertEffect;
+
+    public static Action OnLowHP;
+    public static Action OnNormalHP;
+
     private void Start()
     {
+        deathAlertEffect.SetActive(false);
         tutorialWindow.SetActive(false);
         lvlupAlert.SetActive(true);
         PlayerStats.hasStatPoints += ()=> SetLvlUpNotif(true);
         PlayerStats.noStatPoints += ()=> SetLvlUpNotif(false);
+
+        OnLowHP += ()=> DyingEffect(true);
+        OnNormalHP += () => DyingEffect(false);
     }
 
     private void Update()
@@ -39,6 +49,12 @@ public class UIPlayerHUD : MonoBehaviour
 
         UpdateStats();
 
+    }
+
+    private void OnDestroy()
+    {
+        OnLowHP -= () => DyingEffect(true);
+        OnNormalHP -= () => DyingEffect(false);
     }
 
     public void EnableTutorial()
@@ -91,6 +107,11 @@ public class UIPlayerHUD : MonoBehaviour
     public void SetLvlUpNotif(bool active)
     {
         lvlupAlert.SetActive(active);
+    }
+
+    private void DyingEffect(bool state)
+    {
+        deathAlertEffect.SetActive(state);
     }
 
 }

@@ -222,17 +222,23 @@ public class PlayerCharacter : CharacterBase
             if (calculatedDmg <= 0)
                 calculatedDmg = 0;
 
-            if (health.currentValue - calculatedDmg <= 0)
-            {
-                GameManager.singleton.GameFailed();
-                inputHandler.enabled = false;
-            }
 
             Debug.Log(damageType.ToString() + "damage taken");
 
             SpawnDmgNumber(calculatedDmg, Color.white);
             health.SubtractResource(calculatedDmg);
+
+            if (health.currentValue <= 0)
+            {
+                _animator.SetAnimationState(AnimationStates.Death);
+                GameManager.singleton.GameFailed();
+                inputHandler.enabled = false;
+                this.enabled = false;
+                return;
+            }
         }
+
+        CheckLowHP();
     }
 
     public void TakeHeal(int attackID, int amt)
@@ -243,6 +249,25 @@ public class PlayerCharacter : CharacterBase
             SpawnDmgNumber(amt, Color.green);
             health.AddResource(amt);
         }
+        CheckLowHP();
+    }
+
+    public void CheckLowHP()
+    {
+        float percent = (float)GameManager.singleton.playerStats.health.currentValue /
+                        GameManager.singleton.playerStats.maxHealth;
+
+        if (percent < 0.3f)
+        {
+            UIPlayerHUD.OnLowHP?.Invoke();
+            SoundManager.singleton.SlowMusicPitch();
+        }
+        else
+        {
+            UIPlayerHUD.OnNormalHP?.Invoke();
+            SoundManager.singleton.ReturnMusicPitch();
+        }
+            
     }
 
     public void UseMana(int amt)

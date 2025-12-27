@@ -22,7 +22,8 @@ public class PlayerAnimator : MonoBehaviour
         AttackMelee,
         AttackMage,
         InCombat,
-        CastingSpell
+        CastingSpell,
+        Death
     }
 
     public IEnumerator FreezeCurrentAnim(float duration)
@@ -84,6 +85,10 @@ public class PlayerAnimator : MonoBehaviour
 
             case AnimationStates.CastingSpell:
                 animator.SetTrigger("startCasting");
+                break;
+
+            case AnimationStates.Death:
+                animator.SetTrigger("onDeath");
                 break;
 
             default:
