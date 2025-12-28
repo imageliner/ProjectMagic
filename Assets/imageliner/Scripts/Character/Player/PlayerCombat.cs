@@ -45,6 +45,8 @@ public class PlayerCombat : MonoBehaviour
         flagHandler.OnSpawnAttack += SpawnHitbox;
         flagHandler.OnDespawnAttack += DespawnHitbox;
 
+        flagHandler.OnSpawnEffect += SpawnEffect;
+
         flagHandler.CanCombo += CheckCombo;
     }
 
