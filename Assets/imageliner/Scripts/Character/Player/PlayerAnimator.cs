@@ -20,6 +20,7 @@ public class PlayerAnimator : MonoBehaviour
         MoveBlend,
         Dash,
         AttackMelee,
+        ComboAttack,
         AttackMage,
         InCombat,
         CastingSpell,
@@ -70,6 +71,11 @@ public class PlayerAnimator : MonoBehaviour
             case AnimationStates.AttackMelee:
                 animator.SetFloat("AttackSpeed", Mathf.Clamp(GameManager.singleton.playerStats.finalAtkSpeed, 0.5f, 3.0f));
                 animator.SetTrigger("startAttack");
+                break;
+
+            case AnimationStates.ComboAttack:
+                animator.SetFloat("AttackSpeed", Mathf.Clamp(GameManager.singleton.playerStats.finalAtkSpeed, 0.5f, 3.0f));
+                animator.SetTrigger("ComboAttack");
                 break;
 
             case AnimationStates.AttackMage:

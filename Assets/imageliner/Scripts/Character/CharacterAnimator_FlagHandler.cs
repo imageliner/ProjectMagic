@@ -10,6 +10,9 @@ public class CharacterAnimator_FlagHandler : MonoBehaviour
 
     public Action OnSpawnEffect;
 
+
+    public Action CanCombo;
+
     public void Flag_Footstep()
     {
         if (!footstepSource || !footstepSource.clip) return;
@@ -34,5 +37,10 @@ public class CharacterAnimator_FlagHandler : MonoBehaviour
     public void Flag_SpawnEffect()
     {
         OnSpawnEffect?.Invoke();
+    }
+
+    public void Flag_CanCombo()
+    {
+        CanCombo?.Invoke();
     }
 }

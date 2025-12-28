@@ -181,6 +181,20 @@ public class PlayerCharacter : CharacterBase
                     _animator.SetAnimationState(AnimationStates.AttackMage);
                 }
             }
+            else if (_combat.canCombo)
+            {
+                _combat.CancelAttack();
+
+                _combat.StandardAttack(_gear.currentWeapon, _mouseTracker.mouseAim, characterType.ToString());
+                if (_gear.currentWeapon.GetGearObject().GetClass() == "Warrior")
+                {
+                    _animator.SetAnimationState(AnimationStates.ComboAttack);
+                }
+                else
+                {
+                    _animator.SetAnimationState(AnimationStates.AttackMage);
+                }
+            }
         }
     }
 

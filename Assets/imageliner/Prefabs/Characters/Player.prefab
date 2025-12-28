@@ -293,7 +293,7 @@ MonoBehaviour:
   _movement: {fileID: 7654315632290717996}
   _gear: {fileID: 5699329049162116188}
   _combat: {fileID: 5115874537467744953}
-  moveDir: {x: 0, y: 0, z: 0}
+  moveDirAim: {x: 0, y: 0, z: 0}
   rotationSpeed: 10
   mousePosition: {x: 0, y: 0, z: 0}
   rotateTarget: {fileID: 0}
@@ -335,6 +335,9 @@ MonoBehaviour:
   inCombat: 0
   combatToIdleTimer: 6
   combatTimer: 0
+  canCombo: 0
+  comboCountMax: 2
+  comboCount: 0
   testAttackBox: {fileID: 3251799386050929195, guid: 6799deece1ff55e4b83d5b7aeb1713c4, type: 3}
   flagHandler: {fileID: 0}
 --- !u!114 &5699329049162116188

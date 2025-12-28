@@ -14,6 +14,10 @@ public class PlayerCombat : MonoBehaviour
     private float attackDashTime = 0.15f;
     private float attackCoolDown = 0.5f;
 
+    public bool canCombo;
+    [SerializeField] private int comboCountMax;
+    [SerializeField] private int comboCount;
+
 
     private int currentAttackID = 0;
 
@@ -24,6 +28,8 @@ public class PlayerCombat : MonoBehaviour
 
     public Action AttackStart;
     public Action AttackEnd;
+
+    private Coroutine attackCoroutine;
 
     [SerializeField] private CharacterAnimator_FlagHandler flagHandler;
 
@@ -39,7 +45,7 @@ public class PlayerCombat : MonoBehaviour
         flagHandler.OnSpawnAttack += SpawnHitbox;
         flagHandler.OnDespawnAttack += DespawnHitbox;
 
-        flagHandler.OnSpawnEffect += SpawnEffect;
+        flagHandler.CanCombo += CheckCombo;
     }
 
     private void Update()
@@ -53,24 +59,22 @@ public class PlayerCombat : MonoBehaviour
             combatTimer = 0;
             SheatheWeapon?.Invoke();
             inCombat = false;
-        }
-        
-        
+        } 
     }
-
-    
 
     public void StandardAttack(GearItem weapon, Vector3 attackDir, string playerAtk)
     {
-        if (!isAttacking)
+        if (!isAttacking || canCombo)
         {
+            comboCount++;
+            canCombo = false;
             inCombat = true;
             UnsheatheWeapon?.Invoke();
 
             combatTimer = combatToIdleTimer;
 
             currentAttackID++;
-            StartCoroutine(Attack(weapon, attackDir.normalized, currentAttackID, playerAtk));
+            attackCoroutine = StartCoroutine(Attack(weapon, attackDir.normalized, currentAttackID, playerAtk));
         }
     }
 
@@ -93,10 +97,6 @@ public class PlayerCombat : MonoBehaviour
 
         yield return new WaitUntil(() => spawnAttack == true);
 
-        
-        
-
-
         int playerDamage = GetDamageType(weapon, weapon.GetGearObject().attackAbility.GetDamageType());
 
         weapon.GetGearObject().attackAbility.Use(attackID, transform, playerAtk, playerDamage, null);
@@ -114,15 +114,27 @@ public class PlayerCombat : MonoBehaviour
             yield return null;
         }
 
-        
-
         yield return new WaitForSeconds(attackCoolDown);
 
         isAttacking = false;
         AttackEnd?.Invoke();
+
+        canCombo = false;
+        comboCount = 0;
     }
 
+    public void CancelAttack()
+    {
+        if (attackCoroutine != null)
+        {
+            StopCoroutine(attackCoroutine);
+            attackCoroutine = null;
+        }
+        isAttacking = false;
+        spawnAttack = false;
 
+        AttackEnd?.Invoke();
+    }
 
     public void SpawnHitbox()
     {
@@ -132,6 +144,19 @@ public class PlayerCombat : MonoBehaviour
     public void DespawnHitbox()
     {
         spawnAttack = false;
+    }
+
+    public void CheckCombo()
+    {
+        if (comboCount < comboCountMax)
+        {
+            canCombo = true;
+        }
+        else
+        {
+            canCombo = false;
+            comboCount = 0;
+        }
     }
 
     public void SpawnEffect()
