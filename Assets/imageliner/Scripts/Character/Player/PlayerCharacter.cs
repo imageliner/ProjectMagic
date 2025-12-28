@@ -195,7 +195,14 @@ public class PlayerCharacter : CharacterBase
 
             GameObject temp = new GameObject("DashDirection");
             temp.transform.position = moveDirAim;
+            
             temp.transform.rotation = Quaternion.LookRotation(moveDirAim);
+
+            if (inputHandler.movementAxisValue == Vector2.zero)
+            {
+                temp.transform.position = transform.position + transform.forward * 10f;
+                temp.transform.rotation = transform.rotation;
+            }
 
             Transform t = _mouseTracker.transform;
 

@@ -317,7 +317,7 @@ public class CharacterAI : MonoBehaviour
         moveSpeed = moveSpeed * 0.5f;
         PlayCastAnim();
 
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.8f);
 
 
         PlayAttackAnim();

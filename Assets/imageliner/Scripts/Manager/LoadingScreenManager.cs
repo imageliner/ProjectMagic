@@ -161,12 +161,23 @@ public class LoadingScreenManager : MonoBehaviour
 
         if (cutscene)
         {
-            var director = FindAnyObjectByType<PlayableDirector>(FindObjectsInactive.Include);
-            if (director != null)
+            if (!SaveManager.singleton.data.hasSeenIntro)
             {
-                director.gameObject.SetActive(true);
-                director.Play();
+                var director = FindAnyObjectByType<PlayableDirector>(FindObjectsInactive.Include);
+                if (director != null)
+                {
+                    director.gameObject.SetActive(true);
+                    director.Play();
+                    SaveManager.singleton.data.hasSeenIntro = true;
+                    SaveManager.singleton.SaveData();
+                }
             }
+            else
+            {
+                var director = FindAnyObjectByType<PlayableDirector>(FindObjectsInactive.Include);
+                director?.gameObject.SetActive(false);
+            }
+                
         }
 
     }

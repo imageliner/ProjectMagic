@@ -24,5 +24,5 @@ MonoBehaviour:
   damageType: 0
   attackHitBox: {fileID: 0}
   dashTrail: {fileID: 5623097589423042972, guid: 2ce602bb3ad1ee9409cfff6e507f4cf4, type: 3}
-  dashForce: 30
-  dashDuration: 0.15
+  dashForce: 25
+  dashDuration: 0.1
