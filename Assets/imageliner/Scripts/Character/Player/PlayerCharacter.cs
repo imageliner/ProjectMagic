@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using UnityEditor.Playables;
 using UnityEngine;
 using static PlayerAnimator;
 
@@ -61,6 +60,7 @@ public class PlayerCharacter : CharacterBase
         _combat.AttackEnd += () => _movement.MovespeedNormal();
 
         GameManager.singleton.hitstopManager.HitStop += ApplyHitStop;
+        GameManager.singleton.hitstopManager.HitStop += ()=> _combat.SetCombo(true);
 
         cooldownCoroutines = new Coroutine[abilities.Length];
 
@@ -104,6 +104,11 @@ public class PlayerCharacter : CharacterBase
         if (!this) return; // destroyed object safety guard
         StartCoroutine(_animator.FreezeCurrentAnim(0.5f));
         //StartCoroutine(FreezeAllParticles(1f));
+    }
+
+    public void SetComboLimit(int comboLimit)
+    {
+        _combat.comboCountMax = comboLimit;
     }
 
     private IEnumerator FreezeAllParticles(float duration)
@@ -171,6 +176,7 @@ public class PlayerCharacter : CharacterBase
         {
             if(!_combat.isAttacking)
             {
+                _combat.ResetCombo();
                 _combat.StandardAttack(_gear.currentWeapon, _mouseTracker.mouseAim, characterType.ToString());
                 if (_gear.currentWeapon.GetGearObject().GetClass() == "Warrior")
                 {
@@ -181,14 +187,17 @@ public class PlayerCharacter : CharacterBase
                     _animator.SetAnimationState(AnimationStates.AttackMage);
                 }
             }
-            else if (_combat.canCombo)
+            else if (_combat.canCombo && _combat.comboCountMax > 1)
             {
                 _combat.CancelAttack();
 
                 _combat.StandardAttack(_gear.currentWeapon, _mouseTracker.mouseAim, characterType.ToString());
                 if (_gear.currentWeapon.GetGearObject().GetClass() == "Warrior")
                 {
-                    _animator.SetAnimationState(AnimationStates.ComboAttack);
+                    if (_combat.comboCount == _combat.comboCountMax)
+                        _animator.SetAnimationState(AnimationStates.FinisherAttack);
+                    else
+                        _animator.ComboAnimation();
                 }
                 else
                 {

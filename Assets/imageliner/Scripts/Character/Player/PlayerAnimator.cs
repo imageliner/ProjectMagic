@@ -5,6 +5,8 @@ public class PlayerAnimator : MonoBehaviour
 {
     [SerializeField] private Animator animator;
 
+    private bool comboAnimToggle;
+
     private void Awake()
     {
         animator = GetComponent<Animator>();
@@ -21,6 +23,7 @@ public class PlayerAnimator : MonoBehaviour
         Dash,
         AttackMelee,
         ComboAttack,
+        FinisherAttack,
         AttackMage,
         InCombat,
         CastingSpell,
@@ -29,7 +32,7 @@ public class PlayerAnimator : MonoBehaviour
 
     public IEnumerator FreezeCurrentAnim(float duration)
     {
-        animator.speed = 0f;
+        animator.speed = 0.05f;
 
         ParticleSystem[] allParticles = FindObjectsByType<ParticleSystem>(FindObjectsSortMode.None);
 
@@ -51,6 +54,18 @@ public class PlayerAnimator : MonoBehaviour
                 ps.Play();
             }
         }
+    }
+
+    public void ComboAnimation()
+    {
+        comboAnimToggle = !comboAnimToggle;
+
+        if (comboAnimToggle)
+        {
+            SetAnimationState(AnimationStates.AttackMelee);
+        }
+        else
+            SetAnimationState(AnimationStates.ComboAttack);
     }
 
 
@@ -76,6 +91,11 @@ public class PlayerAnimator : MonoBehaviour
             case AnimationStates.ComboAttack:
                 animator.SetFloat("AttackSpeed", Mathf.Clamp(GameManager.singleton.playerStats.finalAtkSpeed, 0.5f, 3.0f));
                 animator.SetTrigger("ComboAttack");
+                break;
+
+            case AnimationStates.FinisherAttack:
+                animator.SetFloat("AttackSpeed", Mathf.Clamp(GameManager.singleton.playerStats.finalAtkSpeed, 0.5f, 3.0f));
+                animator.SetTrigger("FinisherAttack");
                 break;
 
             case AnimationStates.AttackMage:

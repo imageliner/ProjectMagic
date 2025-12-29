@@ -15,8 +15,8 @@ public class PlayerCombat : MonoBehaviour
     private float attackCoolDown = 0.5f;
 
     public bool canCombo;
-    [SerializeField] private int comboCountMax;
-    [SerializeField] private int comboCount;
+    public int comboCountMax;
+    public int comboCount { get; private set; }
 
 
     private int currentAttackID = 0;
@@ -48,6 +48,7 @@ public class PlayerCombat : MonoBehaviour
         flagHandler.OnSpawnEffect += SpawnEffect;
 
         flagHandler.CanCombo += CheckCombo;
+        flagHandler.StopCombo += ()=> SetCombo(false);
     }
 
     private void Update()
@@ -68,7 +69,6 @@ public class PlayerCombat : MonoBehaviour
     {
         if (!isAttacking || canCombo)
         {
-            comboCount++;
             canCombo = false;
             inCombat = true;
             UnsheatheWeapon?.Invoke();
@@ -95,6 +95,8 @@ public class PlayerCombat : MonoBehaviour
         isAttacking = true;
         AttackStart?.Invoke();
 
+        comboCount++;
+
         spawnAttack = false;
 
         yield return new WaitUntil(() => spawnAttack == true);
@@ -116,26 +118,36 @@ public class PlayerCombat : MonoBehaviour
             yield return null;
         }
 
-        yield return new WaitForSeconds(attackCoolDown);
+        //yield return new WaitForSeconds(attackCoolDown);
+        yield return new WaitUntil(() => canCombo == false);
 
         isAttacking = false;
         AttackEnd?.Invoke();
 
-        canCombo = false;
-        comboCount = 0;
+        if (comboCount >= comboCountMax)
+        {
+            comboCount = 0;
+        }
     }
 
     public void CancelAttack()
     {
         if (attackCoroutine != null)
         {
+            isAttacking = false;
             StopCoroutine(attackCoroutine);
             attackCoroutine = null;
         }
-        isAttacking = false;
+
+        
         spawnAttack = false;
 
         AttackEnd?.Invoke();
+    }
+
+    public void ResetCombo()
+    {
+        comboCount = 0;
     }
 
     public void SpawnHitbox()
@@ -161,14 +173,18 @@ public class PlayerCombat : MonoBehaviour
         }
     }
 
+    public void SetCombo(bool state)
+    {
+        canCombo = state;
+    }
+
     public void SpawnEffect()
     {
         if (_gear.currentWeapon.swingEff != null)
         {
-            ParticleSystem cloneEff = _gear.currentWeapon.swingEff;
             Vector3 spawnPosition = transform.position + (transform.forward * 0.5f) + (transform.up * 1f);
             Quaternion rotOffset = transform.rotation * Quaternion.Euler(270f, 0f, 70f);
-            Instantiate(cloneEff, spawnPosition, rotOffset, null);
+            ParticleSystem cloneEff = Instantiate(_gear.currentWeapon.swingEff, spawnPosition, rotOffset);
             cloneEff.Play();
         }
     }

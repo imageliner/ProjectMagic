@@ -12,6 +12,7 @@ public class CharacterAnimator_FlagHandler : MonoBehaviour
 
 
     public Action CanCombo;
+    public Action StopCombo;
 
     public void Flag_Footstep()
     {
@@ -42,5 +43,10 @@ public class CharacterAnimator_FlagHandler : MonoBehaviour
     public void Flag_CanCombo()
     {
         CanCombo?.Invoke();
+    }
+
+    public void Flag_StopCombo()
+    {
+        StopCombo?.Invoke();
     }
 }

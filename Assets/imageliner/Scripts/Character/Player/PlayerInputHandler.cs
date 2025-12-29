@@ -9,6 +9,10 @@ public class PlayerInputHandler : MonoBehaviour
     public Vector2 lookAxisValue;
     public Vector2 movementAxisValue;
 
+    [SerializeField] private float attackInputRate = 0.1f;
+    private bool attackHeld;
+    private float attackTimer;
+
     public List<Interactable> interactableList = new List<Interactable>();
 
     private void Awake()
@@ -23,7 +27,10 @@ public class PlayerInputHandler : MonoBehaviour
         controls.Player.Look.performed += OnLookPerformed;
         controls.Player.Move.performed += OnMovePerformed;
         controls.Player.Move.canceled += OnMoveCanceled;
-        controls.Player.Attack.performed += OnAttackPerformed;
+
+        controls.Player.Attack.started += OnAttackStarted;
+        controls.Player.Attack.canceled += OnAttackCanceled;
+
         controls.Player.Dash.performed += OnDashPerformed;
 
         controls.Player.OpenMenu.performed += OnMenuPerformed;
@@ -62,10 +69,20 @@ public class PlayerInputHandler : MonoBehaviour
         if (!GameManager.singleton.inMenu)
             playerCharacter.Dash();
     }
-    private void OnAttackPerformed(InputAction.CallbackContext context)
+    private void OnAttackStarted(InputAction.CallbackContext context)
     {
-        if (!GameManager.singleton.inMenu)
-            playerCharacter.Attack();
+        if (GameManager.singleton.inMenu)
+            return;
+
+        attackHeld = true;
+        attackTimer = 0f;
+
+        playerCharacter.Attack();
+    }
+
+    private void OnAttackCanceled(InputAction.CallbackContext context)
+    {
+        attackHeld = false;
     }
 
     private void OnAbility0Performed(InputAction.CallbackContext context)
@@ -111,5 +128,15 @@ public class PlayerInputHandler : MonoBehaviour
     {
         playerCharacter._mouseTracker.UpdateMousePosition(lookAxisValue);
         playerCharacter.Movement(movementAxisValue);
+
+        if (attackHeld)
+        {
+            attackTimer -= Time.deltaTime;
+            if (attackTimer <= 0f)
+            {
+                playerCharacter.Attack();
+                attackTimer = attackInputRate;
+            }
+        }
     }
 }

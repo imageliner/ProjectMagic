@@ -11,6 +11,7 @@ public class GearObject : ScriptableObject
 
     [SerializeField] private string itemName;
     [SerializeField] private Image itemIcon;
+    [SerializeField] private int comboCount = 1;
     [SerializeField] private int pAtk;
     [SerializeField] private int mAtk;
     [SerializeField] private int pDef;
@@ -96,6 +97,8 @@ public class GearObject : ScriptableObject
         GameManager.singleton.playerStats.dexterity.AddBonusValue(dexterity);
         GameManager.singleton.playerStats.intelligence.AddBonusValue(intelligence);
 
+        GameManager.singleton.player.SetComboLimit(Mathf.Clamp(comboCount, 1, 100));
+
         GameManager.singleton.playerStats.StatsUpdated?.Invoke();
     }
 
@@ -113,6 +116,8 @@ public class GearObject : ScriptableObject
         GameManager.singleton.playerStats.strength.AddBonusValue(-strength);
         GameManager.singleton.playerStats.dexterity.AddBonusValue(-dexterity);
         GameManager.singleton.playerStats.intelligence.AddBonusValue(-intelligence);
+
+        GameManager.singleton.player.SetComboLimit(1);
 
         GameManager.singleton.playerStats.StatsUpdated?.Invoke();
     }

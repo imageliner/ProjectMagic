@@ -336,8 +336,7 @@ MonoBehaviour:
   combatToIdleTimer: 6
   combatTimer: 0
   canCombo: 0
-  comboCountMax: 2
-  comboCount: 0
+  comboCountMax: 3
   testAttackBox: {fileID: 3251799386050929195, guid: 6799deece1ff55e4b83d5b7aeb1713c4, type: 3}
   flagHandler: {fileID: 0}
 --- !u!114 &5699329049162116188
