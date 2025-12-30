@@ -1,11 +1,14 @@
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 
 public class OvertimeHitbox : Hitbox
 {
     public ParticleSystem aoeEffect;
 
     private float timeForConsecutiveHits;
+    [SerializeField] private float timeForConsecutiveHitsDebug;
     private float timer;
+    [SerializeField] private float timerDebug;
 
     public void setTimeForConsecutiveHits(float time)
     {
@@ -44,7 +47,7 @@ public class OvertimeHitbox : Hitbox
             {
                 if (debugHitbox == true)
                 {
-                    player.TakeDamage(Random.Range(1, 9999), debugDmg, damageType);
+                    AOEDamageTimerDebug(player);
                 }
                 else
                 {
@@ -70,6 +73,25 @@ public class OvertimeHitbox : Hitbox
             }
         }
         
+    }
+
+    private void AOEDamageTimerDebug(CharacterBase character)
+    {
+        PlayerCharacter player = (PlayerCharacter)character;
+        if (timerDebug != timeForConsecutiveHitsDebug)
+        {
+            timerDebug += 1 * Time.deltaTime;
+        }
+
+        if (timerDebug >= timeForConsecutiveHitsDebug)
+        {
+            player.TakeDamage(Random.Range(1, 9999), debugDmg, damageType);
+            HitEffectPool effPool = FindAnyObjectByType<HitEffectPool>();
+            HitEffect newEffect = effPool.GetAvailableEffect();
+            newEffect.UseEffect(impactEffect, character.transform);
+            SpawnAudio();
+            timerDebug = 0;
+        }
     }
 
     private void AOEDamageTimer(CharacterBase character)

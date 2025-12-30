@@ -94,6 +94,7 @@ MonoBehaviour:
   isBossRoom: 1
   roomLevel: 0
   roomSpawnAmount: 0
+  spikes: {fileID: 6791895654570752974, guid: 376a4827cd6d6424080f87a35191f165, type: 3}
   floorTiles:
   - {fileID: 1585499314411832627}
   - {fileID: 1809104813881504180}

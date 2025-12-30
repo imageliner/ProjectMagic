@@ -231,6 +231,8 @@ public class PlayerCharacter : CharacterBase
 
             dashAbility.ability.Use(0, temp.transform, characterType.ToString(), 0, _rb);
 
+            Destroy(temp, 0.1f);
+
             GameManager.singleton.playerStats.stamina.SubtractResource(1);
         }
     }

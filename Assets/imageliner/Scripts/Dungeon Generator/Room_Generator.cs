@@ -22,6 +22,9 @@ public class Room_Generator : MonoBehaviour
     public int roomLevel;
     public int roomSpawnAmount;
 
+    [Header("Traps")]
+    [SerializeField] private GameObject spikes;
+
     [Header("Decorations")]
     [SerializeField] private Transform[] floorTiles;
     [SerializeField] private GameObject[] groundDeco;
@@ -37,6 +40,7 @@ public class Room_Generator : MonoBehaviour
     {
         spawner.ActivateRoom();
         GenerateDeco();
+        GenerateTraps();
     }
 
     public void SetUnusedToWall()
@@ -73,5 +77,20 @@ public class Room_Generator : MonoBehaviour
                 Instantiate(groundDeco[Random.Range(0, groundDeco.Length)], decoPos, decoRot, tile);
             }
         }
+    }
+
+    private void GenerateTraps()
+    {
+        if (spikes != null)
+        {
+            foreach (Transform tile in floorTiles)
+            {
+                float chanceToSpawn = Random.Range(0, 10);
+                if (chanceToSpawn > 8)
+                {
+                    Instantiate(spikes, tile.transform);
+                }
+            }
+        }   
     }
 }

@@ -61,6 +61,8 @@ public class PlayerCombat : MonoBehaviour
         {
             combatTimer = 0;
             SheatheWeapon?.Invoke();
+            //small bug bandaid fix
+            isAttacking = false;
             inCombat = false;
         } 
     }
@@ -92,10 +94,11 @@ public class PlayerCombat : MonoBehaviour
 
     private IEnumerator Attack(GearItem weapon, Vector3 direction, int attackID, string playerAtk)
     {
-        isAttacking = true;
         AttackStart?.Invoke();
 
         comboCount++;
+
+        isAttacking = true;
 
         spawnAttack = false;
 
@@ -118,8 +121,11 @@ public class PlayerCombat : MonoBehaviour
             yield return null;
         }
 
-        //yield return new WaitForSeconds(attackCoolDown);
-        yield return new WaitUntil(() => canCombo == false);
+        if (comboCount >= comboCountMax)
+            yield return new WaitForSeconds(attackCoolDown);
+        else
+            yield return new WaitUntil(() => canCombo == false);
+
 
         isAttacking = false;
         AttackEnd?.Invoke();
@@ -138,8 +144,8 @@ public class PlayerCombat : MonoBehaviour
             StopCoroutine(attackCoroutine);
             attackCoroutine = null;
         }
+        isAttacking = false;
 
-        
         spawnAttack = false;
 
         AttackEnd?.Invoke();
