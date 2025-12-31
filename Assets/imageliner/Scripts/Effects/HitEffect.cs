@@ -22,9 +22,13 @@ public class HitEffect : MonoBehaviour
             Destroy(_effect.gameObject);
         }
 
-        _effect = Instantiate(newEffect, transform);
-        _effect.Play();
-        Invoke("ResetEffect", 1f);
+        if (_effect != null)
+        {
+            _effect = Instantiate(newEffect, transform);
+            _effect.Play();
+            Invoke("ResetEffect", 1f);
+        }
+        
     }
 
     public void InitializePooledEffects(HitEffectPool owner)

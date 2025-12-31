@@ -443,7 +443,7 @@ GameObject:
   - component: {fileID: 1130656070119423356}
   m_Layer: 0
   m_Name: Spikes
-  m_TagString: Untagged
+  m_TagString: PlayerHitbox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -515,8 +515,8 @@ MonoBehaviour:
   impactEffect: {fileID: 0}
   impactEff: {fileID: 0}
   aoeEffect: {fileID: 0}
-  timeForConsecutiveHitsDebug: 1
-  timerDebug: 1
+  timeForConsecutiveHitsDebug: 0.4
+  timerDebug: 0.4
 --- !u!1 &6791895654570752974
 GameObject:
   m_ObjectHideFlags: 0
@@ -544,7 +544,7 @@ Transform:
   m_GameObject: {fileID: 6791895654570752974}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 4, y: 0, z: 6}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -907,8 +907,8 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
+  MinDistance: 5
+  MaxDistance: 10
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0
@@ -943,7 +943,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0

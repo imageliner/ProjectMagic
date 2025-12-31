@@ -86,10 +86,10 @@ public class OvertimeHitbox : Hitbox
         if (timerDebug >= timeForConsecutiveHitsDebug)
         {
             player.TakeDamage(Random.Range(1, 9999), debugDmg, damageType);
-            HitEffectPool effPool = FindAnyObjectByType<HitEffectPool>();
-            HitEffect newEffect = effPool.GetAvailableEffect();
-            newEffect.UseEffect(impactEffect, character.transform);
-            SpawnAudio();
+            //HitEffectPool effPool = FindAnyObjectByType<HitEffectPool>();
+            //HitEffect newEffect = effPool.GetAvailableEffect();
+            //newEffect.UseEffect(impactEffect, character.transform);
+            //SpawnAudio();
             timerDebug = 0;
         }
     }
